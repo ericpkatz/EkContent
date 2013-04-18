@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/EKContent.web.dll">
+      <publishTime>04/17/2013 08:51:37</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>04/12/2013 09:22:13</publishTime>
+    </File>
+    <File Include="bin/Ninject.dll">
+      <publishTime>04/12/2013 10:00:37</publishTime>
+    </File>
+    <File Include="Content/bootstrap-responsive.css">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Content/bootstrap-responsive.min.css">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Content/images/glyphicons-halflings-white.png">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Content/images/glyphicons-halflings.png">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>04/12/2013 09:22:04</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>04/16/2013 15:34:35</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>04/12/2013 11:39:46</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1-vsdoc.js">
+      <publishTime>04/12/2013 10:01:34</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1.js">
+      <publishTime>04/12/2013 10:01:34</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1.min.js">
+      <publishTime>04/12/2013 10:01:34</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate-vsdoc.js">
+      <publishTime>04/16/2013 15:34:35</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>04/16/2013 15:34:35</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>04/16/2013 15:34:35</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>04/16/2013 15:34:35</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>04/16/2013 15:34:35</publishTime>
+    </File>
+    <File Include="Views/Home/EditContent.cshtml">
+      <publishTime>04/16/2013 17:02:04</publishTime>
+    </File>
+    <File Include="Views/Home/EditPage.cshtml">
+      <publishTime>04/16/2013 17:20:56</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>04/16/2013 17:08:14</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>04/12/2013 09:22:03</publishTime>
+    </File>
+    <File Include="Views/Shared/Nav.cshtml">
+      <publishTime>04/16/2013 15:52:04</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>04/17/2013 08:47:32</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>04/12/2013 09:22:04</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>04/12/2013 09:22:03</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>04/17/2013 08:51:39</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
+@{
+    ViewBag.Title = Model.Page.Title;
+}
+
+
+<ul class="nav nav-tabs">
+        @foreach (var page in Model.Pages)
+        {
+            <li @(Model.Page.Id == page.Id?"class=active":String.Empty)>@Html.ActionLink(page.Title, "Index", new { id = page.Id })</li>
+        }
+</ul>

@@ -1,0 +1,52 @@
+﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
+@{
+    ViewBag.Title = Model.Page.Title;
+}
+<script>
+    $(function () {
+        $(".delete").click(function () {
+            var form = $(this).parents("form");
+            form.attr("action", this.href);
+            form.submit();
+            return false;
+        });
+    });
+</script>
+
+@Html.Partial("Nav")
+
+<div class="control-group">
+<button data-href="@Url.Action("EditPage", new { pageId = Model.SelectedNavigation().Id })" class="btn">
+Edit Page
+<i class="icon-wrench"></i>
+</button>
+<button data-href="@Url.Action("EditPage", new { parentId = Model.SelectedNavigation().Id })" class="btn">
+<i class="icon-plus"></i>
+Add Page
+</button>
+</div>
+<h3>@Model.SelectedNavigation().Title</h3>
+
+
+
+
+@{int Mdx = 0;}
+@foreach (var module in Model.Page.Modules)
+{
+    var moduleId = module.Id;
+    <button data-href="@Url.Action("EditContent", new{Idx = -1, Mdx = Mdx, pageId = Model.Page.Id })" class="btn"><i class="icon-plus"></i>Create Content</button>
+            int Idx = 0;
+            foreach (var item in module.Content)
+            {
+                <h4>@item.Title</h4>
+                <div class="control-group">
+    <button data-href="@Url.Action("EditContent", new{Idx = Idx, Mdx = Mdx, pageId = Model.Page.Id }) " class="btn"><i class="icon-wrench"></i>Update Content</button>
+      <button data-action="@Url.Action("DeleteContent", new { Idx = Idx, Mdx = Mdx, pageId = Model.Page.Id })" class="btn btn-danger"><i class="icon-trash"></i>Delete Content</button>
+               </div> 
+                    <div>@item.Body</div>
+                Idx++;
+            }
+
+   Mdx++; 
+}
+

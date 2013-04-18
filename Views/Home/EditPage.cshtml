@@ -1,0 +1,23 @@
+﻿@model EKContent.web.Models.ViewModels.EditPageViewModel
+
+@{
+    ViewBag.Title = Model.TitleText();
+}
+
+@Html.Partial("Nav", Model.NavigationModel)
+<h3>@Model.TitleText()</h3>
+@using (Html.BeginForm("EditPage", "Home", FormMethod.Post, new { @class="well"}))
+{
+     @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+     @Html.HiddenFor(m => m.ParentId)
+    <div class="control-group">
+    @Html.LabelFor(m => m.Page.Title)
+    @Html.TextBoxFor(m => m.Page.Title)
+    @Html.ValidationMessageFor(m => m.Page.Title)
+    </div>
+    
+    
+    <button type="submit" value="save" class="btn-primary">Save</button>
+    <button data-href=@Url.Action("Index", new { id = Model.Id() })>Cancel</button>
+    
+}
