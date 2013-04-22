@@ -18,7 +18,9 @@
     </div>
     <div class="control-group">
     @Html.LabelFor(m => m.Content.Body)
-    @Html.TextAreaFor(m => m.Content.Body, new { @class="mceEditor"})
+    <div style="width:500px">
+    @Html.TextAreaFor(m => m.Content.Body, new { @class="richText"})
+    </div>
     @Html.ValidationMessageFor(m => m.Content.Body)
     </div>
 

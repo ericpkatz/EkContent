@@ -16,6 +16,21 @@
     @Html.ValidationMessageFor(m => m.Page.Title)
     </div>
     
+    <div class="control-group">
+    @Html.LabelFor(m => m.Page.PageType)
+    @Html.DropDownListFor(m => m.Page.PageType, Model.PageTypesSelectList())       
+    </div>
+    
+    <div class="control-group">
+    @Html.LabelFor(m => m.Page.Description)
+    @Html.TextBoxFor(m => m.Page.Description)       
+    </div>    
+    
+    <div class="control-group">
+    @Html.LabelFor(m => m.Page.Active)
+    @Html.CheckBoxFor(m => m.Page.Active)       
+    </div>   
+    
     
     <button type="submit" value="save" class="btn-primary">Save</button>
     <button data-href=@Url.Action("Index", new { id = Model.Id() })>Cancel</button>

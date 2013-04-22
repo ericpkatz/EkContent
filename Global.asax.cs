@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using EKContent.web.Infrastructure;
 
 namespace EKContent.web
@@ -40,6 +41,27 @@ namespace EKContent.web
 
         protected void Application_Start()
         {
+            if(!System.Web.Security.Roles.RoleExists("Admin"))
+            {
+                System.Web.Security.Roles.CreateRole("Admin");
+            }
+
+            if (!System.Web.Security.Roles.RoleExists("-"))
+            {
+                System.Web.Security.Roles.CreateRole("-");
+            }
+
+            if(System.Web.Security.Membership.GetUser("Admin@Admin.com") == null)
+            {
+                Membership.CreateUser("Admin@Admin.com", "Admin");
+                Roles.AddUserToRole("Admin@Admin.com", "Admin");
+            }
+
+            if (System.Web.Security.Membership.GetUser("ericpkatz@gmail.com") == null)
+            {
+                Membership.CreateUser("ericpkatz@gmail.com", "abc123");
+                Roles.AddUserToRole("ericpkatz@gmail.com", "Admin");
+            }
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
             AreaRegistration.RegisterAllAreas();
 

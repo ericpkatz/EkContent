@@ -18,9 +18,12 @@
     </div>
     <div class="control-group">
     @Html.LabelFor(m => m.Content.Body)
-    @Html.TextBoxFor(m => m.Content.Body)
+    <div style="width:500px">
+    @Html.TextAreaFor(m => m.Content.Body, new { @class="richText"})
+    </div>
     @Html.ValidationMessageFor(m => m.Content.Body)
     </div>
+
     <button type="submit" value="save" class="btn-primary">Save</button>
     <button data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
     

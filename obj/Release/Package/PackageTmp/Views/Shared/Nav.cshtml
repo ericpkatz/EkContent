@@ -4,9 +4,27 @@
 }
 
 
-<ul class="nav nav-tabs">
+@*<ul class="nav nav-tabs">
         @foreach (var page in Model.Pages)
         {
             <li @(Model.Page.Id == page.Id?"class=active":String.Empty)>@Html.ActionLink(page.Title, "Index", new { id = page.Id })</li>
         }
-</ul>
+        <li>@Html.ActionLink(User.Identity.IsAuthenticated ? "Logout" : "Login", User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id }, null)</li>
+</ul>*@
+
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <ul class="nav">
+        @foreach (var page in Model.Pages)
+        {
+            <li @(Model.Page.Id == page.Id?"class=active":String.Empty)>@Html.ActionLink(page.Title, "Index", new { id = page.Id }, new { @class = page.IsHomePage()?"brand":String.Empty})</li>
+        }
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li>@Html.ActionLink(User.Identity.IsAuthenticated ? "Logout" : "Login", User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id }, null)</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>

@@ -39,6 +39,7 @@ namespace EKContent.web.Controllers
             TempData["message"] = msg;
         }
 
+        [Authorize(Roles="Admin")]
         public ActionResult EditContent(int Idx, int pageId, int Mdx)
         {
             var page = _service.GetPage(pageId);
@@ -58,6 +59,7 @@ namespace EKContent.web.Controllers
 
         [ValidateInput(false)]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditContent(EditContentItemViewModel model)
         {
             var page = _service.GetPage(model.NavigationModel.Page.Id);
@@ -72,7 +74,7 @@ namespace EKContent.web.Controllers
             return RedirectToAction("Index", new { id = page.Id });
         }
 
-
+        [Authorize(Roles = "Admin")]
         public ActionResult EditPage(int? pageId, int? parentId)
         {
             var id = pageId.HasValue ? pageId.Value : parentId.Value;
@@ -92,11 +94,15 @@ namespace EKContent.web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditPage(EditPageViewModel model)
         {
             var pages = _service.GetNavigation();
             var page = model.Inserting() ? new Page { ParentId = model.ParentId } : pages.Single(p => p.Id == model.NavigationModel.Page.Id);
             page.Title = model.Page.Title;
+            page.PageType = model.Page.PageType;
+            page.Active = model.Page.Active;
+            page.Description = model.Page.Description;
             if (model.Inserting())
             {
                 page.Id = pages.Max(p => p.Id) + 1;
@@ -108,6 +114,7 @@ namespace EKContent.web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeletePage(int id)
         {
             var pages = _service.GetNavigation();
@@ -124,7 +131,9 @@ namespace EKContent.web.Controllers
             Message("Page Deleted");
             return RedirectToAction("Index", new { id = page.ParentId});
         }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteContent(EditContentItemViewModel model)
         {
             var page = _service.GetPage(model.PageId);
@@ -132,7 +141,6 @@ namespace EKContent.web.Controllers
             _service.SavePage(page);
             Message("Item Deleted");
             return RedirectToAction("Index", new { id = model.PageId });
-            return View(model);
         }
 
     }

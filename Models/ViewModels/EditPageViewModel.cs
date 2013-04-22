@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.ViewModels
@@ -11,6 +12,19 @@ namespace EKContent.web.Models.ViewModels
         public Page Page { get; set; }
         public int? ParentId { get; set; }
         public int? PageId { get; set; }
+        public List<PageTypes> PageTypes()
+        {
+            return Enum.GetValues(typeof (PageTypes)).Cast<PageTypes>().ToList();
+        }
+
+        public List<SelectListItem> PageTypesSelectList()
+        {
+            return
+                PageTypes().Select(
+                    pt =>
+                    new SelectListItem {Text = pt.ToString(), Value = pt.ToString(), Selected = Page.PageType == pt}).
+                    ToList();
+        }
         public HomeIndexViewModel NavigationModel { get; set; }
         public bool Inserting()
         {
