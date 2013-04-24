@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = Model.TitleText();
+    ViewBag.SiteTitle = Model.NavigationModel.Site.Title; 
 }
 
 @Html.Partial("Nav", Model.NavigationModel)

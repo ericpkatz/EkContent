@@ -68,9 +68,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Models\Database\Abstract\IEkSiteDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEkDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEKRoleProvider.cs" />
     <Compile Include="Models\Database\Abstract\INavigationProvider.cs" />
+    <Compile Include="Models\Database\Concrete\EkSiteDataProvider.cs" />
     <Compile Include="Models\Database\Concrete\EKRoleProvider.cs" />
     <Compile Include="Models\Database\Concrete\EkDataProvider.cs" />
     <Compile Include="Models\Database\Concrete\EKRole.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Models\Entities\Module.cs" />
     <Compile Include="Models\Entities\ModuleType.cs" />
     <Compile Include="Models\Entities\Page.cs" />
+    <Compile Include="Models\Entities\Site.cs" />
     <Compile Include="Models\Services\PageService.cs" />
     <Compile Include="Models\ViewModels\EditPageViewModel.cs" />
     <Compile Include="Models\ViewModels\EditContentItemViewModel.cs" />

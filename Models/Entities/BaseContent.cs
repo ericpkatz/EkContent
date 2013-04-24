@@ -13,7 +13,20 @@ namespace EKContent.web.Models.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
-        public DateTime DateCreated { get; set; }
+        private DateTime _dateCreated = DateTime.MinValue;
+        public DateTime DateCreated
+        {
+            get
+            {
+                if (_dateCreated == DateTime.MinValue)
+                    DateCreated = DateTime.Now;
+                return _dateCreated;
+            }
+            set
+            {
+                _dateCreated = value;
+            }
+        }
         public DateTime DateModified { get; set; }
         public int SortOrder { get; set; }
     }

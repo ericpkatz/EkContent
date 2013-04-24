@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Entities;
+using EKContent.web.Models.ViewModels;
 
 namespace EKContent.web.Models.Services
 {
@@ -12,12 +13,23 @@ namespace EKContent.web.Models.Services
     {
         private INavigationProvider _navigationProvider = null;
         private IEkDataProvider _dataProvider = null;
+        private IEkSiteDataProvider _siteProvider = null;
 
+        public Site GetSite()
+        {
+            return _siteProvider.Get();
+        }
 
-        public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider)
+        public void SetSite(Site site)
+        {
+            _siteProvider.Save(site);
+        }
+
+        public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider)
         {
             _navigationProvider = navigationProvider;
             _dataProvider = dataProvider;
+            _siteProvider = siteProvider;
         }
 
         public Page GetHomePage()

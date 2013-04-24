@@ -9,6 +9,7 @@ namespace EKContent.web.Models.ViewModels
     public class HomeIndexViewModel
     {
         public List<Page> Pages { get; set; }
+        public Site Site { get; set; }
         public Page Page { get; set; }
         public bool HasChildren()
         {

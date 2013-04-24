@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,6 +42,10 @@ namespace EKContent.web
 
         protected void Application_Start()
         {
+            var directory = this.Server.MapPath("~/App_Data");
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
             if(!System.Web.Security.Roles.RoleExists("Admin"))
             {
                 System.Web.Security.Roles.CreateRole("Admin");

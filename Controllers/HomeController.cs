@@ -14,20 +14,15 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
-        public HomeController(INavigationProvider navigationProvider, IEkDataProvider dataProvider)
+        public HomeController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider)
         {
-            _service = new PageService(navigationProvider, dataProvider);
+            _service = new PageService(navigationProvider, dataProvider, siteProvider);
         }
 
         public ActionResult Index(int? id)
         {
-            var model = new HomeIndexViewModel
-                            {
-                                Pages = _service.GetNavigation()
-                            };
-            model.Page =
-                _service.GetNavigation().Single(
-                    p => (id.HasValue && p.Id == id.Value) || (!id.HasValue && p.IsHomePage()));
+            var model = HomeIndexViewModelLoader.Create(id, _service);
+
             model.Page.Modules = _service.GetPage(model.Page.Id).Modules;
             //model.Page.Modules = _service.GetModules(model.Page.Id);
 
@@ -47,11 +42,7 @@ namespace EKContent.web.Controllers
                             {
                                 Mdx = Mdx,
                                 Idx = Idx,
-                                NavigationModel = new HomeIndexViewModel
-                                      {
-                                          Page = page,
-                                          Pages = _service.GetNavigation()
-                                      }
+                                NavigationModel =  HomeIndexViewModelLoader.Create(pageId, _service)
                             };
             model.Content = model.Inserting() ? new Content { } : page.Modules[Mdx].Content[Idx];
             return View(model);
@@ -83,11 +74,7 @@ namespace EKContent.web.Controllers
             {
                 ParentId = parentId,
                 PageId = pageId,
-                NavigationModel = new HomeIndexViewModel
-                                      {
-                                          Page = page,
-                                          Pages = _service.GetNavigation()
-                                      }
+                NavigationModel = HomeIndexViewModelLoader.Create(id, _service)
             };
             model.Page = model.Inserting() ? new Page { ParentId = parentId } : page;
             return View(model);

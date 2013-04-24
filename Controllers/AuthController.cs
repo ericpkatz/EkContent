@@ -14,9 +14,9 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
-        public AuthController(INavigationProvider navigationProvider, IEkDataProvider dataProvider)
+        public AuthController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider)
         {
-            _service = new PageService(navigationProvider, dataProvider);
+            _service = new PageService(navigationProvider, dataProvider, siteProvider);
         }
 
         public ActionResult Login(int id)

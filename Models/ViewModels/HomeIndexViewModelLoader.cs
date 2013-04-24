@@ -8,14 +8,15 @@ namespace EKContent.web.Models.ViewModels
 {
     public class HomeIndexViewModelLoader
     {
-        public static HomeIndexViewModel Create(int id, PageService service)
+        public static HomeIndexViewModel Create(int? id, PageService service)
         {
-            var page = service.GetPage(id);
+            var page = id.HasValue ? service.GetPage(id.Value) : service.GetHomePage();
 
             return new HomeIndexViewModel
                        {
                            Page = page,
-                           Pages = service.GetNavigation()
+                           Pages = service.GetNavigation(),
+                           Site = service.GetSite()
                        };
         }
     }

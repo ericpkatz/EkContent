@@ -17,6 +17,7 @@ namespace EKContent.web.Infrastructure
             _kernel = new Ninject.StandardKernel();
             _kernel.Bind<INavigationProvider>().To<NavigationProvider>();
             _kernel.Bind<IEkDataProvider>().To<EkDataProvider>();
+            _kernel.Bind<IEkSiteDataProvider>().To<EkSiteDataProvider>();
         }
 
         protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)
