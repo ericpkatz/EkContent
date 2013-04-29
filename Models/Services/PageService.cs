@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using EKContent.web.Models.Database.Abstract;
@@ -14,6 +15,7 @@ namespace EKContent.web.Models.Services
         private INavigationProvider _navigationProvider = null;
         private IEkDataProvider _dataProvider = null;
         private IEkSiteDataProvider _siteProvider = null;
+        private IImageDataProvider _imageProvider = null;
 
         public Site GetSite()
         {
@@ -25,11 +27,12 @@ namespace EKContent.web.Models.Services
             _siteProvider.Save(site);
         }
 
-        public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider)
+        public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
         {
             _navigationProvider = navigationProvider;
             _dataProvider = dataProvider;
             _siteProvider = siteProvider;
+            _imageProvider = imageProvider;
         }
 
         public Page GetHomePage()
@@ -63,6 +66,37 @@ namespace EKContent.web.Models.Services
         public void SavePage(Page page)
         {
             _dataProvider.Save(page);
+        }
+
+        //images
+        public List<Image> GetImages()
+        {
+            return _imageProvider.Get();
+        }
+
+        public string GetImage(int id)
+        {
+            var img = _imageProvider.Get().SingleOrDefault(i => i.Id == id);
+            if (img == null)
+                return String.Format("[IMG]{0}", id);
+            else
+                return img.FileName;
+        }
+
+        public void SaveImage(Image image)
+        {
+            _imageProvider.Save(image);
+        }
+
+        public string RenderImages(string content)
+        {
+            var regex = new Regex(@"\[IMG(?<image_number>[0-9]+)\]");
+            return regex.Replace("[IMG1]", m=> String.Format("<img src=\"user_images/{0}\"/>", GetImage(int.Parse(m.Groups["image_number"].Value))));
+
+        }
+        public void DeleteImage(int id)
+        {
+            _imageProvider.Delete(id);
         }
 
     }

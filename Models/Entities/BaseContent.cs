@@ -9,6 +9,10 @@ namespace EKContent.web.Models.Entities
     public class BaseContent
     {
         public int Id { get; set; }
+        public bool IsNew()
+        {
+            return Id == 0;
+        }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }

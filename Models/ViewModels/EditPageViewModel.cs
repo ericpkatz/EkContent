@@ -7,7 +7,7 @@ using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.ViewModels
 {
-    public class EditPageViewModel
+    public class EditPageViewModel : BaseViewModel
     {
         public Page Page { get; set; }
         public int? ParentId { get; set; }
@@ -25,7 +25,7 @@ namespace EKContent.web.Models.ViewModels
                     new SelectListItem {Text = pt.ToString(), Value = pt.ToString(), Selected = Page.PageType == pt}).
                     ToList();
         }
-        public HomeIndexViewModel NavigationModel { get; set; }
+
         public bool Inserting()
         {
             return ParentId.HasValue;

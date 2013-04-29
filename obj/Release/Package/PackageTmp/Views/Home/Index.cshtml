@@ -1,6 +1,7 @@
 ﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
 @{
     ViewBag.Title = Model.Page.Title;
+    ViewBag.SiteTitle = Model.Site.Title;
 }
 <script>
     $(function () {
@@ -30,7 +31,7 @@
         }
     </div>
 }
-<h3>@Model.SelectedNavigation().Title</h3>
+
 @{int Mdx = 0;}
 @foreach (var module in Model.Page.Modules)
 {
@@ -53,7 +54,7 @@
             <i class="icon-trash"></i>Delete Content</button>
     </div> 
         }
-    <div>@Html.Raw(item.Body)</div>
+    <div>@Html.Raw(ViewBag.Service.RenderImages(item.Body))</div>
         Idx++;
     }
 

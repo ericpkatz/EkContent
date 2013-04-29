@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using EKContent.web.Models.Database.Concrete;
+using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.Database.Abstract
 {

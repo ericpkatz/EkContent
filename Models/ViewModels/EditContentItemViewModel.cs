@@ -6,7 +6,7 @@ using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.ViewModels
 {
-    public class EditContentItemViewModel
+    public class EditContentItemViewModel : BaseViewModel
     {
         public int Idx { get; set; }
         public int Mdx { get; set; }
@@ -15,7 +15,6 @@ namespace EKContent.web.Models.ViewModels
         {
             return Idx == -1;
         }
-        public HomeIndexViewModel NavigationModel { get; set; }
         public Content Content { get; set; }
 
         public string TitleText()

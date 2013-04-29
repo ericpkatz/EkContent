@@ -12,7 +12,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/EKContent.web.dll">
-      <publishTime>04/22/2013 17:21:22</publishTime>
+      <publishTime>04/29/2013 09:56:16</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/12/2013 09:22:13</publishTime>
@@ -36,10 +36,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2013 11:39:46</publishTime>
     </File>
     <File Include="Content/site.css">
-      <publishTime>04/22/2013 17:14:06</publishTime>
+      <publishTime>04/29/2013 08:49:29</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>04/12/2013 09:22:04</publishTime>
+    </File>
+    <File Include="menu.htm">
+      <publishTime>04/26/2013 17:16:18</publishTime>
+    </File>
+    <File Include="menu2.htm">
+      <publishTime>04/26/2013 17:29:55</publishTime>
     </File>
     <File Include="nav.htm">
       <publishTime>04/19/2013 16:39:20</publishTime>
@@ -89,26 +95,35 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
       <publishTime>04/16/2013 15:34:35</publishTime>
     </File>
+    <File Include="Views/Auth/ChangePassword.cshtml">
+      <publishTime>04/27/2013 17:19:43</publishTime>
+    </File>
     <File Include="Views/Auth/Login.cshtml">
       <publishTime>04/18/2013 16:30:15</publishTime>
     </File>
     <File Include="Views/Home/EditContent.cshtml">
-      <publishTime>04/22/2013 16:39:29</publishTime>
+      <publishTime>04/24/2013 17:11:54</publishTime>
     </File>
     <File Include="Views/Home/EditPage.cshtml">
-      <publishTime>04/18/2013 14:17:48</publishTime>
+      <publishTime>04/24/2013 17:11:46</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>04/18/2013 16:42:51</publishTime>
+      <publishTime>04/29/2013 09:27:27</publishTime>
+    </File>
+    <File Include="Views/Image/Create.cshtml">
+      <publishTime>04/29/2013 09:03:07</publishTime>
+    </File>
+    <File Include="Views/Image/List.cshtml">
+      <publishTime>04/29/2013 08:52:51</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>04/12/2013 09:22:03</publishTime>
     </File>
     <File Include="Views/Shared/Nav.cshtml">
-      <publishTime>04/22/2013 17:20:06</publishTime>
+      <publishTime>04/29/2013 08:48:00</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/22/2013 17:14:44</publishTime>
+      <publishTime>04/27/2013 17:09:34</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/12/2013 09:22:04</publishTime>
@@ -117,7 +132,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2013 09:22:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/22/2013 17:21:30</publishTime>
+      <publishTime>04/29/2013 09:56:21</publishTime>
     </File>
   </ItemGroup>
 </Project>

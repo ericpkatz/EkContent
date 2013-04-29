@@ -46,6 +46,10 @@ namespace EKContent.web
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
 
+            directory = this.Server.MapPath("~/user_images");
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
             if(!System.Web.Security.Roles.RoleExists("Admin"))
             {
                 System.Web.Security.Roles.CreateRole("Admin");

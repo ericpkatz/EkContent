@@ -14,9 +14,9 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
-        public AuthController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider)
+        public AuthController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
         {
-            _service = new PageService(navigationProvider, dataProvider, siteProvider);
+            _service = new PageService(navigationProvider, dataProvider, siteProvider, imageProvider);
         }
 
         public ActionResult Login(int id)
@@ -46,6 +46,32 @@ namespace EKContent.web.Controllers
                 FormsAuthentication.SetAuthCookie(model.Username, false);
                 return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id });
             }
+        }
+
+        public ActionResult ChangePassword(int id)
+        {
+            var model = new PasswordChangeViewModel { };
+            model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(PasswordChangeViewModel model)
+        {
+            model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
+            if (!Membership.ValidateUser(Membership.GetUser().UserName, model.OldPassword))
+                ModelState.AddModelError("OldPassword", "Incorrect Password");
+            ModelState["NavigationModel.Page.Title"].Errors.Clear();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = Membership.GetUser();
+            user.ChangePassword(model.OldPassword, model.NewPassword);
+            TempData["message"] = "Password has been changed";
+            return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id});
+
+            
         }
 
     }

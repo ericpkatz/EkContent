@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using EKContent.web.Models.Database.Concrete;
+using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.Database.DotNetMembership
 {
     public class EKDotNetMembershipProvider : System.Web.Security.MembershipProvider
     {
         private EKRoleProvider database = new EKRoleProvider();
+   
         public override string ApplicationName
         {
             get
@@ -24,7 +26,19 @@ namespace EKContent.web.Models.Database.DotNetMembership
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            var roles = database.Get();
+            var role = (from r in roles
+                       let _role = r
+                       from u in r.Users
+                       where u.UserName == username && u.Password == oldPassword
+                       select _role).Single();
+
+            var user = role.Users.Single(u => u.UserName == username && u.Password == oldPassword);
+            user.Password = newPassword;
+            database.Save(role);
+            return true;
+            
+            
         }
 
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)

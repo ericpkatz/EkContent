@@ -14,9 +14,9 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
-        public HomeController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider)
+        public HomeController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
         {
-            _service = new PageService(navigationProvider, dataProvider, siteProvider);
+            _service = new PageService(navigationProvider, dataProvider, siteProvider, imageProvider);
         }
 
         public ActionResult Index(int? id)
@@ -24,6 +24,7 @@ namespace EKContent.web.Controllers
             var model = HomeIndexViewModelLoader.Create(id, _service);
 
             model.Page.Modules = _service.GetPage(model.Page.Id).Modules;
+            ViewBag.Service = _service;
             //model.Page.Modules = _service.GetModules(model.Page.Id);
 
             return View(model);
