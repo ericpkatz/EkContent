@@ -1,8 +1,0 @@
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\bin\EKContent.web.dll
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\bin\EKContent.web.pdb
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\bin\Ninject.dll
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\bin\Ninject.pdb
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\bin\Ninject.xml
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\obj\Release\EKContent.web.csprojResolveAssemblyReference.cache
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\obj\Release\EKContent.web.dll
-C:\Users\ekatz\Documents\Magic Briefcase\complete_solutions\EkContent\EKContent.web\obj\Release\EKContent.web.pdb
