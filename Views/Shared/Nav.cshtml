@@ -21,7 +21,7 @@
 <!-- Everything you want hidden at 940px or less, place within here -->
 <div class="nav-collapse collapse">
                     <ul class="nav">
-        @foreach (var page in Model.Pages.Where(p=>!p.IsHomePage()))
+        @foreach (var page in Model.TopLevelPages())
         {
             <li @(Model.Page.Id == page.Id?"class=active":String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
         }

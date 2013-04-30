@@ -107,7 +107,7 @@ namespace EKContent.web.Controllers
         {
             var pages = _service.GetNavigation();
             var page =  pages.Single(p => p.Id == id);
-            if (!pages.Any(p => p.ParentId == page.Id))
+            if (pages.Any(p => p.ParentId == page.Id))
             {
                 Message("Could not Delete Page");
                 return RedirectToAction("Index", new { id = id });

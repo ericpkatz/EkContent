@@ -9,11 +9,32 @@ namespace EKContent.web.Models.ViewModels
     public class HomeIndexViewModel
     {
         public List<Page> Pages { get; set; }
+        public List<Page> TopLevelPages()
+        {
+            return Pages.Where(p =>  p.ParentId == HomePage().Id).ToList();
+        }
+        public Page HomePage()
+        {
+            return Pages.Single(p => p.IsHomePage());
+        }
+
+        public List<Page> ChildPages()
+        {
+            if (this.Page.IsHomePage())
+                return new List<Page>();
+            return Pages.Where(p => p.ParentId == Page.Id).ToList();
+        }
+
         public Site Site { get; set; }
         public Page Page { get; set; }
         public bool HasChildren()
         {
             return Pages.Any(p => p.ParentId == Page.Id);
+        }
+
+        public bool ShowChildPages()
+        {
+            return ChildPages().Count > 0;
         }
         public bool CanDelete()
         {
@@ -24,9 +45,26 @@ namespace EKContent.web.Models.ViewModels
             return true;
         }
 
-        public Page SelectedNavigation()
+        //public Page SelectedNavigation()
+        //{
+        //    return Pages.Single(p => p.Id == Page.Id);
+        //}
+
+        private List<Page> _pagePathList = null;
+        public List<Page> PagePathList()
         {
-            return Pages.Single(p => p.Id == Page.Id);
+            if (_pagePathList != null)
+                return _pagePathList;
+            var page = Page;
+            var pages = new List<Page>();
+            do
+            {
+                pages.Add(page);
+                page = this.Pages.SingleOrDefault(p => p.Id == page.ParentId);
+            } while (page != null);
+            pages.Reverse();
+            _pagePathList = pages;
+            return _pagePathList;
         }
     }
 }
