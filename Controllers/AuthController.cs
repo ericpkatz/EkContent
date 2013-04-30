@@ -35,6 +35,7 @@ namespace EKContent.web.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
+            ModelState["NavigationModel.Page.Title"].Errors.Clear();
             if (!Membership.ValidateUser(model.Username, model.Password))
             {
                 ModelState.AddModelError("", "Username and/or Password are incorrect");

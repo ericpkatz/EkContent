@@ -2,50 +2,25 @@
 @{
     ViewBag.Title = Model.Page.Title;
 }
-
-
-
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-
- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</a>
- 
-<!-- Be sure to leave the brand out there if you want it shown -->
-<a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null})">@Model.Site.Title</a>
- 
-<!-- Everything you want hidden at 940px or less, place within here -->
-<div class="nav-collapse collapse">
-                    <ul class="nav">
-        @foreach (var page in Model.TopLevelPages())
-        {
-            <li @(Model.Page.Id == page.Id?"class=active":String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
-        }
-                    </ul>
-</div>
-
-                </div>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </a>
+            <!-- Be sure to leave the brand out there if you want it shown -->
+            <a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null })">@Model.Site.Title</a>
+            <!-- Everything you want hidden at 940px or less, place within here -->
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    @foreach (var page in Model.TopLevelPages())
+                    {
+                        <li @(Model.Page.Id == page.Id ? "class=active" : String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
+                    }
+                </ul>
             </div>
-
         </div>
-                  <ul class="nav">
-                        <li class="dropdown">
-                            <a  class="dropdown-toggle" data-toggle="dropdown" href = "#">User Actions<b class="caret"></b></a>
-<ul class="dropdown-menu">
-... <li><a  href = "@Url.Action(User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id })">@( User.Identity.IsAuthenticated ? "Logout" : "Login")</a></li>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <li><a  href = "@Url.Action("ChangePassword", "Auth", new { id = Model.Page.Id })">Change Password</a></li>
-    }
-    @if (Roles.IsUserInRole("Admin"))
-    {
-        <li><a  href = "@Url.Action("List", "Image", new { id = Model.Page.Id })">Image Gallery</a></li>
-    }
+    </div>
+</div>
+@Html.Partial("UserActions")
 
-</ul>
-</li>
-</ul>

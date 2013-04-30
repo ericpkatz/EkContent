@@ -16,36 +16,45 @@
 @Html.Partial("Nav")
 @if (Roles.IsUserInRole("Admin"))
 {
-    <div class="control-group">
-        <button data-href="@Url.Action("EditPage", new { pageId = Model.Page.Id })" class="btn">
-            Edit Page <i class="icon-wrench"></i>
-        </button>
-        <button data-href="@Url.Action("EditPage", new { parentId = Model.Page.Id })" class="btn">
-            <i class="icon-plus"></i>Add Page
-        </button>
-        @if (Model.CanDelete())
-        {
-            <button data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })" class="btn btn-danger">
-                <i class="icon-trash"></i>Delete Page
-            </button>    
-        }
+    <div class="btn-group" style="margin-bottom:5px">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Page Actions <span
+            class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })"><i class="icon-wrench">
+            </i>Edit Page</a></li>
+            <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"><i class="icon-plus">
+            </i>Add Page</a></li>
+            @if (Model.CanDelete())
+            {
+                <li><a data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })"><i class="icon-trash">
+                </i>Delete Page</a></li>   
+            }
+        </ul>
     </div>
+        
 }
-
 <ul class="breadcrumb">
-    @for (var i = 0; i < Model.PagePathList().Count; i++ )
+    @for (var i = 0; i < Model.PagePathList().Count; i++)
     {
-        <li @(Model.PagePathList().Count - 1== i?"class=active" : String.Empty)><a href="@Url.Action("Index", new { id = Model.PagePathList()[i].Id })">@Model.PagePathList()[i].Title</a> @if (Model.PagePathList().Count - 1 != i)
-                                                                                                                                                              {<span class="divider"></span>}</li>
+        if (Model.PagePathList().Count - 1 == i)
+        {
+        <li  class="badge badge-info")>@Model.PagePathList()[i].Title</li>
+        }
+        else
+        {
+        <li><a href="@Url.Action("Index", new { id = Model.PagePathList()[i].Id })">@Model.PagePathList()[i].Title</a>
+
+            <span class="divider">/</span></li>            
+        }
     }
 </ul>
-
-@if(Model.ShowChildPages()){
+@if (Model.ShowChildPages())
+{
     <ul class="nav nav-pills">
-    @foreach (var page in Model.ChildPages())
-    {
-        <li>@Html.ActionLink(page.Title, "Index", new {id = page.Id })</li>
-    }
+        @foreach (var page in Model.ChildPages())
+        {
+            <li>@Html.ActionLink(page.Title, "Index", new { id = page.Id })</li>
+        }
     </ul>
 }
 @{int Mdx = 0;}

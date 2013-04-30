@@ -38,7 +38,7 @@
                 window.document.location = $(this).attr("data-href");
                 return false;
             });
-            $("button[data-action]").click(function () {
+            $("button[data-action],a[data-action]").click(function () {
                 var form = $("<form method='post' />");
                 form.attr("action", $(this).attr("data-action"));
                 $("body").append(form);

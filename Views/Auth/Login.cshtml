@@ -3,11 +3,12 @@
 @{
     ViewBag.Title = "Login";
 }
+<h3>Login</h3>
 
-@Html.ValidationSummary()
 
 @Html.Partial("Nav", Model.NavigationModel)
-<h3>Login</h3>
+@Html.ValidationSummary()
+
 @using (Html.BeginForm("Login", "Auth", FormMethod.Post, new { @class="well"}))
 {
     @Html.HiddenFor(m=>m.NavigationModel.Page.Id)
@@ -26,6 +27,6 @@
     
     
     <button type="submit" value="save" class="btn-primary">Save</button>
-    <button data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    <button data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
     
 }
