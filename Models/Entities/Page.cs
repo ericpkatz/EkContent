@@ -8,7 +8,8 @@ namespace EKContent.web.Models.Entities
     public enum PageTypes
     {
         Blog,
-        HTML
+        HTML,
+        Contact
     }
 
     public class Page : BaseContent

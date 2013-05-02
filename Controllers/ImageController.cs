@@ -17,9 +17,9 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
-        public ImageController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
+        public ImageController(IEKProvider provider)
         {
-            _service = new PageService(navigationProvider, dataProvider, siteProvider, imageProvider);
+            _service = new PageService(provider);
         }
 
         public ActionResult List(int id)

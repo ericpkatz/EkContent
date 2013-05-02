@@ -14,9 +14,9 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
-        public AuthController(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
+        public AuthController(IEKProvider dal)
         {
-            _service = new PageService(navigationProvider, dataProvider, siteProvider, imageProvider);
+            _service = new PageService(dal);
         }
 
         public ActionResult Login(int id)
@@ -71,8 +71,6 @@ namespace EKContent.web.Controllers
             user.ChangePassword(model.OldPassword, model.NewPassword);
             TempData["message"] = "Password has been changed";
             return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id});
-
-            
         }
 
     }

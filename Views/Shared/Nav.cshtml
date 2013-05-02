@@ -2,25 +2,57 @@
 @{
     ViewBag.Title = Model.Page.Title;
 }
+<style>
+@Model.Site.IconStyleString();
+</style>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
                 class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
             </a>
-            <!-- Be sure to leave the brand out there if you want it shown -->
-            <a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null })">@Model.Site.Title</a>
-            <!-- Everything you want hidden at 940px or less, place within here -->
+            
+            <a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null })"><i class="@Model.Site.IconLogo()"></i>@Model.Site.Title</a>
+            
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     @foreach (var page in Model.TopLevelPages())
                     {
                         <li @(Model.Page.Id == page.Id ? "class=active" : String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
                     }
+                    <li class="nav-header">User Actions:</li>
+<li><a  href = "@Url.Action(User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id })"><span class="badge badge-info">@( User.Identity.IsAuthenticated ? "Logout" : "Login")</span></a></li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li><a  href = "@Url.Action("ChangePassword", "Auth", new { id = Model.Page.Id })">Change
+                Password</a></li>
+        }
                 </ul>
             </div>
         </div>
     </div>
 </div>
-@Html.Partial("UserActions")
+<ul class="breadcrumb">
+    @for (var i = 0; i < Model.PagePathList().Count; i++)
+    {
+        if (Model.PagePathList().Count - 1 == i)
+        {
+        <li>@Model.PagePathList()[i].Title</li>
+        }
+        else
+        {
+        <li><a href="@Url.Action("Index", new { id = Model.PagePathList()[i].Id })">@Model.PagePathList()[i].Title</a>
 
+            <span class="divider">/</span></li>            
+        }
+    }
+</ul>
+@if (Model.ShowChildPages())
+{
+    <ul class="nav nav-pills">
+        @foreach (var page in Model.ChildPages())
+        {
+            <li>@Html.ActionLink(page.Title, "Index", new { id = page.Id })</li>
+        }
+    </ul>
+}

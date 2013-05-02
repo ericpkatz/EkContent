@@ -1,0 +1,39 @@
+﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
+@{
+    ViewBag.Title = Model.Page.Title;
+    ViewBag.SiteTitle = Model.Site.Title;
+}
+<script>
+    $(function () {
+        $(".delete").click(function () {
+            var form = $(this).parents("form");
+            form.attr("action", this.href);
+            form.submit();
+            return false;
+        });
+    });
+</script>
+@Html.Partial("Nav")
+@if (Roles.IsUserInRole("Admin"))
+{
+    <div class="btn-group" style="margin-bottom:5px">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Page Actions <span
+            class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })"><i class="icon-wrench">
+            </i>Edit Page</a></li>
+            <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"><i class="icon-plus">
+            </i>Add Page</a></li>
+            @if (Model.CanDelete())
+            {
+                <li><a data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })"><i class="icon-trash">
+                </i>Delete Page</a></li>   
+            }
+            <li><a  href = "@Url.Action("List", "Image", new { id = Model.Page.Id })"><i class="icon-picture"></i>Image Gallery</a></li>
+            <li><a  href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })"><i class="icon-globe"></i>Site Settings</a></li>
+        </ul>
+    </div>
+        
+}
+<br clear="all" />
+<h3>Contact Form</h3>

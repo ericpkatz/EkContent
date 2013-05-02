@@ -35,6 +35,14 @@ namespace EKContent.web.Models.Services
             _imageProvider = imageProvider;
         }
 
+        public PageService(IEKProvider provider)
+        {
+            _navigationProvider = provider.NavigationProvider;
+            _dataProvider = provider.DataProvider;
+            _siteProvider = provider.SiteProvider;
+            _imageProvider = provider.ImageProvider;
+        }
+
         public Page GetHomePage()
         {
             var page = _navigationProvider.GetNavigation().Where(p => p.IsHomePage()).Single();
@@ -91,7 +99,7 @@ namespace EKContent.web.Models.Services
         public string RenderImages(string content)
         {
             var regex = new Regex(@"\[IMG(?<image_number>[0-9]+)\]");
-            return regex.Replace("[IMG1]", m=> String.Format("<img src=\"user_images/{0}\"/>", GetImage(int.Parse(m.Groups["image_number"].Value))));
+            return regex.Replace(content, m=> String.Format("<img src=\"user_images/{0}\"/>", GetImage(int.Parse(m.Groups["image_number"].Value))));
 
         }
         public void DeleteImage(int id)

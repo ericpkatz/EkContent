@@ -3,6 +3,23 @@
 @{
     ViewBag.Title = "Login";
 }
+<script>
+    $(function () {
+        $("#Username").blur(function () {
+            if(localStorage)
+                localStorage["Username"] = $(this).val();
+        });
+    });
+
+</script>
+    @if(Model.GetRequest){
+<script>
+    $(function () {
+        if (localStorage && localStorage["Username"])
+            $("#Username").val(localStorage["Username"]);
+    });
+    
+</script>}
 <h3>Login</h3>
 
 
@@ -26,7 +43,7 @@
     
     
     
-    <button type="submit" value="save" class="btn-primary">Save</button>
-    <button data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    <button type="submit"  class="btn btn-primary">Login</button>
+    <button data-href="@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })" class="btn">Cancel</button>
     
 }

@@ -17,46 +17,40 @@
 @if (Roles.IsUserInRole("Admin"))
 {
     <div class="btn-group" style="margin-bottom:5px">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Page Actions <span
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench"></i>Page Actions <span
             class="caret"></span></a>
         <ul class="dropdown-menu">
             <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })"><i class="icon-wrench">
             </i>Edit Page</a></li>
             <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"><i class="icon-plus">
             </i>Add Page</a></li>
+            <li class="divider"></li>
             @if (Model.CanDelete())
             {
-                <li><a data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })"><i class="icon-trash">
-                </i>Delete Page</a></li>   
+                <li><a @*data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })"*@ data-toggle="modal" class="btn-danger" href="#myModal"><i class="icon-trash">
+                </i>Delete Page</a></li>
             }
+            <li><a  href = "@Url.Action("List", "Image", new { id = Model.Page.Id })"><i class="icon-picture"></i>Image Gallery</a></li>
+            <li><a  href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })"><i class="icon-globe"></i>Site Settings</a></li>
         </ul>
     </div>
+    
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Warning!</h3>
+    </div>
+    <div class="modal-body">
+    <p>Are you sure you want to delete this page?</p>
+    </div>
+    <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })">Delete</button>
+    </div>
+    </div>    
         
 }
-<ul class="breadcrumb">
-    @for (var i = 0; i < Model.PagePathList().Count; i++)
-    {
-        if (Model.PagePathList().Count - 1 == i)
-        {
-        <li  class="badge badge-info")>@Model.PagePathList()[i].Title</li>
-        }
-        else
-        {
-        <li><a href="@Url.Action("Index", new { id = Model.PagePathList()[i].Id })">@Model.PagePathList()[i].Title</a>
-
-            <span class="divider">/</span></li>            
-        }
-    }
-</ul>
-@if (Model.ShowChildPages())
-{
-    <ul class="nav nav-pills">
-        @foreach (var page in Model.ChildPages())
-        {
-            <li>@Html.ActionLink(page.Title, "Index", new { id = page.Id })</li>
-        }
-    </ul>
-}
+<br clear="all" />
 @{int Mdx = 0;}
 @foreach (var module in Model.Page.Modules)
 {
@@ -68,19 +62,24 @@
     int Idx = 0;
     foreach (var item in module.Content)
     {
-    <h4>@item.Title</h4>
-    
+    <hr />
         if (Roles.IsUserInRole("Admin"))
         {
     <div class="control-group">
         <button data-href="@Url.Action("EditContent", new { Idx = Idx, Mdx = Mdx, pageId = Model.Page.Id }) " class="btn">
-            <i class="icon-wrench"></i>Update Content</button>
+            <i class="icon-pencil"></i>Update Content</button>
         <button data-action="@Url.Action("DeleteContent", new { Idx = Idx, Mdx = Mdx, pageId = Model.Page.Id })" class="btn btn-danger">
             <i class="icon-trash"></i>Delete Content</button>
     </div> 
+
         }
+    if (item.ShowTitle)
+    {
+    <h4>@item.Title</h4>
+    }        
     <div>@Html.Raw(ViewBag.Service.RenderImages(item.Body))</div>
         Idx++;
+        <hr />
     }
 
     Mdx++;

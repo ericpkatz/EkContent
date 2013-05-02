@@ -18,12 +18,20 @@
     @Html.ValidationMessageFor(m => m.Content.Title)
     </div>
     <div class="control-group">
-    @Html.LabelFor(m => m.Content.Body)
     <div style="width:500px">
+    @Html.ValidationMessageFor(m => m.Content.Body)
     @Html.TextAreaFor(m => m.Content.Body, new { @class="richText"})
     </div>
-    @Html.ValidationMessageFor(m => m.Content.Body)
+   
     </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Content.ShowTitle)
+    @Html.EditorFor(m => m.Content.ShowTitle)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Content.Priority)
+    <input type="range" min="1" max="100" name="Content.Priority" id="Content_Priority" value=@Model.Content.Priority />
+    </div>       
 
     <button type="submit" value="save" class="btn-primary">Save</button>
     <button data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>Cancel</button>

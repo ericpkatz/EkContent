@@ -1,0 +1,46 @@
+﻿@model EKContent.web.Models.ViewModels.SiteEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@Html.Partial("Nav", Model.NavigationModel)
+<h2>Create Image</h2>
+@using (Html.BeginForm("Edit", "Site", FormMethod.Post, new { @class = "well", enctype = "multipart/form-data"}))
+{                                 
+    @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+    @Html.HiddenFor(m=>m.Site.Logo)
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.Title)
+    @Html.TextBoxFor(m => m.Site.Title)
+    @Html.ValidationMessageFor(m => m.Site.Title)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.Email)
+    @Html.TextBoxFor(m => m.Site.Email)
+    @Html.ValidationMessageFor(m => m.Site.Email)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.Name)
+    @Html.TextBoxFor(m => m.Site.Name)
+    @Html.ValidationMessageFor(m => m.Site.Name)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.Phone)
+    @Html.TextBoxFor(m => m.Site.Phone)
+    @Html.ValidationMessageFor(m => m.Site.Phone)
+    </div>
+    <div class="control-group">
+    <label for="image-input">Upload Image</label>
+    <input type="file" name="image-input" id="image-input" />
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.ShowLogo)
+    @Html.EditorFor(m => m.Site.ShowLogo)
+    @Model.Site.Logo
+    </div>                     
+
+    <button type="submit" value="save" class="btn-primary">Save</button>
+    <button data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    
+}

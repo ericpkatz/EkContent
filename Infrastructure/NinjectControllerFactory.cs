@@ -19,6 +19,7 @@ namespace EKContent.web.Infrastructure
             _kernel.Bind<IEkDataProvider>().To<EkDataProvider>();
             _kernel.Bind<IEkSiteDataProvider>().To<EkSiteDataProvider>();
             _kernel.Bind<IImageDataProvider>().To<ImageProvider>();
+            _kernel.Bind<IEKProvider>().To<EKProvider>();
         }
 
         protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)

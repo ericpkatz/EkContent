@@ -66,16 +66,19 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\NavigationModelBinder.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Models\Database\Abstract\IEKProvider.cs" />
     <Compile Include="Models\Database\Abstract\IImageDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEkSiteDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEkDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEKRoleProvider.cs" />
     <Compile Include="Models\Database\Abstract\INavigationProvider.cs" />
+    <Compile Include="Models\Database\Concrete\EKProvider.cs" />
     <Compile Include="Models\Database\Concrete\ImageProvider.cs" />
     <Compile Include="Models\Database\Concrete\EkSiteDataProvider.cs" />
     <Compile Include="Models\Database\Concrete\EKRoleProvider.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Models\ViewModels\HomeIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeIndexViewModelLoader.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\SiteEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +147,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\DIY Advisors.pubxml" />
     <None Include="Properties\PublishProfiles\ftp.pubxml" />
     <Content Include="Views\Home\EditContent.cshtml" />
     <Content Include="Views\Home\EditPage.cshtml" />
@@ -151,7 +156,8 @@
     <Content Include="Views\Auth\ChangePassword.cshtml" />
     <Content Include="Views\Image\List.cshtml" />
     <Content Include="Views\Image\Create.cshtml" />
-    <Content Include="Views\Shared\UserActions.cshtml" />
+    <Content Include="Views\Site\Edit.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -33,5 +33,17 @@ namespace EKContent.web.Models.Entities
         }
         public DateTime DateModified { get; set; }
         public int SortOrder { get; set; }
+        private int _priority = 1;
+        public int Priority
+        {
+            get { return _priority; }
+            set { _priority = value; }
+        }
+        private bool _showTitle = true;
+        public bool ShowTitle
+        {
+            get { return _showTitle; }
+            set { _showTitle = value; }
+        }
     }
 }
