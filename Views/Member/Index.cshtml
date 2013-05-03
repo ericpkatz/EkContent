@@ -1,0 +1,25 @@
+﻿@model EKContent.web.Models.ViewModels.MemberIndexViewModel
+
+@{
+    ViewBag.Title = "Members";
+}
+
+@Html.Partial("Nav", Model.NavigationModel)
+<h2>Members</h2>
+
+@*        <button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id })" class="btn">
+            <i class="icon-plus"></i>Add Image
+        </button>*@
+<ul>
+@foreach (var role in Model.Roles)
+{
+    <li>@role.Name
+            <ul>
+                @foreach (var member in role.Users)
+                {
+                    <li>@member.UserName</li>
+                }
+            </ul>
+            </li>
+}
+</ul>

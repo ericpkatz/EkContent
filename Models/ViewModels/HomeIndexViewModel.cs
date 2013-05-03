@@ -45,10 +45,22 @@ namespace EKContent.web.Models.ViewModels
             return true;
         }
 
-        //public Page SelectedNavigation()
-        //{
-        //    return Pages.Single(p => p.Id == Page.Id);
-        //}
+        public bool ShowBreadCrumb()
+        {
+            return PagePathList().Count > 2;
+        }
+
+        public bool UserMode
+        {
+            get;
+            set;
+        }
+
+        public bool EditMode()
+        {
+            return !UserMode;
+        }
+
 
         private List<Page> _pagePathList = null;
         public List<Page> PagePathList()

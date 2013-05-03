@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using EKContent.web.Infrastructure;
+using EKContent.web.Models.ViewModels;
 
 namespace EKContent.web
 {
@@ -42,6 +43,7 @@ namespace EKContent.web
 
         protected void Application_Start()
         {
+            ModelBinders.Binders.Add(typeof (HomeIndexViewModel), new NavigationModelBinder());
             var directory = this.Server.MapPath("~/App_Data");
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);

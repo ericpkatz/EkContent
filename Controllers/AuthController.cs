@@ -19,10 +19,10 @@ namespace EKContent.web.Controllers
             _service = new PageService(dal);
         }
 
-        public ActionResult Login(int id)
+        public ActionResult Login(int id, HomeIndexViewModel homeIndexViewModel)
         {
             var model = new LoginViewModel {};
-            model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
+            model.NavigationModel = homeIndexViewModel;
             return View(model);
         }
 
@@ -35,11 +35,9 @@ namespace EKContent.web.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            ModelState["NavigationModel.Page.Title"].Errors.Clear();
             if (!Membership.ValidateUser(model.Username, model.Password))
             {
                 ModelState.AddModelError("", "Username and/or Password are incorrect");
-                model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
                 return View(model);
             }
             else
@@ -49,20 +47,19 @@ namespace EKContent.web.Controllers
             }
         }
 
-        public ActionResult ChangePassword(int id)
+        public ActionResult ChangePassword(int id, HomeIndexViewModel navModel)
         {
             var model = new PasswordChangeViewModel { };
-            model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
+            model.NavigationModel = navModel;
             return View(model);
         }
 
         [HttpPost]
         public ActionResult ChangePassword(PasswordChangeViewModel model)
         {
-            model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
             if (!Membership.ValidateUser(Membership.GetUser().UserName, model.OldPassword))
                 ModelState.AddModelError("OldPassword", "Incorrect Password");
-            ModelState["NavigationModel.Page.Title"].Errors.Clear();
+
             if (!ModelState.IsValid)
             {
                 return View(model);

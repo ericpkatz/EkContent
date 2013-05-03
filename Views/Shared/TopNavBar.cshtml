@@ -1,0 +1,34 @@
+﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
+@{
+    ViewBag.Title = Model.Page.Title;
+}
+<style>
+@Model.Site.IconStyleString();
+</style>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </a>
+            
+            <a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null })"><i class="@Model.Site.IconLogo()"></i>@Model.Site.Title</a>
+            
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    @foreach (var page in Model.TopLevelPages())
+                    {
+                        <li @(Model.Page.Id == page.Id ? "class=active" : String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
+                    }
+                    <li class="nav-header">User Actions:</li>
+<li><a  href = "@Url.Action(User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id })"><span class="badge badge-info">@( User.Identity.IsAuthenticated ? "Logout" : "Login")</span></a></li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li><a  href = "@Url.Action("ChangePassword", "Auth", new { id = Model.Page.Id })"><span class="badge badge-info">Change
+                Password</span></a></li>
+        }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

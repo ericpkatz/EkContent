@@ -19,28 +19,20 @@ namespace EKContent.web.Controllers
             _service = new PageService(dal);
         }
 
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, HomeIndexViewModel model, bool userMode = false)
         {
-            var model = HomeIndexViewModelLoader.Create(id, _service);
-
-            model.Page.Modules = _service.GetPage(model.Page.Id).Modules;
+            //model.UserMode = userMode;
             ViewBag.Service = _service;
-            //model.Page.Modules = _service.GetModules(model.Page.Id);
-            if (model.Page.PageType == PageTypes.Contact)
-                return RedirectToAction("Contact", new {id = id});
+            //if (model.Page.PageType == PageTypes.Contact)
+            //    return RedirectToAction("Contact", new {id = id, userMode = userMode});
             return View(model);
         }
 
-        public ActionResult Contact(int? id)
-        {
-            var model = HomeIndexViewModelLoader.Create(id, _service);
-
-            model.Page.Modules = _service.GetPage(model.Page.Id).Modules;
-            ViewBag.Service = _service;
-            //model.Page.Modules = _service.GetModules(model.Page.Id);
-
-            return View(model);
-        }
+        //public ActionResult Contact(int? id, HomeIndexViewModel model)
+        //{
+        //    ViewBag.Service = _service;
+        //    return View(model);
+        //}
 
         private void Message(string msg)
         {
@@ -66,22 +58,21 @@ namespace EKContent.web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditContent(EditContentItemViewModel model)
         {
-            var page = _service.GetPage(model.NavigationModel.Page.Id);
             if (String.IsNullOrEmpty(model.Content.Body))
                 ModelState.AddModelError("Content.Body", "Required");
             if (ModelState.IsValid)
             {
-                var content = model.Inserting() ? new Content { } : page.Modules[model.Mdx].Content[model.Idx];
+                var content = model.Inserting() ? new Content { } : model.NavigationModel.Page.Modules[model.Mdx].Content[model.Idx];
                 if (model.Inserting())
-                    page.Modules[model.Mdx].Content.Add(content);
+                    model.NavigationModel.Page.Modules[model.Mdx].Content.Add(content);
 
                 content.Title = model.Content.Title;
                 content.Body = model.Content.Body;
                 content.ShowTitle = model.Content.ShowTitle;
                 content.Priority = model.Content.Priority;
-                _service.SavePage(page);
+                _service.SavePage(model.NavigationModel.Page);
                 Message("Content Saved");
-                return RedirectToAction("Index", new { id = page.Id });
+                return RedirectToAction("Index", new { id = model.NavigationModel.Page.Id });
             }
             model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
             return View(model);

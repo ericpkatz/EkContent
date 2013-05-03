@@ -12,7 +12,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/EKContent.web.dll">
-      <publishTime>05/02/2013 16:42:34</publishTime>
+      <publishTime>05/03/2013 15:14:58</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/12/2013 09:22:13</publishTime>
@@ -96,22 +96,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/16/2013 15:34:35</publishTime>
     </File>
     <File Include="Views/Auth/ChangePassword.cshtml">
-      <publishTime>04/27/2013 17:19:43</publishTime>
+      <publishTime>05/02/2013 17:02:31</publishTime>
+    </File>
+    <File Include="Views/Auth/Contact.cshtml">
+      <publishTime>05/03/2013 13:50:41</publishTime>
     </File>
     <File Include="Views/Auth/Login.cshtml">
       <publishTime>05/02/2013 08:55:24</publishTime>
     </File>
+    <File Include="Views/Home/BlogItem.cshtml">
+      <publishTime>05/03/2013 15:03:02</publishTime>
+    </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>05/01/2013 16:28:27</publishTime>
+      <publishTime>05/03/2013 15:14:25</publishTime>
+    </File>
+    <File Include="Views/Home/ContactItem.cshtml">
+      <publishTime>05/03/2013 15:04:20</publishTime>
     </File>
     <File Include="Views/Home/EditContent.cshtml">
-      <publishTime>05/02/2013 16:31:25</publishTime>
+      <publishTime>05/03/2013 09:00:42</publishTime>
     </File>
     <File Include="Views/Home/EditPage.cshtml">
-      <publishTime>04/24/2013 17:11:46</publishTime>
+      <publishTime>05/03/2013 09:35:41</publishTime>
+    </File>
+    <File Include="Views/Home/HTMLItem.cshtml">
+      <publishTime>05/03/2013 15:03:15</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/02/2013 13:48:23</publishTime>
+      <publishTime>05/03/2013 15:10:10</publishTime>
     </File>
     <File Include="Views/Image/Create.cshtml">
       <publishTime>04/29/2013 09:03:07</publishTime>
@@ -119,11 +131,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Image/List.cshtml">
       <publishTime>04/29/2013 08:52:51</publishTime>
     </File>
+    <File Include="Views/Member/Index.cshtml">
+      <publishTime>05/03/2013 14:03:05</publishTime>
+    </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>04/12/2013 09:22:03</publishTime>
     </File>
     <File Include="Views/Shared/Nav.cshtml">
-      <publishTime>05/02/2013 14:35:29</publishTime>
+      <publishTime>05/03/2013 14:41:38</publishTime>
+    </File>
+    <File Include="Views/Shared/TopNavBar.cshtml">
+      <publishTime>05/03/2013 10:56:37</publishTime>
     </File>
     <File Include="Views/Shared/UserActions.cshtml">
       <publishTime>04/30/2013 16:58:18</publishTime>
@@ -141,7 +159,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2013 09:22:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/02/2013 16:42:41</publishTime>
+      <publishTime>05/03/2013 15:15:09</publishTime>
     </File>
   </ItemGroup>
 </Project>

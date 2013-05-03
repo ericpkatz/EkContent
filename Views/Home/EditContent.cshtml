@@ -4,7 +4,7 @@
     ViewBag.Title = Model.TitleText();
     ViewBag.SiteTitle = Model.NavigationModel.Site.Title; 
 }
-
+@Html.ValidationSummary()
 @Html.Partial("Nav", Model.NavigationModel)
 <h3>@Model.TitleText()</h3>
 @using (Html.BeginForm("EditContent", "Home", FormMethod.Post, new { @class="well"}))
@@ -33,7 +33,7 @@
     <input type="range" min="1" max="100" name="Content.Priority" id="Content_Priority" value=@Model.Content.Priority />
     </div>       
 
-    <button type="submit" value="save" class="btn-primary">Save</button>
-    <button data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    <button type="submit" value="save" class="btn btn-primary">Save</button>
+    <button class="btn" data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
     
 }

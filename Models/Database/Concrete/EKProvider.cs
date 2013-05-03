@@ -27,5 +27,11 @@ namespace EKContent.web.Models.Database.Concrete
         {
             get { return new ImageProvider(); }
         }
+
+
+        public IEKRoleProvider RoleProvider
+        {
+            get { return new EKRoleProvider(); }
+        }
     }
 }

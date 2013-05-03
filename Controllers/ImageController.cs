@@ -22,10 +22,10 @@ namespace EKContent.web.Controllers
             _service = new PageService(provider);
         }
 
-        public ActionResult List(int id)
+        public ActionResult List(int id, HomeIndexViewModel homeIndexViewModel)
         {
             var model = new ImageListViewModel{Images = _service.GetImages()};
-            model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
+            model.NavigationModel = homeIndexViewModel;
             return View(model);
         }
 

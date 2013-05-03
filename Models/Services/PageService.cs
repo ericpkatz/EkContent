@@ -16,6 +16,7 @@ namespace EKContent.web.Models.Services
         private IEkDataProvider _dataProvider = null;
         private IEkSiteDataProvider _siteProvider = null;
         private IImageDataProvider _imageProvider = null;
+        private IEKRoleProvider _roleProvider = null;
 
         public Site GetSite()
         {
@@ -41,6 +42,7 @@ namespace EKContent.web.Models.Services
             _dataProvider = provider.DataProvider;
             _siteProvider = provider.SiteProvider;
             _imageProvider = provider.ImageProvider;
+            _roleProvider = provider.RoleProvider;
         }
 
         public Page GetHomePage()
@@ -73,6 +75,8 @@ namespace EKContent.web.Models.Services
 
         public void SavePage(Page page)
         {
+            foreach (Module m in page.Modules)
+                m.Content = m.Content.OrderBy(c => c.Priority).ThenByDescending(c => c.DateCreated).ToList();
             _dataProvider.Save(page);
         }
 
@@ -98,6 +102,8 @@ namespace EKContent.web.Models.Services
 
         public string RenderImages(string content)
         {
+            if (content == null)
+                return String.Empty;
             var regex = new Regex(@"\[IMG(?<image_number>[0-9]+)\]");
             return regex.Replace(content, m=> String.Format("<img src=\"user_images/{0}\"/>", GetImage(int.Parse(m.Groups["image_number"].Value))));
 
@@ -105,6 +111,11 @@ namespace EKContent.web.Models.Services
         public void DeleteImage(int id)
         {
             _imageProvider.Delete(id);
+        }
+
+        public List<EKRole> GetRoles()
+        {
+            return _roleProvider.Get().ToList();
         }
 
     }

@@ -2,57 +2,89 @@
 @{
     ViewBag.Title = Model.Page.Title;
 }
-<style>
-@Model.Site.IconStyleString();
-</style>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-            </a>
-            
-            <a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null })"><i class="@Model.Site.IconLogo()"></i>@Model.Site.Title</a>
-            
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    @foreach (var page in Model.TopLevelPages())
-                    {
-                        <li @(Model.Page.Id == page.Id ? "class=active" : String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
-                    }
-                    <li class="nav-header">User Actions:</li>
-<li><a  href = "@Url.Action(User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id })"><span class="badge badge-info">@( User.Identity.IsAuthenticated ? "Logout" : "Login")</span></a></li>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <li><a  href = "@Url.Action("ChangePassword", "Auth", new { id = Model.Page.Id })">Change
-                Password</a></li>
-        }
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<ul class="breadcrumb">
+@Html.Partial("TopNavBar")
+
+@if (!Model.Page.IsHomePage())
+{
+<ul class="breadcrumb" @(Model.ShowBreadCrumb() ? "style=display:block" : String.Empty)>
     @for (var i = 0; i < Model.PagePathList().Count; i++)
     {
+        if (Model.PagePathList()[i].IsHomePage())
+        {
+            continue;
+        }
         if (Model.PagePathList().Count - 1 == i)
         {
         <li>@Model.PagePathList()[i].Title</li>
         }
         else
         {
-        <li><a href="@Url.Action("Index", new { id = Model.PagePathList()[i].Id })">@Model.PagePathList()[i].Title</a>
-
+        <li><a href="@Url.Action("Index", "Home",  new { id = Model.PagePathList()[i].Id }, null)">@Model.PagePathList()[i].Title</a>
             <span class="divider">/</span></li>            
         }
     }
 </ul>
+}
 @if (Model.ShowChildPages())
 {
     <ul class="nav nav-pills">
         @foreach (var page in Model.ChildPages())
         {
-            <li>@Html.ActionLink(page.Title, "Index", new { id = page.Id })</li>
+            <li>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
         }
     </ul>
+}
+
+@if (Roles.IsUserInRole("Admin"))
+{
+
+    <div class="control-group">
+   @Html.ActionLink(String.Format("Switch to {0}", Model.UserMode ? " Edit Mode": "User Mode"), "Index", "Home", new{id = Model.Page.Id, userMode = !Model.UserMode}, null)
+   </div>
+    
+    if (Model.EditMode())
+    {
+    <div class="btn-group" style="margin-bottom: 5px">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench">
+        </i>Admin Actions <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })"><i class="icon-wrench">
+            </i>Edit Page</a></li>
+            <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"><i class="icon-plus">
+            </i>Add Page</a></li>
+            <li class="divider"></li>
+            @if (Model.CanDelete())
+            {
+                <li><a @*data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })"*@ data-toggle="modal" class="btn-danger" href="#delete-page">
+                    <i class="icon-trash"></i>Delete Page</a></li>
+            }
+            <li><a  href = "@Url.Action("List", "Image", new { id = Model.Page.Id })"><i class="icon-picture">
+            </i>Image Gallery</a></li>
+            <li><a  href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })"><i class="icon-globe">
+            </i>Site Settings</a></li>
+            <li><a  href = "@Url.Action("Index", "Member", new { id = Model.Page.Id })"><i class="icon-user">
+            </i>Manage Users</a></li>
+        </ul>
+    </div>
+    
+    <div id="delete-page" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h3 id="myModalLabel">
+                Warning!</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure you want to delete this page?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Cancel</button>
+            <button class="btn btn-primary" data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })">
+                Delete</button>
+        </div>
+    </div>
+    }        
 }

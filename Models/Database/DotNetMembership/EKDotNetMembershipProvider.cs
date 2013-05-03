@@ -30,10 +30,10 @@ namespace EKContent.web.Models.Database.DotNetMembership
             var role = (from r in roles
                        let _role = r
                        from u in r.Users
-                       where u.UserName == username && u.Password == oldPassword
+                       where u.UserName.ToLower() == username.ToLower() && u.Password.ToLower() == oldPassword.ToLower()
                        select _role).Single();
 
-            var user = role.Users.Single(u => u.UserName == username && u.Password == oldPassword);
+            var user = role.Users.Single(u => u.UserName.ToLower() == username.ToLower() && u.Password.ToLower() == oldPassword.ToLower());
             user.Password = newPassword;
             database.Save(role);
             return true;
