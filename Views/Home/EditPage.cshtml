@@ -14,22 +14,29 @@
     <div class="control-group">
     @Html.LabelFor(m => m.Page.Title)
     @Html.TextBoxFor(m => m.Page.Title)
+    @Html.Help("The title of the page")
     @Html.ValidationMessageFor(m => m.Page.Title)
     </div>
-    
+        <div class="control-group">
+    @Html.LabelFor(m => m.Page.Priority)
+    <input type="range" min="1" max="100" name="Page.Priority" id="Page_Priority" value=@Model.Page.Priority /> @Html.Help("The priority of page. A page with a priority of 1 will show up before a page of priority 2")
+    </div>
     <div class="control-group">
     @Html.LabelFor(m => m.Page.PageType)
-    @Html.DropDownListFor(m => m.Page.PageType, Model.PageTypesSelectList())       
+    @Html.DropDownListFor(m => m.Page.PageType, Model.PageTypesSelectList()) 
+     @Html.Help("Blog will result in an accordian style, HTML will list all contents of page, Contact should only be used on the contact page")      
     </div>
     
     <div class="control-group">
     @Html.LabelFor(m => m.Page.Description)
-    @Html.TextBoxFor(m => m.Page.Description)       
+    @Html.TextBoxFor(m => m.Page.Description)
+     @Html.Help("The description of the page- not currently being used")       
     </div>    
     
     <div class="control-group">
     @Html.LabelFor(m => m.Page.Active)
-    @Html.CheckBoxFor(m => m.Page.Active)       
+    @Html.CheckBoxFor(m => m.Page.Active)
+     @Html.Help("Whether or not the page will be seen- not currently being used.")       
     </div>   
     
     

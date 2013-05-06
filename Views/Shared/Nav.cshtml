@@ -27,7 +27,7 @@
 }
 @if (Model.ShowChildPages())
 {
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills nav-stacked">
         @foreach (var page in Model.ChildPages())
         {
             <li>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>

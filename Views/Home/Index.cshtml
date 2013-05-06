@@ -1,4 +1,5 @@
 ﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
+@using EKContent.web.Models.ViewModels;
 @{
     ViewBag.Title = Model.Page.Title;
     ViewBag.SiteTitle = Model.Site.Title;
@@ -28,44 +29,12 @@
     int Idx = 0;
     foreach (var item in module.Content)
     {
-    <hr />
-        if (Roles.IsUserInRole("Admin") && Model.EditMode())
-        {
-    <div class="control-group">
-        <button data-href="@Url.Action("EditContent", new { Idx = Idx, Mdx = Mdx, pageId = Model.Page.Id }) " class="btn">
-            <i class="icon-pencil"></i>Update Content</button>
-        <button class="btn btn-danger" data-toggle="modal" class="btn-danger" href="#delete-content">
-            <i class="icon-trash"></i>Delete Content</button>
-    </div> 
-    <div id="delete-content" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                ×</button>
-            <h3 id="myModalLabel">
-                Warning!</h3>
-        </div>
-        <div class="modal-body">
-            <p>
-                Are you sure you want to delete this content?</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">
-                Cancel</button>
-            <button class="btn btn-primary" data-action="@Url.Action("DeleteContent", new { Idx = Idx, Mdx = Mdx, pageId = Model.Page.Id })">
-                Delete</button>
-        </div>
-    </div>  
-        }
-        if (item.ShowTitle)
-        {
-    <h4>@item.Title</h4>
-        }        
     <div>
-        @Html.Partial(String.Format("{0}Item", Model.Page.PageType.ToString()), item)
+    <div class="accordion" id="content-wrapper">
+        @Html.Partial(String.Format("~/Views/Shared/Items/{0}Item.cshtml", Model.Page.PageType.ToString()), new ContentWrapper { Content = item, Page = Model.Page, Idx = Idx, Mdx = Mdx, EditMode = Model.EditMode()})
+    </div>
    </div>
-        Idx++;
-    <hr />
+        Idx++;        
     }
 
     Mdx++;

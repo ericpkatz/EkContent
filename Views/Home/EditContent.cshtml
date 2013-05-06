@@ -15,22 +15,27 @@
     <div class="control-group">
     @Html.LabelFor(m => m.Content.Title)
     @Html.TextBoxFor(m => m.Content.Title)
+    @Html.Help("The title of the content item.")
     @Html.ValidationMessageFor(m => m.Content.Title)
-    </div>
-    <div class="control-group">
-    <div style="width:500px">
-    @Html.ValidationMessageFor(m => m.Content.Body)
-    @Html.TextAreaFor(m => m.Content.Body, new { @class="richText"})
-    </div>
-   
     </div>
     <div class="control-group">
     @Html.LabelFor(m => m.Content.ShowTitle)
     @Html.EditorFor(m => m.Content.ShowTitle)
+    @Html.Help("Determines if title is shown.")
+    </div>    
+    <div class="control-group">
+    <div style="width:500px">
+    @Html.ValidationMessageFor(m => m.Content.Body)
+    @Html.TextAreaFor(m => m.Content.Body, new { @class = "richText" })
+    @Html.Help("The body of the content item.")
     </div>
+   
+    </div>
+
     <div class="control-group">
     @Html.LabelFor(m => m.Content.Priority)
     <input type="range" min="1" max="100" name="Content.Priority" id="Content_Priority" value=@Model.Content.Priority />
+    @Html.Help("Determines the order of the content item (A priority item of 1 will come before a priority of 2).")
     </div>       
 
     <button type="submit" value="save" class="btn btn-primary">Save</button>

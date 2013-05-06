@@ -53,7 +53,7 @@ namespace EKContent.web.Models.Services
 
         public List<Page> GetNavigation()
         {
-            return _navigationProvider.GetNavigation();
+            return _navigationProvider.GetNavigation().OrderBy(p=>p.Priority).ToList();
         }
 
         public void SaveNavigation(List<Page> pages)

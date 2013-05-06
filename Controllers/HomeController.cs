@@ -103,6 +103,7 @@ namespace EKContent.web.Controllers
             page.PageType = model.Page.PageType;
             page.Active = model.Page.Active;
             page.Description = model.Page.Description;
+            page.Priority = model.Page.Priority;
             if (model.Inserting())
             {
                 page.Id = pages.Max(p => p.Id) + 1;

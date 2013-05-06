@@ -73,6 +73,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\HtmlHelpers.cs" />
     <Compile Include="Infrastructure\NavigationModelBinder.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\Database\Abstract\IEKProvider.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Models\Entities\Site.cs" />
     <Compile Include="Models\Services\PageService.cs" />
     <Compile Include="Models\ViewModels\BaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\ContentWrapper.cs" />
     <Compile Include="Models\ViewModels\ImageCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\ImageListViewModel.cs" />
     <Compile Include="Models\ViewModels\MemberIndexViewModel.cs" />
@@ -164,10 +166,11 @@
     <Content Include="Views\Auth\Contact.cshtml" />
     <Content Include="Views\Shared\TopNavBar.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
-    <Content Include="Views\Home\HTMLItem.cshtml" />
-    <Content Include="Views\Home\BlogItem.cshtml" />
-    <Content Include="Views\Home\ContactItem.cshtml" />
+    <Content Include="Views\Shared\Items\HTMLItem.cshtml" />
+    <Content Include="Views\Shared\Items\BlogItem.cshtml" />
+    <Content Include="Views\Shared\Items\ContactItem.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Shared\EditContentControls.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
