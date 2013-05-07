@@ -45,25 +45,30 @@
     if (Model.EditMode())
     {
     <div class="btn-group" style="margin-bottom: 5px">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench">
+        <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench">
         </i>Admin Actions <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })"><i class="icon-wrench">
+            <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })" class="btn-large"><i class="icon-wrench">
             </i>Edit Page</a></li>
-            <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"><i class="icon-plus">
+            <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"  class="btn-large"><i class="icon-plus">
             </i>Add Page</a></li>
             <li class="divider"></li>
             @if (Model.CanDelete())
             {
-                <li><a @*data-action="@Url.Action("DeletePage", new { id = Model.Page.Id })"*@ data-toggle="modal" class="btn-danger" href="#delete-page">
+                <li><a data-toggle="modal" class="btn-danger" href="#delete-page">
                     <i class="icon-trash"></i>Delete Page</a></li>
             }
-            <li><a  href = "@Url.Action("List", "Image", new { id = Model.Page.Id })"><i class="icon-picture">
+            <li><a   class="btn-large" href = "@Url.Action("List", "Image", new { id = Model.Page.Id })"><i class="icon-picture">
             </i>Image Gallery</a></li>
-            <li><a  href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })"><i class="icon-globe">
+            <li><a   class="btn-large" href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })"><i class="icon-globe">
             </i>Site Settings</a></li>
-            <li><a  href = "@Url.Action("Index", "Member", new { id = Model.Page.Id })"><i class="icon-user">
+            <li><a  class="btn-large" href = "@Url.Action("Index", "Member", new { id = Model.Page.Id })"><i class="icon-user">
             </i>Manage Users</a></li>
+
+        <li>
+        <button data-href="@Url.Action("EditContent", new { Idx = -1, Mdx = 0, pageId = Model.Page.Id })" class="btn btn-large">
+        <i class="icon-plus"></i>Create Content</button>
+        </li>
         </ul>
     </div>
     

@@ -18,8 +18,8 @@
     @Html.ValidationMessageFor(m => m.Page.Title)
     </div>
         <div class="control-group">
-    @Html.LabelFor(m => m.Page.Priority)
-    <input type="range" min="1" max="100" name="Page.Priority" id="Page_Priority" value=@Model.Page.Priority /> @Html.Help("The priority of page. A page with a priority of 1 will show up before a page of priority 2")
+    @Html.TextBoxFor(m => m.Page.Priority, new { @readonly = "readonly"})<div data-slider="#Page_Priority"></div>
+    @Html.Help("Use slider to change priority. Determines the order of pages. Page with a priority of 1 will appear before a page of priority 2.")@Html.Help("The priority of page. A page with a priority of 1 will show up before a page of priority 2")
     </div>
     <div class="control-group">
     @Html.LabelFor(m => m.Page.PageType)
@@ -40,7 +40,7 @@
     </div>   
     
     
-    <button type="submit" value="save" class="btn btn-primary">Save</button>
-    <button class="btn" data-href=@Url.Action("Index", new { id = Model.Id() })>Cancel</button>
+    <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
+    <button class="btn btn-large" data-href=@Url.Action("Index", new { id = Model.Id() })>Cancel</button>
     
 }

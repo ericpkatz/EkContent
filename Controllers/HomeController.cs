@@ -21,18 +21,15 @@ namespace EKContent.web.Controllers
 
         public ActionResult Index(int? id, HomeIndexViewModel model, bool userMode = false)
         {
-            //model.UserMode = userMode;
             ViewBag.Service = _service;
-            //if (model.Page.PageType == PageTypes.Contact)
-            //    return RedirectToAction("Contact", new {id = id, userMode = userMode});
             return View(model);
         }
 
-        //public ActionResult Contact(int? id, HomeIndexViewModel model)
-        //{
-        //    ViewBag.Service = _service;
-        //    return View(model);
-        //}
+        public ActionResult Help(int? id, HomeIndexViewModel model, bool userMode = false)
+        {
+            ViewBag.Service = _service;
+            return View(model);
+        }
 
         private void Message(string msg)
         {
@@ -142,6 +139,12 @@ namespace EKContent.web.Controllers
             _service.SavePage(page);
             Message("Item Deleted");
             return RedirectToAction("Index", new { id = model.PageId });
+        }
+
+        public ActionResult Slider(int? id, HomeIndexViewModel model)
+        {
+            ViewBag.Service = _service;
+            return View(model);
         }
 
     }

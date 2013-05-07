@@ -1,0 +1,20 @@
+﻿@model EKContent.web.Models.ViewModels.HomeIndexViewModel
+@using EKContent.web.Models.ViewModels;
+@{
+    ViewBag.Title = Model.Page.Title;
+    ViewBag.SiteTitle = Model.Site.Title;
+}
+<script>
+    $(function () {
+        $(".delete").click(function () {
+            var form = $(this).parents("form");
+            form.attr("action", this.href);
+            form.submit();
+            return false;
+        });
+    });
+</script>
+@Html.Partial("Nav")
+<ul>
+    <li>Help to go here.</li>
+</ul>

@@ -20,23 +20,16 @@
 @{int Mdx = 0;}
 @foreach (var module in Model.Page.Modules)
 {
-    if (Roles.IsUserInRole("Admin") && Model.EditMode())
-    {
-        <br clear="all" />
-    <button data-href="@Url.Action("EditContent", new { Idx = -1, Mdx = Mdx, pageId = Model.Page.Id })" class="btn">
-        <i class="icon-plus"></i>Create Content</button>
-    }
-    int Idx = 0;
-    foreach (var item in module.Content)
-    {
-    <div>
+    int Idx = 0;    
     <div class="accordion" id="content-wrapper">
+    @foreach (var item in module.Content)
+    {
+
         @Html.Partial(String.Format("~/Views/Shared/Items/{0}Item.cshtml", Model.Page.PageType.ToString()), new ContentWrapper { Content = item, Page = Model.Page, Idx = Idx, Mdx = Mdx, EditMode = Model.EditMode()})
-    </div>
-   </div>
+    
         Idx++;        
     }
-
+    </div>
     Mdx++;
 }
 @if (Model.Page.PageType == EKContent.web.Models.Entities.PageTypes.Contact)

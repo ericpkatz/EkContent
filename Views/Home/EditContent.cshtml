@@ -1,5 +1,4 @@
 ﻿@model EKContent.web.Models.ViewModels.EditContentItemViewModel
-
 @{
     ViewBag.Title = Model.TitleText();
     ViewBag.SiteTitle = Model.NavigationModel.Site.Title; 
@@ -7,38 +6,52 @@
 @Html.ValidationSummary()
 @Html.Partial("Nav", Model.NavigationModel)
 <h3>@Model.TitleText()</h3>
-@using (Html.BeginForm("EditContent", "Home", FormMethod.Post, new { @class="well"}))
+@using (Html.BeginForm("EditContent", "Home", FormMethod.Post, new { @class = "well" }))
 {
-    @Html.HiddenFor(m=>m.NavigationModel.Page.Id)
+    @Html.HiddenFor(m => m.NavigationModel.Page.Id)
     @Html.HiddenFor(m => m.Mdx)
     @Html.HiddenFor(m => m.Idx)
-    <div class="control-group">
-    @Html.LabelFor(m => m.Content.Title)
-    @Html.TextBoxFor(m => m.Content.Title)
-    @Html.Help("The title of the content item.")
-    @Html.ValidationMessageFor(m => m.Content.Title)
+    <div class="row">
+        <div class="span2">
+            @Html.LabelFor(m => m.Content.Title)
+        </div>
+        <div class="span6">
+            @Html.TextBoxFor(m => m.Content.Title)
+            @Html.Help("The title of the content item.")
+            @Html.ValidationMessageFor(m => m.Content.Title)
+        </div>
     </div>
-    <div class="control-group">
-    @Html.LabelFor(m => m.Content.ShowTitle)
-    @Html.EditorFor(m => m.Content.ShowTitle)
-    @Html.Help("Determines if title is shown.")
+    <div class="row">
+        <div class="span2">
+            @Html.LabelFor(m => m.Content.ShowTitle)
+        </div>
+        <div class="span6">
+            @Html.EditorFor(m => m.Content.ShowTitle)
+            @Html.Help("Determines if title is shown.")
+        </div>
     </div>    
     <div class="control-group">
-    <div style="width:500px">
-    @Html.ValidationMessageFor(m => m.Content.Body)
-    @Html.TextAreaFor(m => m.Content.Body, new { @class = "richText" })
-    @Html.Help("The body of the content item.")
-    </div>
-   
+        <div style="width: 500px">
+            @Html.ValidationMessageFor(m => m.Content.Body)
+            @Html.TextAreaFor(m => m.Content.Body, new { @class = "richText" })
+            @Html.Help("The body of the content item.")
+        </div>
     </div>
 
-    <div class="control-group">
-    @Html.LabelFor(m => m.Content.Priority)
-    <input type="range" min="1" max="100" name="Content.Priority" id="Content_Priority" value=@Model.Content.Priority />
-    @Html.Help("Determines the order of the content item (A priority item of 1 will come before a priority of 2).")
+    <div class="row">
+        <div class="span2">
+        @Html.LabelFor(m => m.Content.Priority)
+        </div>
+        <div class="span6">
+        @Html.TextBoxFor(m => m.Content.Priority, new { @readonly = "readonly" })
+        <div data-slider="#Content_Priority" style="width:300px"></div>
+        @Html.Help("Use slider to change priority. Determines the order of the content item A priority item of 1 will come before a priority of 2.")
+        </div>
     </div>       
 
-    <button type="submit" value="save" class="btn btn-primary">Save</button>
-    <button class="btn" data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    <button type="submit" value="save" class="btn btn-primary btn-large">
+        Save</button>
+    <button class="btn btn-large" data-href=@Url.Action("Index", new { id = Model.NavigationModel.Page.Id })>
+        Cancel</button>
     
 }

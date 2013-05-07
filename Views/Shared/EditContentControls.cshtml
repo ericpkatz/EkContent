@@ -5,11 +5,17 @@
 }
 @if (Roles.IsUserInRole("Admin") && Model.EditMode)
 {
-    <div class="control-group">
+    <div class="btn-group">
         <button data-href="@Url.Action("EditContent", new { Idx = Model.Idx, Mdx = Model.Mdx, pageId = Model.Page.Id }) " class="btn">
             <i class="icon-pencil"></i>Update Content</button>
-        <button class="btn btn-danger" data-toggle="modal" class="btn-danger" href="#delete-content">
-            <i class="icon-trash"></i>Delete Content</button>
+         <button class="btn dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li>
+        <a  data-toggle="modal" href="#delete-content">
+            <i class="icon-trash"></i>Delete Content</a>
+            </li>
+        </ul>
     </div> 
     <div id="delete-content" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
@@ -29,5 +35,6 @@
             <button class="btn btn-primary" data-action="@Url.Action("DeleteContent", new { Idx = Model.Idx, Mdx = Model.Mdx, pageId = Model.Page.Id })">
                 Delete</button>
         </div>
-    </div>  
+    </div>
+    <br clear="all" />  
 }
