@@ -3,27 +3,26 @@
     ViewBag.Title = Model.Page.Title;
 }
 @Html.Partial("TopNavBar")
-
 @if (!Model.Page.IsHomePage())
 {
-<ul class="breadcrumb" @(Model.ShowBreadCrumb() ? "style=display:block" : String.Empty)>
-    @for (var i = 0; i < Model.PagePathList().Count; i++)
-    {
-        if (Model.PagePathList()[i].IsHomePage())
+    <ul class="breadcrumb" @(Model.ShowBreadCrumb() ? "style=display:block" : String.Empty)>
+        @for (var i = 0; i < Model.PagePathList().Count; i++)
         {
-            continue;
+            if (Model.PagePathList()[i].IsHomePage())
+            {
+                continue;
+            }
+            if (Model.PagePathList().Count - 1 == i)
+            {
+            <li>@Model.PagePathList()[i].Title</li>
+            }
+            else
+            {
+            <li><a href="@Url.Action("Index", "Home", new { id = Model.PagePathList()[i].Id }, null)">@Model.PagePathList()[i].Title</a>
+                <span class="divider">/</span></li>            
+            }
         }
-        if (Model.PagePathList().Count - 1 == i)
-        {
-        <li>@Model.PagePathList()[i].Title</li>
-        }
-        else
-        {
-        <li><a href="@Url.Action("Index", "Home",  new { id = Model.PagePathList()[i].Id }, null)">@Model.PagePathList()[i].Title</a>
-            <span class="divider">/</span></li>            
-        }
-    }
-</ul>
+    </ul>
 }
 @if (Model.ShowChildPages())
 {
@@ -34,13 +33,12 @@
         }
     </ul>
 }
-
 @if (Roles.IsUserInRole("Admin"))
 {
 
     <div class="control-group">
-   @Html.ActionLink(String.Format("Switch to {0}", Model.UserMode ? " Edit Mode": "User Mode"), "Index", "Home", new{id = Model.Page.Id, userMode = !Model.UserMode}, null)
-   </div>
+        @Html.ActionLink(String.Format("Switch to {0}", Model.UserMode ? " Edit Mode" : "User Mode"), "Index", "Home", new { id = Model.Page.Id, userMode = !Model.UserMode }, null)
+    </div>
     
     if (Model.EditMode())
     {
@@ -48,27 +46,27 @@
         <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench">
         </i>Admin Actions <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="@Url.Action("EditPage", new { pageId = Model.Page.Id })" class="btn-large"><i class="icon-wrench">
-            </i>Edit Page</a></li>
-            <li><a href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"  class="btn-large"><i class="icon-plus">
-            </i>Add Page</a></li>
+            <li>
+                <button data-href="@Url.Action("EditContent", new { Idx = -1, Mdx = 0, pageId = Model.Page.Id })" class="btn btn-large btn-block">
+                    <i class="icon-plus"></i>Create Content</button>
+            </li>
+            <li>
+                <button data-href="@Url.Action("EditPage", new { pageId = Model.Page.Id })" class="btn btn-large btn-block">
+                    <i class="icon-wrench"></i>Edit Page</button>
+            <li><button data-href="@Url.Action("EditPage", new { parentId = Model.Page.Id })"  class="btn btn-large btn-block">
+                <i class="icon-plus"></i>Add Page</button>
             <li class="divider"></li>
             @if (Model.CanDelete())
             {
-                <li><a data-toggle="modal" class="btn-danger" href="#delete-page">
-                    <i class="icon-trash"></i>Delete Page</a></li>
+                <li><a data-toggle="modal" class="btn btn-large btn-danger btn-block" href="#delete-page"><i class="icon-trash">
+                </i>Delete Page</a></li>
             }
-            <li><a   class="btn-large" href = "@Url.Action("List", "Image", new { id = Model.Page.Id })"><i class="icon-picture">
-            </i>Image Gallery</a></li>
-            <li><a   class="btn-large" href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })"><i class="icon-globe">
-            </i>Site Settings</a></li>
-            <li><a  class="btn-large" href = "@Url.Action("Index", "Member", new { id = Model.Page.Id })"><i class="icon-user">
-            </i>Manage Users</a></li>
-
-        <li>
-        <button data-href="@Url.Action("EditContent", new { Idx = -1, Mdx = 0, pageId = Model.Page.Id })" class="btn btn-large">
-        <i class="icon-plus"></i>Create Content</button>
-        </li>
+            <li><button   class="btn btn-large btn-block" data-href = "@Url.Action("List", "Image", new { id = Model.Page.Id })">
+                <i class="icon-picture"></i>Image Gallery</button></li>
+            <li><button   class="btn btn-large btn-block" data-href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })">
+                <i class="icon-globe"></i>Site Settings</button></li>
+            <li><button  class="btn btn-large btn-block" data-href = "@Url.Action("Index", "Member", new { id = Model.Page.Id })">
+                <i class="icon-user"></i>Manage Users</button></li>
         </ul>
     </div>
     
@@ -91,5 +89,5 @@
                 Delete</button>
         </div>
     </div>
-    }        
+    }
 }

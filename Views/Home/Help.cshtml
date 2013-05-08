@@ -14,7 +14,42 @@
         });
     });
 </script>
+@{Model.UserMode = true;}
 @Html.Partial("Nav")
-<ul>
-    <li>Help to go here.</li>
-</ul>
+<dl>
+    <dt>Pages</dt>
+    <dd><ul>
+        <li>Pages can be added edited or deleted</li>
+        <li>Pages - with the exception of the home page below to other pages</li>
+    </ul></dd>
+    <dt>Page Types</dt>
+    <dd>
+    <ul>
+        <li>Page Types can be HTML, Blog, or Contact</li>
+        <li>HTML - will just display content</li>
+        <li>Blog - will display in accordian format</li>
+        <li>Contact - will display contact information</li>
+        </ul>
+    </dd>
+    <dt>Content Items</dt>
+    <dd><ul>
+        <li>A content item is made up of a title and content</li>
+        <li>A lower priority will make the content appear higher up in the page</li>
+    </ul></dd>
+    <dt>Images</dt>
+    <dd>
+        <ul>
+            <li>Images can be uploaded through the image tool</li>
+            <li>In order to use the image on a page you will need the Id of the image</li>
+            <li>You can put an image on a page by doing the following: [IMGx] where x is the Id of the uploaded image</li>
+        </ul>
+    </dd>
+    <dt>Site Settings</dt>
+    <dd>
+        <ul>
+            <li>Site settings allow you to set administrator name, email, and phone</li>
+            <li>Site setting also allow you set the title for the site</li>
+            <li>An image can be uploaded for placement in the Navigation Bar- it must be 20px by 20px in order to fit in the Navigation Bar.</li>
+        </ul>
+    </dd>
+</dl>
