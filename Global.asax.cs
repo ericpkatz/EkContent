@@ -70,7 +70,7 @@ namespace EKContent.web
 
             if (System.Web.Security.Membership.GetUser("ericpkatz@gmail.com") == null)
             {
-                Membership.CreateUser("ericpkatz@gmail.com", "abc123");
+                Membership.CreateUser("ericpkatz@gmail.com", "Admin");
                 Roles.AddUserToRole("ericpkatz@gmail.com", "Admin");
             }
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
