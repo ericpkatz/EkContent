@@ -25,6 +25,13 @@ namespace EKContent.web.Controllers
             return View(model);
         }
 
+        public ActionResult SendMessage(int? id, HomeIndexViewModel model, bool userMode = false)
+        {
+            ViewBag.Service = _service;
+            TempData["message"] = "Your message has been sent";
+            return RedirectToAction("Index", new {id = id});
+        }
+
         public ActionResult Help(int? id, HomeIndexViewModel model, bool userMode = false)
         {
             ViewBag.Service = _service;

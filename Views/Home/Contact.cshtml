@@ -5,8 +5,24 @@
 }
 
 <h2>Contact Form</h2>
-<ul>
-    <li>@Model.Site.Name</li>
-    <li>@Model.Site.Phone</li>
-    <li>@Model.Site.Email</li>
-</ul>
+
+@using (Html.BeginForm("SendMessage", "Home", new { id = Model.Page.Id}, FormMethod.Post))
+{
+    <div class="row">
+    <div class="span6">
+    <div class="controls controls-row">
+    <input id="name" name="Name" type="text" class="span3" placeholder="Your Name">
+    <input id="email" name="Email" type="email" class="span3" placeholder="Your Email address">
+    </div>
+    <div class="controls">
+    <textarea id="message" name="Message" class="span6" placeholder="Your Message" rows="5"></textarea>
+    </div>
+    <div class="controls">
+    <button id="contact-submit" type="submit" class="btn btn-primary input-medium pull-right">Send</button>
+    </div>
+    </div>
+    </div>
+}
+
+<div>Or give us a call at @Model.Site.Phone.</div>
+

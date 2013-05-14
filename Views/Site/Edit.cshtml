@@ -6,10 +6,10 @@
 
 @Html.Partial("Nav", Model.NavigationModel)
 <h2>Create Image</h2>
-@using (Html.BeginForm("Edit", "Site", FormMethod.Post, new { @class = "well", enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Edit", "Site", FormMethod.Post, new { @class = "well", enctype = "multipart/form-data" }))
 {                                 
     @Html.HiddenFor(m => m.NavigationModel.Page.Id)
-    @Html.HiddenFor(m=>m.Site.Logo)
+    @Html.HiddenFor(m => m.Site.Logo)
     <div class="control-group">
     @Html.LabelFor(m => m.Site.Title)
     @Html.TextBoxFor(m => m.Site.Title)
@@ -30,6 +30,26 @@
     @Html.TextBoxFor(m => m.Site.Phone)
     @Html.ValidationMessageFor(m => m.Site.Phone)
     </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.TwitterConsumerKey)
+    @Html.TextBoxFor(m => m.Site.TwitterConsumerKey)
+    @Html.ValidationMessageFor(m => m.Site.TwitterConsumerKey)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.TwitterConsumerSecret)
+    @Html.TextBoxFor(m => m.Site.TwitterConsumerSecret)
+    @Html.ValidationMessageFor(m => m.Site.TwitterConsumerSecret)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.SiteEmail)
+    @Html.TextBoxFor(m => m.Site.SiteEmail)
+    @Html.ValidationMessageFor(m => m.Site.SiteEmail)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.SiteEmailPassword)
+    @Html.TextBoxFor(m => m.Site.SiteEmailPassword)
+    @Html.ValidationMessageFor(m => m.Site.SiteEmailPassword)
+    </div>           
     <div class="control-group">
     <label for="image-input">Upload Image</label>
     <input type="file" name="image-input" id="image-input" />

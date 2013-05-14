@@ -33,7 +33,7 @@ namespace EKContent.web.Controllers
             if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
             {
                 var fileName = this.Request.Files[0].FileName;
-                var extension = Path.GetExtension(fileName);
+                var extension = Path.GetExtension(fileName); 
                 //delete the old file
                 if (!model.Site.IsNew())
                 {

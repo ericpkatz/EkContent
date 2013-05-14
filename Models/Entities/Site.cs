@@ -14,6 +14,10 @@ namespace EKContent.web.Models.Entities
         public string Phone { get; set; }
         public string Logo { get; set; }
         public bool ShowLogo { get; set; }
+        public string TwitterConsumerKey { get; set; }
+        public string TwitterConsumerSecret { get; set; }
+        public string SiteEmail { get; set; }
+        public string SiteEmailPassword { get; set; }
         public bool HideLogo()
         {
             return !ShowLogo;
