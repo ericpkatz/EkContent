@@ -5,6 +5,7 @@
 }
 @if (Roles.IsUserInRole("Admin") && Model.EditMode)
 {
+    <p>
     <div class="btn-group">
         <button data-href="@Url.Action("EditContent", new { Idx = Model.Idx, Mdx = Model.Mdx, pageId = Model.Page.Id }) " class="btn">
             <i class="icon-pencil"></i>Update Content</button>
@@ -36,5 +37,5 @@
                 Delete</button>
         </div>
     </div>
-    <br clear="all" />  
+    </p> 
 }

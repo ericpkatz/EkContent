@@ -1,28 +1,79 @@
 ﻿@model EKContent.web.Models.ViewModels.ImageListViewModel
-
 @{
     ViewBag.Title = "List";
 }
-
 @Html.Partial("Nav", Model.NavigationModel)
-<h2>Images</h2>
-
-        <button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id })" class="btn">
-            <i class="icon-plus"></i>Add Image
-        </button>
-<ul>
-@foreach (var image in Model.Images)
-{
-    <li>
-@image.Id
-@image.Title
-@image.FileName
-<button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id, id = image.Id })" class="btn">
-            Edit <i class="icon-wrench"></i>
-        </button>
-            <button data-action="@Url.Action("Delete", new { pageId = Model.NavigationModel.Page.Id, id = image.Id })" class="btn btn-danger">
-                <i class="icon-trash"></i>Delete
-            </button> 
-            </li>
-}
-</ul>
+<h2>
+    Images</h2>
+<button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id })" class="btn">
+    <i class="icon-plus"></i>Add Image
+</button>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Image Path
+            </th>
+            <th>
+                Thumbnail
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var image in Model.Images)
+        {
+            <tr>
+                <td>
+                    <pre>[IMG@(image.Id)]</pre>
+                    <div class="help help-block">
+                        Use this text in editor to display image.
+                    </div>
+                </td>
+                <td>
+                    <img src="@Url.Content(String.Format("~/user_images/bitmap-{0}", image.FileName))" />
+                </td>
+                <td>
+                    @image.Title
+                </td>
+                <td>
+                    <button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id, id = image.Id })" class="btn">
+                        Edit <i class="icon-wrench"></i>
+                    </button>
+                </td>
+                <td>
+                    <a  data-toggle="modal" href="#delete-image-@image.Id" class="btn btn-danger"><i
+                        class="icon-trash"></i>Delete Image</a>
+                    <div id="delete-image-@image.Id" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×</button>
+                            <h3 id="myModalLabel">
+                                Warning!</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                Are you sure you want to delete this image? It is possible that it is being used
+                                in one of your content items.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                                Cancel</button>
+                            <button class="btn btn-primary" data-action="@Url.Action("Delete", new { pageId = Model.NavigationModel.Page.Id, id = image.Id })">
+                                Delete</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

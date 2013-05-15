@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -118,5 +120,18 @@ namespace EKContent.web.Models.Services
             return _roleProvider.Get().ToList();
         }
 
+
+        public void SendMessage(Message message)
+        {
+            var site = this.GetSite();
+            MailMessage msgeme = new MailMessage(message.Email, site.SmtpSiteEmail, String.Format("Message From {0}", message.Name), message.Body);
+            SmtpClient smtpclient = new SmtpClient(site.SmtpServer);
+            smtpclient.EnableSsl = false;
+            smtpclient.Credentials = new NetworkCredential(site.SmtpSiteEmail, site.SmtpSiteEmailPassword);
+            smtpclient.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            smtpclient.Send(msgeme);
+            
+        }
     }
 }

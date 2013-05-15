@@ -41,15 +41,20 @@
     @Html.ValidationMessageFor(m => m.Site.TwitterConsumerSecret)
     </div>
     <div class="control-group">
-    @Html.LabelFor(m => m.Site.SiteEmail)
-    @Html.TextBoxFor(m => m.Site.SiteEmail)
-    @Html.ValidationMessageFor(m => m.Site.SiteEmail)
+    @Html.LabelFor(m => m.Site.SmtpSiteEmail)
+    @Html.TextBoxFor(m => m.Site.SmtpSiteEmail)
+    @Html.ValidationMessageFor(m => m.Site.SmtpSiteEmail)
     </div>
     <div class="control-group">
-    @Html.LabelFor(m => m.Site.SiteEmailPassword)
-    @Html.TextBoxFor(m => m.Site.SiteEmailPassword)
-    @Html.ValidationMessageFor(m => m.Site.SiteEmailPassword)
-    </div>           
+    @Html.LabelFor(m => m.Site.SmtpSiteEmailPassword)
+    @Html.TextBoxFor(m => m.Site.SmtpSiteEmailPassword)
+    @Html.ValidationMessageFor(m => m.Site.SmtpSiteEmailPassword)
+    </div> 
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.SmtpServer)
+    @Html.TextBoxFor(m => m.Site.SmtpServer)
+    @Html.ValidationMessageFor(m => m.Site.SmtpServer)
+    </div>               
     <div class="control-group">
     <label for="image-input">Upload Image</label>
     <input type="file" name="image-input" id="image-input" />

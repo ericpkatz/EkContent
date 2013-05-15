@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,14 +9,68 @@ using System.Web.Security;
 using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Services;
 using EKContent.web.Models.ViewModels;
-using EKContent.web.Models.Entities;
 using System.IO;
+using Image = EKContent.web.Models.Entities.Image;
 
 namespace EKContent.web.Controllers
 {
     [Authorize(Roles="Admin")]
     public class ImageController : Controller
     {
+        private void ResizeImage(string lcFilename, int lnWidth = 150, int lnHeight = 150)
+        {
+            System.Drawing.Bitmap bmpOut = null;
+
+            try
+            {
+                Bitmap loBMP = new Bitmap(lcFilename);
+                ImageFormat loFormat = loBMP.RawFormat;
+
+                decimal lnRatio;
+                int lnNewWidth = 0;
+                int lnNewHeight = 0;
+
+                if (loBMP.Width < lnWidth && loBMP.Height < lnHeight)
+                {
+                    loBMP.Dispose();
+                    return;
+                }
+                //return loBMP;
+
+                if (loBMP.Width > loBMP.Height)
+                {
+                    lnRatio = (decimal)lnWidth / loBMP.Width;
+                    lnNewWidth = lnWidth;
+                    decimal lnTemp = loBMP.Height * lnRatio;
+                    lnNewHeight = (int)lnTemp;
+                }
+                else
+                {
+                    lnRatio = (decimal)lnHeight / loBMP.Height;
+                    lnNewHeight = lnHeight;
+                    decimal lnTemp = loBMP.Width * lnRatio;
+                    lnNewWidth = (int)lnTemp;
+                }
+
+
+                bmpOut = new Bitmap(lnNewWidth, lnNewHeight);
+                Graphics g = Graphics.FromImage(bmpOut);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                g.FillRectangle(Brushes.White, 0, 0, lnNewWidth, lnNewHeight);
+                g.DrawImage(loBMP, 0, 0, lnNewWidth, lnNewHeight);
+
+                loBMP.Dispose();
+            }
+            catch
+            {
+                return;
+            }
+            bmpOut.Save(lcFilename);
+            bmpOut.Dispose();
+        }
         private PageService _service;
 
         public ImageController(IEKProvider provider)
@@ -40,24 +96,33 @@ namespace EKContent.web.Controllers
         [HttpPost]
         public ActionResult Create(ImageCreateViewModel model)
         {
+            string bitMapName = String.Empty;
             if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
             {
                 var fileName = this.Request.Files[0].FileName;
                 var extension = Path.GetExtension(fileName);
                 model.Image.FileName = String.Format("{0}{1}", Guid.NewGuid(), extension);
+                bitMapName = String.Format("bitmap-{0}", model.Image.FileName);
                 //delete the old file
                 if(!model.Image.IsNew())
                 {
                     var oldImage = _service.GetImages().Single(i => i.Id == model.Image.Id).FileName;
                     var oldImagePath = this.Server.MapPath(String.Format("~/user_images/{0}", oldImage));
+                    var oldBitMap = this.Server.MapPath(String.Format("~/user_images/bitmap-{0}", oldImage));
                     if (System.IO.File.Exists(oldImagePath))
                         System.IO.File.Delete(oldImagePath);
+                    if (System.IO.File.Exists(oldBitMap))
+                        System.IO.File.Delete(oldBitMap);
                 }
                 
             }
             var saveTo = this.Server.MapPath(String.Format("~/user_images/{0}", model.Image.FileName));
+            var saveToBitMap = this.Server.MapPath(String.Format("~/user_images/{0}", bitMapName));
             _service.SaveImage(model.Image);
             this.Request.Files[0].SaveAs(saveTo);
+            ResizeImage(saveTo, 500, 500);
+            System.IO.File.Copy(saveTo, saveToBitMap);
+            ResizeImage(saveToBitMap, 50, 50);
             TempData["message"] = "Image Saved";
             return RedirectToAction("List", new {id = model.NavigationModel.Page.Id });
         }
@@ -68,8 +133,11 @@ namespace EKContent.web.Controllers
             var image = _service.GetImages().Single(i => i.Id == id);
             _service.DeleteImage(image.Id);
             var savedImage = this.Server.MapPath(String.Format("~/user_images/{0}", image.FileName));
+            var saveToBitMap = this.Server.MapPath(String.Format("~/user_images/bitmap-{0}", image.FileName));
             if (System.IO.File.Exists(savedImage))
                 System.IO.File.Delete(savedImage);
+            if (System.IO.File.Exists(saveToBitMap))
+                System.IO.File.Delete(saveToBitMap);
             TempData["message"] = "Image Removed";
             return RedirectToAction("List", new { id = pageId });
         }
