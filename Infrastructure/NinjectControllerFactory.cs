@@ -5,13 +5,18 @@ using System.Web;
 using System.Web.Mvc;
 using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Database.Concrete;
+using Ninject;
 
 namespace EKContent.web.Infrastructure
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {
+        public static IKernel NinjectKernel
+        {
+            get { return _kernel; }
+        }
 
-        Ninject.IKernel _kernel = null;
+        static Ninject.IKernel _kernel = null;
         public NinjectControllerFactory()
         {
             _kernel = new Ninject.StandardKernel();

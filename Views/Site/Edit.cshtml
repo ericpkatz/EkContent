@@ -1,11 +1,11 @@
 ﻿@model EKContent.web.Models.ViewModels.SiteEditViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Site Settings";
 }
 
 @Html.Partial("Nav", Model.NavigationModel)
-<h2>Create Image</h2>
+<h2>Edit Site</h2>
 @using (Html.BeginForm("Edit", "Site", FormMethod.Post, new { @class = "well", enctype = "multipart/form-data" }))
 {                                 
     @Html.HiddenFor(m => m.NavigationModel.Page.Id)

@@ -6,9 +6,11 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.Security;
 using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Entities;
 using EKContent.web.Models.ViewModels;
+using Newtonsoft.Json.Linq;
 
 namespace EKContent.web.Models.Services
 {
@@ -19,6 +21,7 @@ namespace EKContent.web.Models.Services
         private IEkSiteDataProvider _siteProvider = null;
         private IImageDataProvider _imageProvider = null;
         private IEKRoleProvider _roleProvider = null;
+        private IEKProvider _dal = null;
 
         public Site GetSite()
         {
@@ -30,21 +33,31 @@ namespace EKContent.web.Models.Services
             _siteProvider.Save(site);
         }
 
-        public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
+        //public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
+        //{
+        //    _navigationProvider = navigationProvider;
+        //    _dataProvider = dataProvider;
+        //    _siteProvider = siteProvider;
+        //    _imageProvider = imageProvider;
+        //}
+
+        public IEKProvider Dal
         {
-            _navigationProvider = navigationProvider;
-            _dataProvider = dataProvider;
-            _siteProvider = siteProvider;
-            _imageProvider = imageProvider;
+            get
+            {
+                return _dal;
+            }
         }
 
         public PageService(IEKProvider provider)
         {
+            _dal = provider;
             _navigationProvider = provider.NavigationProvider;
             _dataProvider = provider.DataProvider;
             _siteProvider = provider.SiteProvider;
             _imageProvider = provider.ImageProvider;
             _roleProvider = provider.RoleProvider;
+
         }
 
         public Page GetHomePage()
@@ -133,5 +146,41 @@ namespace EKContent.web.Models.Services
             smtpclient.Send(msgeme);
             
         }
+
+        public void ChangePassword(string oldPassword, string newPassword)
+        {
+            var user = Membership.GetUser();
+            user.ChangePassword(oldPassword, newPassword);
+        }
+
+        public void SaveTwitterKeys(TwitterKeys keys)
+        {
+            _dal.TwitterKeysProvider.Save(keys);
+        }
+
+        public TwitterKeys GetTwitterKeys()
+        {
+            return _dal.TwitterKeysProvider.Get();
+        }
+
+        public JArray GetTweets()
+        {
+            return _dal.TwitterKeysProvider.Tweets();
+        }
+        
+        public bool ShowTwitterFeed()
+        {
+            return _dal.TwitterKeysProvider.Get().Configured && _dal.TwitterKeysProvider.Get().Enabled;
+        }
+
+        public string Encrypt(string input)
+        {
+            System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(input);
+            data = x.ComputeHash(data);
+            String md5Hash = System.Text.Encoding.ASCII.GetString(data);
+            return md5Hash;
+        }
+
     }
 }

@@ -34,6 +34,11 @@
     </div>    
     
     <div class="control-group">
+    @Html.LabelFor(m => m.Page.ShowTwitterFeed)
+    @Html.CheckBoxFor(m => m.Page.ShowTwitterFeed)
+     @Html.Help("If Twitter is configured- Feed will be displayed on right side of page.")       
+    </div>    
+    <div class="control-group">
     @Html.LabelFor(m => m.Page.Active)
     @Html.CheckBoxFor(m => m.Page.Active)
      @Html.Help("Whether or not the page will be seen- not currently being used.")       

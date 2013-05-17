@@ -15,6 +15,7 @@ namespace EKContent.web.Models.Entities
     public class Page : BaseContent
     {
         public int? ParentId { get; set; }
+        public bool ShowTwitterFeed { get; set; }
         public PageTypes PageType { get; set; }
         private List<Module> _modules = null;
         public List<Module> Modules

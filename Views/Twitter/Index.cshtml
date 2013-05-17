@@ -1,0 +1,36 @@
+﻿@model EKContent.web.Models.ViewModels.TwitterTimelineViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+@if (Model.ShowFeed)
+{ 
+<h4><a href=@Model.TwitterLink>Check us out on Twitter</a></h4>
+
+       
+       
+        <table class="table table-striped">
+            @for (int x = 0; x < Model.Tweets.Count(); x++)
+            {
+
+                Newtonsoft.Json.Linq.JObject tweet = Newtonsoft.Json.Linq.JObject.Parse(Model.Tweets[x].ToString());
+                const string format = "ddd MMM dd HH:mm:ss zzzz yyyy";
+                
+                <tr>
+                <td>
+                
+                 <img src="@tweet["user"]["profile_image_url"]" />
+                 </td> 
+                 <td>
+                 <blockquote style="font-size:smaller">
+                @tweet["text"].ToString()
+                <small>@tweet["user"]["name"] <text>@@</text>@(tweet["user"]["screen_name"]) on @DateTime.ParseExact(tweet["created_at"].ToString(), format, System.Globalization.CultureInfo.InvariantCulture)from @tweet["user"]["location"].ToString()</small>
+                </blockquote>  
+                <br />
+
+                </td>
+                </tr>
+            }
+        </table>
+}

@@ -109,6 +109,7 @@ namespace EKContent.web.Controllers
             page.Active = model.Page.Active;
             page.Description = model.Page.Description;
             page.Priority = model.Page.Priority;
+            page.ShowTwitterFeed = model.Page.ShowTwitterFeed;
             if (model.Inserting())
             {
                 page.Id = pages.Max(p => p.Id) + 1;

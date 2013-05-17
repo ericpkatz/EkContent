@@ -1,0 +1,51 @@
+﻿@model EKContent.web.Models.ViewModels.TwitterKeysEditViewModel
+
+@{
+    ViewBag.Title = "Edit Twitter Keys";
+}
+
+@Html.Partial("Nav", Model.NavigationModel)
+<h2>Edit Twitter Keys</h2>
+@using (Html.BeginForm())
+{                                 
+    @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.ApplicationKey)
+    @Html.TextBoxFor(m => m.TwitterKeys.ApplicationKey)
+    @Html.ValidationMessageFor(m => m.TwitterKeys.ApplicationKey)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.ApplicationSecret)
+    @Html.TextBoxFor(m => m.TwitterKeys.ApplicationSecret)
+    @Html.ValidationMessageFor(m => m.TwitterKeys.ApplicationSecret)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.ApplicationAuthorizationKey)
+    @Html.TextBoxFor(m => m.TwitterKeys.ApplicationAuthorizationKey)
+    @Html.ValidationMessageFor(m => m.TwitterKeys.ApplicationAuthorizationKey)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.ApplicationAuthorizationSecret)
+    @Html.TextBoxFor(m => m.TwitterKeys.ApplicationAuthorizationSecret)
+    @Html.ValidationMessageFor(m => m.TwitterKeys.ApplicationAuthorizationSecret)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.TwitterHandle)
+    @Html.TextBoxFor(m => m.TwitterKeys.TwitterHandle)
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.Enabled)
+    @Html.CheckBoxFor(m => m.TwitterKeys.Enabled)
+    </div>        
+    <div class="control-group">
+    @Html.LabelFor(m => m.TwitterKeys.Configured)
+    @Html.CheckBoxFor(m => m.TwitterKeys.Configured, new { @readonly = "readonly"})
+    <button  class="btn btn-small" data-href=@Url.Action("StartAuth", new { id = Model.NavigationModel.Page.Id })>Configure</button>
+    </div>                        
+
+    <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
+    <button  class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+        
+    
+}

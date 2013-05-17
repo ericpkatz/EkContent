@@ -64,8 +64,8 @@ namespace EKContent.web.Controllers
             {
                 return View(model);
             }
-            var user = Membership.GetUser();
-            user.ChangePassword(model.OldPassword, model.NewPassword);
+
+            _service.ChangePassword(model.OldPassword, model.NewPassword);
             TempData["message"] = "Password has been changed";
             return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id});
         }

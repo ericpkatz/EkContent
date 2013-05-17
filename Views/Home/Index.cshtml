@@ -16,6 +16,8 @@
 </script>
 @Html.Partial("Nav")
 
+<div class="row">
+<div class="span6">
 @*<br clear="all" />*@
 @{int Mdx = 0;}
 @foreach (var module in Model.Page.Modules)
@@ -36,3 +38,11 @@
 {
     @Html.Partial("Contact")
 }
+</div>
+@if (Model.Page.ShowTwitterFeed)
+{
+<div class="span3">
+@Html.Action("Index", "Twitter")
+</div>
+}
+</div>

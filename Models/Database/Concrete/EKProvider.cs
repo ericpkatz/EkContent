@@ -33,5 +33,11 @@ namespace EKContent.web.Models.Database.Concrete
         {
             get { return new EKRoleProvider(); }
         }
+
+
+        public ITwitterKeysProvider TwitterKeysProvider
+        {
+            get { return new EkTwitterKeysDataProvider(); }
+        }
     }
 }
