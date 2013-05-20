@@ -52,7 +52,8 @@ namespace EKContent.web.Controllers
                             {
                                 Mdx = Mdx,
                                 Idx = Idx,
-                                NavigationModel =  HomeIndexViewModelLoader.Create(pageId, _service)
+                                NavigationModel =  HomeIndexViewModelLoader.Create(pageId, _service),
+                                Images = _service.GetImages()
                             };
             model.Content = model.Inserting() ? new Content { } : page.Modules[Mdx].Content[Idx];
             return View(model);
@@ -69,16 +70,22 @@ namespace EKContent.web.Controllers
             {
                 var content = model.Inserting() ? new Content { } : model.NavigationModel.Page.Modules[model.Mdx].Content[model.Idx];
                 if (model.Inserting())
+                {
+                    if (model.NavigationModel.Page.Modules.Count == 0)
+                        model.NavigationModel.Page.Modules.Add(new Module {});
                     model.NavigationModel.Page.Modules[model.Mdx].Content.Add(content);
+                }
 
                 content.Title = model.Content.Title;
                 content.Body = model.Content.Body;
                 content.ShowTitle = model.Content.ShowTitle;
                 content.Priority = model.Content.Priority;
+                content.ImageId = model.Content.ImageId;
                 _service.SavePage(model.NavigationModel.Page);
                 Message("Content Saved");
                 return RedirectToAction("Index", new { id = model.NavigationModel.Page.Id });
             }
+            model.Images = _service.GetImages();
             model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
             return View(model);
         }
@@ -118,6 +125,16 @@ namespace EKContent.web.Controllers
             _service.SaveNavigation(pages);
             Message("Page Saved");
             return RedirectToAction("Index", new { id = page.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult MovePage(EditPageViewModel model)
+        {
+            //var pageToMove = _service.GetPage(model.NavigationModel.Page.Id);
+            var newPage = _service.MovePageToChildPage(model.NavigationModel.Page.Id);
+            Message("A new page has been added.");
+            return RedirectToAction("Index", new { id = newPage.Id });
         }
 
         [HttpPost]

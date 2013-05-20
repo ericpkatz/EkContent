@@ -42,7 +42,13 @@
     @Html.LabelFor(m => m.Page.Active)
     @Html.CheckBoxFor(m => m.Page.Active)
      @Html.Help("Whether or not the page will be seen- not currently being used.")       
-    </div>   
+    </div>
+    <div class="control-group">
+    Move the content on this page to a new page below this page.
+    <button class="btn btn-large" data-action-post=@Url.Action("MovePage")>Move Page</button>
+    
+     @Html.Help("This can be used to add new content to this page and 'retire' the content on this page.")       
+    </div>       
     
     
     <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>

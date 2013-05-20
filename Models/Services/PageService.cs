@@ -68,7 +68,7 @@ namespace EKContent.web.Models.Services
 
         public List<Page> GetNavigation()
         {
-            return _navigationProvider.GetNavigation().OrderBy(p=>p.Priority).ToList();
+            return _navigationProvider.GetNavigation().OrderBy(p => p.Priority).ToList();
         }
 
         public void SaveNavigation(List<Page> pages)
@@ -80,6 +80,13 @@ namespace EKContent.web.Models.Services
         {
             var page = _navigationProvider.GetNavigation().Where(p => p.Id == id).Single();
             page.Modules = _dataProvider.Get(page.Id);
+            foreach(var module in page.Modules)
+                foreach(var item in module.Content)
+                    if(item.ImageId != 0)
+                    {
+                        var image = _imageProvider.Get().SingleOrDefault(i => i.Id == item.ImageId);
+                        item.Image = image;
+                    }
             return page;
         }
 
@@ -93,6 +100,28 @@ namespace EKContent.web.Models.Services
             foreach (Module m in page.Modules)
                 m.Content = m.Content.OrderBy(c => c.Priority).ThenByDescending(c => c.DateCreated).ToList();
             _dataProvider.Save(page);
+        }
+
+        public Page MovePageToChildPage(int pageId)
+        {
+            var pages = GetNavigation();
+            var page = pages.Single(p => p.Id == pageId);
+            var modules = GetPage(pageId).Modules;
+            foreach (Module m in modules)
+                m.Content = m.Content.OrderBy(c => c.Priority).ThenByDescending(c => c.DateCreated).ToList();
+            var newPage = page.Clone();
+            newPage.Modules = modules;
+            page.Modules = new List<Module>();
+            //page.Title = "Change Title";
+
+            newPage.Id = pages.Max(p => p.Id) + 1;
+            newPage.Title = "Change Page Title";
+            pages.Add(newPage);
+
+            SaveNavigation(pages);
+            _dataProvider.Save(newPage);
+            _dataProvider.Save(page);
+            return newPage;
         }
 
         //images
@@ -120,7 +149,7 @@ namespace EKContent.web.Models.Services
             if (content == null)
                 return String.Empty;
             var regex = new Regex(@"\[IMG(?<image_number>[0-9]+)\]");
-            return regex.Replace(content, m=> String.Format("<img src=\"user_images/{0}\"/>", GetImage(int.Parse(m.Groups["image_number"].Value))));
+            return regex.Replace(content, m => String.Format("<img src=\"user_images/{0}\"/>", GetImage(int.Parse(m.Groups["image_number"].Value))));
 
         }
         public void DeleteImage(int id)
@@ -144,7 +173,7 @@ namespace EKContent.web.Models.Services
             smtpclient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             smtpclient.Send(msgeme);
-            
+
         }
 
         public void ChangePassword(string oldPassword, string newPassword)
@@ -167,7 +196,7 @@ namespace EKContent.web.Models.Services
         {
             return _dal.TwitterKeysProvider.Tweets();
         }
-        
+
         public bool ShowTwitterFeed()
         {
             return _dal.TwitterKeysProvider.Get().Configured && _dal.TwitterKeysProvider.Get().Enabled;

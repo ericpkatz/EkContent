@@ -26,12 +26,12 @@ namespace EKContent.web.Models.Database.Concrete
             {
                 keys = new TwitterKeys
                                {
- 
+
                                };
                 Save(keys);
                 return keys;
             }
-            keys  = null;
+            keys = null;
             StreamReader sr = null;
             try
             {
@@ -67,7 +67,7 @@ namespace EKContent.web.Models.Database.Concrete
                 sw.Close();
                 sw.Dispose();
                 sw = null;
-            }          
+            }
         }
 
 
@@ -89,26 +89,33 @@ namespace EKContent.web.Models.Database.Concrete
         public Newtonsoft.Json.Linq.JArray Tweets()
         {
             var cache = System.Web.HttpContext.Current.Cache;
-            JArray tweets = (JArray) cache["Tweets"];
+            JArray tweets = (JArray)cache["Tweets"];
 
             if (tweets == null)
             {
-            
-            var token = Get().ApplicationAuthorizationKey;
 
-            var consumer = new DotNetOpenAuth.OAuth.WebConsumer(ServiceProviderDescription(),
-                                                                new LongTermTokenProvider());
+                var token = Get().ApplicationAuthorizationKey;
+                try
+                {
 
-            var endpoint = new MessageReceivingEndpoint("https://api.twitter.com/1.1/statuses/home_timeline.json",
-                                                        HttpDeliveryMethods.GetRequest);
+                    var consumer = new DotNetOpenAuth.OAuth.WebConsumer(ServiceProviderDescription(),
+                                                                        new LongTermTokenProvider());
 
-            var request = consumer.PrepareAuthorizedRequest(endpoint, token);
+                    var endpoint = new MessageReceivingEndpoint("https://api.twitter.com/1.1/statuses/home_timeline.json",
+                                                                HttpDeliveryMethods.GetRequest);
 
-            var response = request.GetResponse();
-            var data = (new StreamReader(response.GetResponseStream())).ReadToEnd();
+                    var request = consumer.PrepareAuthorizedRequest(endpoint, token);
 
-            tweets = JArray.Parse(data);
-                cache.Insert("Tweets", tweets, null, DateTime.Now.AddMinutes(5), TimeSpan.Zero);
+                    var response = request.GetResponse();
+                    var data = (new StreamReader(response.GetResponseStream())).ReadToEnd();
+
+                    tweets = JArray.Parse(data);
+                    cache.Insert("Tweets", tweets, null, DateTime.Now.AddMinutes(5), TimeSpan.Zero);
+                }
+                catch (Exception ex)
+                {
+                    tweets = new JArray();
+                }
             }
 
             return tweets;

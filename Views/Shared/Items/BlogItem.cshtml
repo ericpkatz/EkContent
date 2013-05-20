@@ -13,6 +13,12 @@
 <div id="collapse@(Model.Idx)" class="accordion-body collapse@(Model.Idx == 0?" in":String.Empty)">
 <div class="accordion-inner">
  @Html.Partial("EditContentControls")
+  @if (Model.Content.Image != null)
+{
+    <div class="row">
+    <img src="@Url.Content(String.Format("~/user_images/{0}", @Model.Content.Image.FileName))" />
+    </div>
+}
  @Html.Raw(ViewBag.Service.RenderImages(Model.Content.Body))
   </div>
 </div>

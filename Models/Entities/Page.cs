@@ -14,6 +14,20 @@ namespace EKContent.web.Models.Entities
 
     public class Page : BaseContent
     {
+        public Page Clone()
+        {
+            return new Page
+                       {
+                           Id = 0,
+                           ParentId = this.Id,
+                           Title = this.Title,
+                           Active = this.Active,
+                           Description = this.Description,
+                           Modules = this.Modules,
+                           ShowTitle = this.ShowTitle,
+                           ShowTwitterFeed = this.ShowTwitterFeed
+                       };
+        }
         public int? ParentId { get; set; }
         public bool ShowTwitterFeed { get; set; }
         public PageTypes PageType { get; set; }

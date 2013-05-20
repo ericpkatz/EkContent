@@ -29,7 +29,16 @@
             @Html.EditorFor(m => m.Content.ShowTitle)
             @Html.Help("Determines if title is shown.")
         </div>
-    </div>    
+    </div>
+    <div class="row">
+        <div class="span2">
+            @Html.LabelFor(m => m.Content.ImageId, "Select Image")
+        </div>
+        <div class="span6">
+            @Html.DropDownListFor(m=>m.Content.ImageId, Model.SelectListImages())
+            @Html.Help("Image will appear before content body.")
+        </div>
+    </div>        
     <div class="control-group">
         <div style="width: 500px">
             @Html.ValidationMessageFor(m => m.Content.Body)

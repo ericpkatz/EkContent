@@ -55,6 +55,12 @@
                 form.submit();
                 return false;
             });
+            $("button[data-action-post]").click(function () {
+                var form = $(this).parents("form");
+                form.attr("action", $(this).attr("data-action-post"));
+                form.submit();
+                return false;
+            });
             $(".alert-info").css("opacity", 0).animate(
             { opacity: 1.0 },
             function () {

@@ -58,9 +58,13 @@ namespace EKContent.web.Models.Database.DotNetMembership
 
         public override string[] GetRolesForUser(string username)
         {
+            var roles = database.Get().Where(r => r.Users.Select(u=>u.UserName.ToLower()).Contains(username.ToLower()));
+            if(roles.Count() == 0)
+                return new string[] {};
             return new string[]
                        {
-                           database.Get().Where(r => r.Users.Select(u=>u.UserName.ToLower()).Contains(username.ToLower())).First().Name
+                           
+                           roles.First().Name
                        };
         }
 
