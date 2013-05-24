@@ -23,6 +23,16 @@
     </div>
     <div class="row">
         <div class="span2">
+            @Html.LabelFor(m => m.Content.DatePublished)
+        </div>
+        <div class="span6">
+            @Html.TextBox("Content.DatePublished", Model.Content.DatePublished == DateTime.MinValue ? DateTime.Now.ToShortDateString() : Model.Content.DatePublished.ToShortDateString(), new { @class="datepicker"})
+            @Html.Help("The date associated with this item.")
+            @Html.ValidationMessageFor(m => m.Content.DatePublished)
+        </div>
+    </div>    
+    <div class="row">
+        <div class="span2">
             @Html.LabelFor(m => m.Content.ShowTitle)
         </div>
         <div class="span6">
@@ -35,7 +45,7 @@
             @Html.LabelFor(m => m.Content.ImageId, "Select Image")
         </div>
         <div class="span6">
-            @Html.DropDownListFor(m=>m.Content.ImageId, Model.SelectListImages())
+            @Html.DropDownListFor(m => m.Content.ImageId, Model.SelectListImages())
             @Html.Help("Image will appear before content body.")
         </div>
     </div>        

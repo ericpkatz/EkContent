@@ -9,10 +9,5 @@
     <h4>@Model.Content.Title</h4>
         } 
  @Html.Partial("EditContentControls")
- @if (Model.Content.Image != null)
-{
-     <div class="row">
-    <img src="@Url.Content(String.Format("~/user_images/{0}", @Model.Content.Image.FileName))" />
-    </div>
-}
- @Html.Raw(ViewBag.Service.RenderImages(Model.Content.Body))
+ @Html.Partial("ImageItem")
+ @Html.Partial("Body")

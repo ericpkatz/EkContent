@@ -1,0 +1,13 @@
+﻿@model EKContent.web.Models.ViewModels.ContentWrapper
+
+@{
+    ViewBag.Title = "HTML";
+}
+
+
+ @Html.Partial("EditContentControls")
+ @Html.Partial("ImageItem")
+    <blockquote>
+    <p>@Html.Raw(Model.Content.Body)</p>
+    <small>@Model.Content.Title on @Model.Content.DatePublished.ToShortDateString()</small>
+    </blockquote>

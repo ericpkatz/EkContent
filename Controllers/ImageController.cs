@@ -114,17 +114,18 @@ namespace EKContent.web.Controllers
                     if (System.IO.File.Exists(oldBitMap))
                         System.IO.File.Delete(oldBitMap);
                 }
-                
+                var saveTo = this.Server.MapPath(String.Format("~/user_images/{0}", model.Image.FileName));
+                var saveToBitMap = this.Server.MapPath(String.Format("~/user_images/{0}", bitMapName));
+                this.Request.Files[0].SaveAs(saveTo);
+                ResizeImage(saveTo, 500, 500);
+                System.IO.File.Copy(saveTo, saveToBitMap);
+                ResizeImage(saveToBitMap, 50, 50);
             }
-            var saveTo = this.Server.MapPath(String.Format("~/user_images/{0}", model.Image.FileName));
-            var saveToBitMap = this.Server.MapPath(String.Format("~/user_images/{0}", bitMapName));
+
             _service.SaveImage(model.Image);
-            this.Request.Files[0].SaveAs(saveTo);
-            ResizeImage(saveTo, 500, 500);
-            System.IO.File.Copy(saveTo, saveToBitMap);
-            ResizeImage(saveToBitMap, 50, 50);
+
             TempData["message"] = "Image Saved";
-            return RedirectToAction("List", new {id = model.NavigationModel.Page.Id });
+            return RedirectToAction("List", new {id = model.NavigationModel.Page.PageNavigation.Id });
         }
 
         [HttpPost]
@@ -154,13 +155,13 @@ namespace EKContent.web.Controllers
             if (!Membership.ValidateUser(model.Username, model.Password))
             {
                 ModelState.AddModelError("", "Username and/or Password are incorrect");
-                model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
+                model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.PageNavigation.Id, _service);
                 return View(model);
             }
             else
             {
                 FormsAuthentication.SetAuthCookie(model.Username, false);
-                return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id });
+                return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.PageNavigation.Id });
             }
         }
 
@@ -174,7 +175,7 @@ namespace EKContent.web.Controllers
         [HttpPost]
         public ActionResult ChangePassword(PasswordChangeViewModel model)
         {
-            model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
+            model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.PageNavigation.Id, _service);
             if (!Membership.ValidateUser(Membership.GetUser().UserName, model.OldPassword))
                 ModelState.AddModelError("OldPassword", "Incorrect Password");
             ModelState["NavigationModel.Page.Title"].Errors.Clear();
@@ -185,7 +186,7 @@ namespace EKContent.web.Controllers
             var user = Membership.GetUser();
             user.ChangePassword(model.OldPassword, model.NewPassword);
             TempData["message"] = "Password has been changed";
-            return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id});
+            return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.PageNavigation.Id});
 
             
         }

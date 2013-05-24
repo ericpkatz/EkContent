@@ -11,6 +11,8 @@ namespace EKContent.web.Models.Entities
         public string Body { get; set; }
         public int ImageId { get; set; }
 
+        public DateTime DatePublished { get; set; }
+
         [ScriptIgnore]
         public Image Image { get; set; }
     }

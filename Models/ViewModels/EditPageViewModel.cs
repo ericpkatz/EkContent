@@ -22,7 +22,7 @@ namespace EKContent.web.Models.ViewModels
             return
                 PageTypes().Select(
                     pt =>
-                    new SelectListItem {Text = pt.ToString(), Value = pt.ToString(), Selected = Page.PageType == pt}).
+                    new SelectListItem {Text = pt.ToString(), Value = pt.ToString(), Selected = Page.PageNavigation.PageType == pt}).
                     ToList();
         }
 

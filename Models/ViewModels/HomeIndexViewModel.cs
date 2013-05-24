@@ -8,28 +8,28 @@ namespace EKContent.web.Models.ViewModels
 {
     public class HomeIndexViewModel
     {
-        public List<Page> Pages { get; set; }
-        public List<Page> TopLevelPages()
+        public List<PageNavigation> Pages { get; set; }
+        public List<PageNavigation> TopLevelPages()
         {
             return Pages.Where(p =>  p.ParentId == HomePage().Id).ToList();
         }
-        public Page HomePage()
+        public PageNavigation HomePage()
         {
             return Pages.Single(p => p.IsHomePage());
         }
 
-        public List<Page> ChildPages()
+        public List<PageNavigation> ChildPages()
         {
             if (this.Page.IsHomePage())
-                return new List<Page>();
-            return Pages.Where(p => p.ParentId == Page.Id).ToList();
+                return new List<PageNavigation>();
+            return Pages.Where(p => p.ParentId == Page.PageNavigation.Id).ToList();
         }
 
         public Site Site { get; set; }
         public Page Page { get; set; }
         public bool HasChildren()
         {
-            return Pages.Any(p => p.ParentId == Page.Id);
+            return Pages.Any(p => p.ParentId == Page.PageNavigation.Id);
         }
 
         public bool ShowChildPages()
@@ -62,13 +62,13 @@ namespace EKContent.web.Models.ViewModels
         }
 
 
-        private List<Page> _pagePathList = null;
-        public List<Page> PagePathList()
+        private List<PageNavigation> _pagePathList = null;
+        public List<PageNavigation> PagePathList()
         {
             if (_pagePathList != null)
                 return _pagePathList;
-            var page = Page;
-            var pages = new List<Page>();
+            var page = Page.PageNavigation;
+            var pages = new List<PageNavigation>();
             do
             {
                 pages.Add(page);

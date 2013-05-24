@@ -12,44 +12,50 @@
      @Html.HiddenFor(m => m.NavigationModel.Page.Id)
      @Html.HiddenFor(m => m.ParentId)
     <div class="control-group">
-    @Html.LabelFor(m => m.Page.Title)
-    @Html.TextBoxFor(m => m.Page.Title)
+    @Html.LabelFor(m => m.Page.PageNavigation.Title)
+    @Html.TextBoxFor(m => m.Page.PageNavigation.Title)
     @Html.Help("The title of the page")
-    @Html.ValidationMessageFor(m => m.Page.Title)
+    @Html.ValidationMessageFor(m => m.Page.PageNavigation.Title)
     </div>
         <div class="control-group">
-    @Html.TextBoxFor(m => m.Page.Priority, new { @readonly = "readonly"})<div data-slider="#Page_Priority"></div>
-    @Html.Help("Use slider to change priority. Determines the order of pages. Page with a priority of 1 will appear before a page of priority 2.")@Html.Help("The priority of page. A page with a priority of 1 will show up before a page of priority 2")
+    @Html.TextBoxFor(m => m.Page.PageNavigation.Priority, new { @readonly = "readonly"})<div data-slider="#Page_PageNavigation_Priority" style="width:50%"></div>
+    @Html.Help("The priority of page. A page with a priority of 1 will show up before a page of priority 2")
     </div>
     <div class="control-group">
-    @Html.LabelFor(m => m.Page.PageType)
-    @Html.DropDownListFor(m => m.Page.PageType, Model.PageTypesSelectList()) 
+    @Html.LabelFor(m => m.Page.PageNavigation.PageType)
+    @Html.DropDownListFor(m => m.Page.PageNavigation.PageType, Model.PageTypesSelectList()) 
      @Html.Help("Blog will result in an accordian style, HTML will list all contents of page, Contact should only be used on the contact page")      
     </div>
     
     <div class="control-group">
-    @Html.LabelFor(m => m.Page.Description)
-    @Html.TextBoxFor(m => m.Page.Description)
+    @Html.LabelFor(m => m.Page.PageNavigation.Description)
+    @Html.TextAreaFor(m => m.Page.PageNavigation.Description)
      @Html.Help("The description of the page- not currently being used")       
     </div>    
     
     <div class="control-group">
-    @Html.LabelFor(m => m.Page.ShowTwitterFeed)
-    @Html.CheckBoxFor(m => m.Page.ShowTwitterFeed)
+    @Html.LabelFor(m => m.Page.PageNavigation.ShowTwitterFeed)
+    @Html.CheckBoxFor(m => m.Page.PageNavigation.ShowTwitterFeed)
      @Html.Help("If Twitter is configured- Feed will be displayed on right side of page.")       
     </div>    
     <div class="control-group">
-    @Html.LabelFor(m => m.Page.Active)
-    @Html.CheckBoxFor(m => m.Page.Active)
+    @Html.LabelFor(m => m.Page.PageNavigation.Active)
+    @Html.CheckBoxFor(m => m.Page.PageNavigation.Active)
      @Html.Help("Whether or not the page will be seen- not currently being used.")       
     </div>
     <div class="control-group">
-    Move the content on this page to a new page below this page.
-    <button class="btn btn-large" data-action-post=@Url.Action("MovePage")>Move Page</button>
+    @Html.LabelFor(m => m.Page.PageNavigation.ShowPageDescriptionInHeroUnit)
+    @Html.CheckBoxFor(m => m.Page.PageNavigation.ShowPageDescriptionInHeroUnit)
+     @Html.Help("Whether or not the page description will be displayed in a hero unit.")       
+    </div>        
+    if (Model.Page.HasContent())
+    {
+    <div class="control-group">
+    <button class="btn btn-large btn-warning" data-action-post=@Url.Action("MovePage")>Move the content on this page to a new page below this page.</button>
     
      @Html.Help("This can be used to add new content to this page and 'retire' the content on this page.")       
     </div>       
-    
+    }
     
     <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
     <button class="btn btn-large" data-href=@Url.Action("Index", new { id = Model.Id() })>Cancel</button>

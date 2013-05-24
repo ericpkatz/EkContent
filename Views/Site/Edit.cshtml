@@ -31,16 +31,6 @@
     @Html.ValidationMessageFor(m => m.Site.Phone)
     </div>
     <div class="control-group">
-    @Html.LabelFor(m => m.Site.TwitterConsumerKey)
-    @Html.TextBoxFor(m => m.Site.TwitterConsumerKey)
-    @Html.ValidationMessageFor(m => m.Site.TwitterConsumerKey)
-    </div>
-    <div class="control-group">
-    @Html.LabelFor(m => m.Site.TwitterConsumerSecret)
-    @Html.TextBoxFor(m => m.Site.TwitterConsumerSecret)
-    @Html.ValidationMessageFor(m => m.Site.TwitterConsumerSecret)
-    </div>
-    <div class="control-group">
     @Html.LabelFor(m => m.Site.SmtpSiteEmail)
     @Html.TextBoxFor(m => m.Site.SmtpSiteEmail)
     @Html.ValidationMessageFor(m => m.Site.SmtpSiteEmail)
@@ -65,7 +55,7 @@
     @Model.Site.Logo
     </div>                     
 
-    <button type="submit" value="save" class="btn-primary">Save</button>
-    <button data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
+    <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
     
 }

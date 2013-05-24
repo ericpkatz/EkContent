@@ -81,12 +81,13 @@ namespace EKContent.web.Controllers
                 content.ShowTitle = model.Content.ShowTitle;
                 content.Priority = model.Content.Priority;
                 content.ImageId = model.Content.ImageId;
+                content.DatePublished = model.Content.DatePublished;
                 _service.SavePage(model.NavigationModel.Page);
                 Message("Content Saved");
-                return RedirectToAction("Index", new { id = model.NavigationModel.Page.Id });
+                return RedirectToAction("Index", new { id = model.NavigationModel.Page.PageNavigation.Id });
             }
             model.Images = _service.GetImages();
-            model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.Id, _service);
+            model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.PageNavigation.Id, _service);
             return View(model);
         }
 
@@ -94,29 +95,31 @@ namespace EKContent.web.Controllers
         public ActionResult EditPage(int? pageId, int? parentId)
         {
             var id = pageId.HasValue ? pageId.Value : parentId.Value;
-            var page = _service.GetNavigation().Single(p => p.Id == id);
+            var page = _service.GetPage(id);
             var model = new EditPageViewModel
             {
                 ParentId = parentId,
                 PageId = pageId,
                 NavigationModel = HomeIndexViewModelLoader.Create(id, _service)
             };
-            model.Page = model.Inserting() ? new Page { ParentId = parentId } : page;
+            model.Page = model.Inserting() ? new Page {PageNavigation =  new PageNavigation{ParentId = parentId} } : page;
             return View(model);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         [Authorize(Roles = "Admin")]
         public ActionResult EditPage(EditPageViewModel model)
         {
             var pages = _service.GetNavigation();
-            var page = model.Inserting() ? new Page { ParentId = model.ParentId } : pages.Single(p => p.Id == model.NavigationModel.Page.Id);
-            page.Title = model.Page.Title;
-            page.PageType = model.Page.PageType;
-            page.Active = model.Page.Active;
-            page.Description = model.Page.Description;
-            page.Priority = model.Page.Priority;
-            page.ShowTwitterFeed = model.Page.ShowTwitterFeed;
+            var page = model.Inserting() ? new PageNavigation { ParentId = model.ParentId } : pages.Single(p => p.Id == model.NavigationModel.Page.PageNavigation.Id);
+            page.Title = model.Page.PageNavigation.Title;
+            page.PageType = model.Page.PageNavigation.PageType;
+            page.Active = model.Page.PageNavigation.Active;
+            page.Description = model.Page.PageNavigation.Description;
+            page.Priority = model.Page.PageNavigation.Priority;
+            page.ShowTwitterFeed = model.Page.PageNavigation.ShowTwitterFeed;
+            page.ShowPageDescriptionInHeroUnit = model.Page.PageNavigation.ShowPageDescriptionInHeroUnit;
             if (model.Inserting())
             {
                 page.Id = pages.Max(p => p.Id) + 1;
@@ -131,10 +134,10 @@ namespace EKContent.web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult MovePage(EditPageViewModel model)
         {
-            //var pageToMove = _service.GetPage(model.NavigationModel.Page.Id);
-            var newPage = _service.MovePageToChildPage(model.NavigationModel.Page.Id);
+            //var pageToMove = _service.GetPage(model.NavigationModel.Page.PageNavigation.Id);
+            var newPage = _service.MovePageToChildPage(model.NavigationModel.Page.PageNavigation.Id);
             Message("A new page has been added.");
-            return RedirectToAction("Index", new { id = newPage.Id });
+            return RedirectToAction("Index", new { id = newPage.PageNavigation.Id });
         }
 
         [HttpPost]

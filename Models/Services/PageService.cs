@@ -66,20 +66,21 @@ namespace EKContent.web.Models.Services
             return GetPage(page.Id);
         }
 
-        public List<Page> GetNavigation()
+        public List<PageNavigation> GetNavigation()
         {
             return _navigationProvider.GetNavigation().OrderBy(p => p.Priority).ToList();
         }
 
-        public void SaveNavigation(List<Page> pages)
+        public void SaveNavigation(List<PageNavigation> pages)
         {
             _navigationProvider.Save(pages);
         }
 
         public Page GetPage(int id)
         {
-            var page = _navigationProvider.GetNavigation().Where(p => p.Id == id).Single();
-            page.Modules = _dataProvider.Get(page.Id);
+            var page = new Page {PageNavigation = _navigationProvider.GetNavigation().Where(p => p.Id == id).Single()};
+            
+            page.Modules = _dataProvider.Get(page.PageNavigation.Id);
             foreach(var module in page.Modules)
                 foreach(var item in module.Content)
                     if(item.ImageId != 0)
@@ -105,7 +106,7 @@ namespace EKContent.web.Models.Services
         public Page MovePageToChildPage(int pageId)
         {
             var pages = GetNavigation();
-            var page = pages.Single(p => p.Id == pageId);
+            var page = new Page { PageNavigation = pages.Single(p => p.Id == pageId) };
             var modules = GetPage(pageId).Modules;
             foreach (Module m in modules)
                 m.Content = m.Content.OrderBy(c => c.Priority).ThenByDescending(c => c.DateCreated).ToList();
@@ -114,20 +115,19 @@ namespace EKContent.web.Models.Services
             page.Modules = new List<Module>();
             //page.Title = "Change Title";
 
-            newPage.Id = pages.Max(p => p.Id) + 1;
-            newPage.Title = "Change Page Title";
-            pages.Add(newPage);
-
-            SaveNavigation(pages);
+            newPage.PageNavigation.Id = pages.Max(p => p.Id) + 1;
+            newPage.PageNavigation.Title = modules.SelectMany(m=>m.Content).First().Title;
+            pages.Add(newPage.PageNavigation);
             _dataProvider.Save(newPage);
             _dataProvider.Save(page);
+            SaveNavigation(pages);
             return newPage;
         }
 
         //images
         public List<Image> GetImages()
         {
-            return _imageProvider.Get();
+            return _imageProvider.Get().OrderByDescending(i=>i.DateCreated).ToList();
         }
 
         public string GetImage(int id)

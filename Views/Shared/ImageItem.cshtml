@@ -1,0 +1,15 @@
+﻿@model EKContent.web.Models.ViewModels.ContentWrapper
+
+@{
+    ViewBag.Title = "HTML";
+}
+
+
+@if (Model.Content.Image != null)
+{
+    @*<div class="row" style="text-align:center">*@
+    <p style="text-align:center;">
+    <img style="border:solid 1px black;padding:10px;border-radius:3px;" src="@Url.Content(String.Format("~/user_images/{0}", @Model.Content.Image.FileName))" />
+    </p>
+  @*  </div>*@
+}

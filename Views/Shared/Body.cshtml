@@ -1,0 +1,9 @@
+﻿@model EKContent.web.Models.ViewModels.ContentWrapper
+
+@{
+    ViewBag.Title = "HTML";
+}
+
+ <div style="margin-top:10px" class="well">
+ @Html.Raw(ViewBag.Service.RenderImages(Model.Content.Body))
+ </div>

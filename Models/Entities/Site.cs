@@ -14,8 +14,6 @@ namespace EKContent.web.Models.Entities
         public string Phone { get; set; }
         public string Logo { get; set; }
         public bool ShowLogo { get; set; }
-        public string TwitterConsumerKey { get; set; }
-        public string TwitterConsumerSecret { get; set; }
         public string SmtpSiteEmail { get; set; }
         public string SmtpSiteEmailPassword { get; set; }
         public string SmtpServer { get; set; }

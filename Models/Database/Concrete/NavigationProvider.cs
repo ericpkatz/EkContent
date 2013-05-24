@@ -13,7 +13,7 @@ namespace EKContent.web.Models.Database.Concrete
     {
         private string navigationFile = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/pages.js");
 
-        public void Save(List<Page> pages)
+        public void Save(List<PageNavigation> pages)
         {
             StreamWriter sw = null;
             try
@@ -32,7 +32,7 @@ namespace EKContent.web.Models.Database.Concrete
             }
         }
 
-        public List<Entities.Page> GetNavigation()
+        public List<PageNavigation> GetNavigation()
         {
             if(!File.Exists(navigationFile))
             {
@@ -40,7 +40,7 @@ namespace EKContent.web.Models.Database.Concrete
                 try
                 {
                     sw = new StreamWriter(navigationFile);
-                    var page = new Page
+                    var page = new PageNavigation
                                    {
                                        Id = 1,
                                        ParentId = null,
@@ -49,7 +49,7 @@ namespace EKContent.web.Models.Database.Concrete
                                        DateModified = DateTime.Now,
                                        Active = true
                                    };
-                    var pages = new List<Page> {page};
+                    var pages = new List<PageNavigation> {page};
                     var serializer = new JavaScriptSerializer();
                     var str = serializer.Serialize(pages);
                     sw.Write(str);
@@ -62,14 +62,14 @@ namespace EKContent.web.Models.Database.Concrete
                     sw = null;
                 }
             }
-            Page[] navigation = null;
+            PageNavigation[] navigation = null;
             StreamReader sr = null;
             try
             {
                 sr = new StreamReader(navigationFile);
                 var str = sr.ReadToEnd();
                 var serializer = new JavaScriptSerializer();
-                navigation = serializer.Deserialize<Page[]>(str);
+                navigation = serializer.Deserialize<PageNavigation[]>(str);
             }
             finally
             {

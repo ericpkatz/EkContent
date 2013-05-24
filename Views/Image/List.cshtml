@@ -3,8 +3,25 @@
     ViewBag.Title = "List";
 }
 @Html.Partial("Nav", Model.NavigationModel)
+<style>
+img[data-toggle-image]
+{
+    cursor: pointer;
+}
+
+</style>
+<script>
+    $(function () {
+        $("img[data-toggle-image]").click(function () {
+            $(this).attr("src", $(this).attr("src").indexOf("bitmap-") != -1 ? $(this).attr("src").replace("bitmap-", "") : $(this).attr("src").replace("user_images/", "user_images/bitmap-"));
+        });
+    });
+
+</script>
 <h2>
     Images</h2>
+
+
 <button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id })" class="btn">
     <i class="icon-plus"></i>Add Image
 </button>
@@ -21,10 +38,7 @@
                 Name
             </th>
             <th>
-                Edit
-            </th>
-            <th>
-                Delete
+                
             </th>
         </tr>
     </thead>
@@ -39,19 +53,25 @@
                     </div>
                 </td>
                 <td>
-                    <img src="@Url.Content(String.Format("~/user_images/bitmap-{0}", image.FileName))" />
+                    <img data-toggle-image="true" src="@Url.Content(String.Format("~/user_images/bitmap-{0}", image.FileName))" />
                 </td>
                 <td>
                     @image.Title
                 </td>
                 <td>
+    <div class="btn-group">
                     <button data-href="@Url.Action("Create", new { pageId = Model.NavigationModel.Page.Id, id = image.Id })" class="btn">
                         Edit <i class="icon-wrench"></i>
                     </button>
-                </td>
-                <td>
-                    <a  data-toggle="modal" href="#delete-image-@image.Id" class="btn btn-danger"><i
-                        class="icon-trash"></i>Delete Image</a>
+         <button class="btn dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li>
+        <a  data-toggle="modal" href="#delete-image-@image.Id">
+            <i class="icon-trash"></i>Delete Content</a>
+            </li>
+        </ul>
+    </div> 
                     <div id="delete-image-@image.Id" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
                         <div class="modal-header">

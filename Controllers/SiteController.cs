@@ -83,7 +83,7 @@ new ShortTermTokenProvider());
         {
             _service.SaveTwitterKeys(model.TwitterKeys);
             TempData["message"] = "Twitter keys have been set";
-            return RedirectToAction("EditTwitterKeys",  new { id = model.NavigationModel.Page.Id });
+            return RedirectToAction("EditTwitterKeys",  new { id = model.NavigationModel.Page.PageNavigation.Id });
         }
 
         public ActionResult Edit(int id)
@@ -114,7 +114,7 @@ new ShortTermTokenProvider());
             };
             _service.SetSite(model.Site);
             TempData["message"] = "Site settings have been set";
-            return RedirectToAction("Index", "Home", new {id = model.NavigationModel.Page.Id});
+            return RedirectToAction("Index", "Home", new {id = model.NavigationModel.Page.PageNavigation.Id});
         }
 
     }

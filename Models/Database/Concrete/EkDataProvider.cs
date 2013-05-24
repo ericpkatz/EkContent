@@ -14,7 +14,7 @@ namespace EKContent.web.Models.Database.Concrete
 
         public void Save(Page page)
         {
-            string pageFile = System.Web.HttpContext.Current.Server.MapPath(String.Format("~/App_Data/page{0}.js", page.Id));
+            string pageFile = System.Web.HttpContext.Current.Server.MapPath(String.Format("~/App_Data/page{0}.js", page.PageNavigation.Id));
 
                 StreamWriter sw = null;
                 try
@@ -36,7 +36,7 @@ namespace EKContent.web.Models.Database.Concrete
         public void Delete(int id)
         {
             string pageFile = System.Web.HttpContext.Current.Server.MapPath(String.Format("~/App_Data/page{0}.js", id));
-            if (!File.Exists(pageFile))
+            if (File.Exists(pageFile))
             {
                 File.Delete(pageFile);
             }
@@ -53,12 +53,6 @@ namespace EKContent.web.Models.Database.Concrete
                     sw = new StreamWriter(pageFile);
                     var page = new Page
                     {
-                        Id = 1,
-                        ParentId = null,
-                        Title = "Home",
-                        DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now,
-                        Active = true,
                         Modules = new List<Module>
                                       {
                                           new Module

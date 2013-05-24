@@ -15,7 +15,18 @@
     });
 </script>
 @Html.Partial("Nav")
-
+@if (Model.Page.PageNavigation.ShowHeroUnit())
+{
+<div class="well">
+    @Html.Raw(Model.Page.Description)
+</div>
+}
+else if (Model.Page.PageNavigation.ShowSimpleDescription())
+{
+    <div>
+     @Html.Raw(Model.Page.Description)   
+    </div>
+}
 <div class="row">
 <div class="span6">
 @*<br clear="all" />*@

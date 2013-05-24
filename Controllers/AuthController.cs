@@ -43,7 +43,7 @@ namespace EKContent.web.Controllers
             else
             {
                 FormsAuthentication.SetAuthCookie(model.Username, false);
-                return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id });
+                return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.PageNavigation.Id });
             }
         }
 
@@ -67,7 +67,7 @@ namespace EKContent.web.Controllers
 
             _service.ChangePassword(model.OldPassword, model.NewPassword);
             TempData["message"] = "Password has been changed";
-            return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.Id});
+            return RedirectToAction("Index", "Home", new { id = model.NavigationModel.Page.PageNavigation.Id});
         }
 
     }
