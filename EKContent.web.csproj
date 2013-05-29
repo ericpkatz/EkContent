@@ -105,6 +105,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseAdminController.cs" />
+    <Compile Include="Controllers\StyleSettingsController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Infrastructure\HtmlHelpers.cs" />
     <Compile Include="Infrastructure\NavigationModelBinder.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Models\Database\Abstract\IStyleSettingsDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEKProvider.cs" />
     <Compile Include="Models\Database\Abstract\IImageDataProvider.cs" />
     <Compile Include="Models\Database\Abstract\IEkSiteDataProvider.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Models\Database\Abstract\IEKRoleProvider.cs" />
     <Compile Include="Models\Database\Abstract\INavigationProvider.cs" />
     <Compile Include="Models\Database\Abstract\ITwitterKeysProvider.cs" />
+    <Compile Include="Models\Database\Concrete\StyleSettingsDataProvider.cs" />
     <Compile Include="Models\Database\Concrete\EkTwitterKeysDataProvider.cs" />
     <Compile Include="Models\Database\Concrete\EKProvider.cs" />
     <Compile Include="Models\Database\Concrete\ImageProvider.cs" />
@@ -143,10 +146,13 @@
     <Compile Include="Models\Entities\ModuleType.cs" />
     <Compile Include="Models\Entities\Page.cs" />
     <Compile Include="Models\Entities\Site.cs" />
+    <Compile Include="Models\Entities\StyleSettings.cs" />
     <Compile Include="Models\Entities\TwitterKeys.cs" />
     <Compile Include="Models\Services\PageService.cs" />
+    <Compile Include="Models\Styles\StylesProvider.cs" />
     <Compile Include="Models\ViewModels\BaseViewModel.cs" />
     <Compile Include="Models\ViewModels\ContentWrapper.cs" />
+    <Compile Include="Models\ViewModels\StyleSettingsEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TwitterKeysEditViewModel.cs" />
     <Compile Include="Models\ViewModels\ImageCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\ImageListViewModel.cs" />
@@ -170,7 +176,6 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\diy.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\site.css" />
@@ -296,6 +301,7 @@
     <Content Include="Views\Shared\ImageItem.cshtml" />
     <Content Include="Views\Shared\Body.cshtml" />
     <Content Include="Views\Shared\Items\TestimonialItem.cshtml" />
+    <Content Include="Views\StyleSettings\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

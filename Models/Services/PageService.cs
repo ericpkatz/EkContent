@@ -23,6 +23,16 @@ namespace EKContent.web.Models.Services
         private IEKRoleProvider _roleProvider = null;
         private IEKProvider _dal = null;
 
+        public StyleSettings GetStyleSettings()
+        {
+            return _dal.StyleSettingsProvider.Get();
+        }
+
+        public void SetStyleSettings(StyleSettings settings)
+        {
+            _dal.StyleSettingsProvider.Save(settings);
+        }
+
         public Site GetSite()
         {
             return _siteProvider.Get();

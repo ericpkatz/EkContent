@@ -12,13 +12,13 @@
                 class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
             </a>
             
-            <a class="brand" href="@Url.Action("Index", "Home", new { id = (int?)null })"><i class="@Model.Site.IconLogo()"></i>@Model.Site.Title</a>
+            <a class="brand" href="@Url.Action("Index", "Home", new { pageTitle = Model.Pages.Single(p=>p.IsHomePage()).PagePath(), id = (int?)null })"><i class="@Model.Site.IconLogo()"></i>@Model.Site.Title</a>
             
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     @foreach (var page in Model.TopLevelPages())
                     {
-                        <li @(Model.Page.Id == page.Id ? "class=active" : String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
+                         <li @(Model.Page.Id == page.Id ? "class=active" : String.Empty)>@Html.ActionLink(page.Title, "Index", "Home", new { pageTitle = page.PagePath() }, null)</li>
                     }
                     <li class="nav-header">User Actions:</li>
 <li><a  href = "@Url.Action(User.Identity.IsAuthenticated ? "Logout" : "Login", "Auth", new { id = Model.Page.Id })"><span class="badge badge-info">@( User.Identity.IsAuthenticated ? "Logout" : "Login")</span></a></li>
@@ -34,3 +34,15 @@
         </div>
     </div>
 </div>
+
+@if (Model.PagePathList().Count < 3)
+{
+<select class="alternative-navigation">
+            <option value="@Url.Action("Index", "Home", new { pageTitle = Model.Pages.Single(p => p.IsHomePage()).PagePath(), id = (int?)null })">@Model.Site.Title</option>
+            
+                    @foreach (var page in Model.TopLevelPages())
+                    {
+                         <option value="@Url.Action("Index", "Home", new { pageTitle = page.PagePath() }, null)" @(Model.Page.Id == page.Id ? "selected=selected" : String.Empty)>@page.Title</option>
+                    }
+</select>
+}

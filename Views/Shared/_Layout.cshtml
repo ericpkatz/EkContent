@@ -24,6 +24,9 @@
 
         <script>
             $(function () {
+                $("select.alternative-navigation").change(function () {
+                    window.document.location = $(this).val();
+                });
                 $("div[data-slider]").each(
                     function () {
                         $(this).slider({

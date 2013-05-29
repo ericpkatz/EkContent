@@ -33,6 +33,11 @@ namespace EKContent.web.Models.Entities
             set;
         }
 
+        public string PagePath()
+        {
+            return Title.Replace(' ', '_');
+        }
+
         public bool ShowHeroUnit()
         {
             return this.ShowPageDescriptionInHeroUnit && !String.IsNullOrEmpty(Description);

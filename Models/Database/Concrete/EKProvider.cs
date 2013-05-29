@@ -39,5 +39,11 @@ namespace EKContent.web.Models.Database.Concrete
         {
             get { return new EkTwitterKeysDataProvider(); }
         }
+
+
+        public IStyleSettingsDataProvider StyleSettingsProvider
+        {
+            get { return new StyleSettingsDataProvider(); }
+        }
     }
 }

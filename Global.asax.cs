@@ -25,6 +25,12 @@ namespace EKContent.web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.MapRoute(
+                "PageTitle", // Route name
+                "web/{pageTitle}", // URL with parameters
+                new { controller = "Home", action = "Index" },
+                new { pageTitle = @"[a-zA-Z][_a-zA-Z\d]*" }
+            );
 
             routes.MapRoute(
                 "Id", // Route name

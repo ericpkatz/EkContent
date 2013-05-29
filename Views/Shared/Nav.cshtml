@@ -3,7 +3,7 @@
     ViewBag.Title = Model.Page.Title;
 }
 @Html.Partial("TopNavBar")
-@if (!Model.Page.IsHomePage())
+@if (!Model.Page.IsHomePage() && Model.PagePathList().Count > 2)
 {
     <ul class="breadcrumb" @(Model.ShowBreadCrumb() ? "style=display:block" : String.Empty)>
         @for (var i = 0; i < Model.PagePathList().Count; i++)
@@ -18,7 +18,7 @@
             }
             else
             {
-            <li><a href="@Url.Action("Index", "Home", new { id = Model.PagePathList()[i].Id }, null)">@Model.PagePathList()[i].Title</a>
+            <li><a href="@Url.Action("Index", "Home", new { pageTitle = Model.PagePathList()[i].PagePath() }, null)">@Model.PagePathList()[i].Title</a>
                 <span class="divider">/</span></li>            
             }
         }
@@ -29,7 +29,7 @@
     <ul class="nav nav-pills nav-stacked">
         @foreach (var page in Model.ChildPages())
         {
-            <li>@Html.ActionLink(page.Title, "Index", "Home", new { id = page.Id }, null)</li>
+            <li>@Html.ActionLink(page.Title, "Index", "Home", new { pageTitle = page.PagePath() }, null)</li>
         }
     </ul>
 }
@@ -70,7 +70,9 @@
             <li><a  href = "@Url.Action("EditTwitterKeys", "Site", new { id = Model.Page.Id })">
                 <i class="icon-globe"></i>Twitter Settings</a></li>
             <li><a href = "@Url.Action("Index", "Member", new { id = Model.Page.Id })">
-                <h5><i class="icon-user"></i>Manage Users</h5></a></li>
+                <i class="icon-user"></i>Manage Users</a></li>
+            <li><a href = "@Url.Action("Edit", "StyleSettings", new { id = Model.Page.Id })">
+                <i class="icon-user"></i>Style Settings</a></li>
         </ul>
     </div>
     

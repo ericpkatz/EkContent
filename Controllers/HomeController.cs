@@ -25,7 +25,7 @@ namespace EKContent.web.Controllers
             return View(model);
         }
 
-        public ActionResult SendMessage(int? id, HomeIndexViewModel model, Message message, bool userMode = false)
+        public ActionResult SendMessage(int? id, string pageTitle, HomeIndexViewModel model, Message message, bool userMode = false)
         {
             ViewBag.Service = _service;
             _service.SendMessage(message);
@@ -111,6 +111,8 @@ namespace EKContent.web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditPage(EditPageViewModel model)
         {
+            if (!this.ModelState.IsValid)
+                return View(model);
             var pages = _service.GetNavigation();
             var page = model.Inserting() ? new PageNavigation { ParentId = model.ParentId } : pages.Single(p => p.Id == model.NavigationModel.Page.PageNavigation.Id);
             page.Title = model.Page.PageNavigation.Title;

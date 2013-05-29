@@ -13,5 +13,6 @@ namespace EKContent.web.Models.Database.Abstract
         IImageDataProvider ImageProvider{get; }
         IEKRoleProvider RoleProvider { get; }
         ITwitterKeysProvider TwitterKeysProvider { get;  }
+        IStyleSettingsDataProvider StyleSettingsProvider { get;  }
     }
 }

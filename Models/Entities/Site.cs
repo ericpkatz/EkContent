@@ -17,6 +17,7 @@ namespace EKContent.web.Models.Entities
         public string SmtpSiteEmail { get; set; }
         public string SmtpSiteEmailPassword { get; set; }
         public string SmtpServer { get; set; }
+        public string CustomStyleSheetIdentifier { get; set; }
         public bool HideLogo()
         {
             return !ShowLogo;

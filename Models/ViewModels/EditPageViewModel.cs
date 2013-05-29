@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EKContent.web.Models.Database.Concrete;
 using EKContent.web.Models.Entities;
+using EKContent.web.Models.Services;
 
 namespace EKContent.web.Models.ViewModels
 {
-    public class EditPageViewModel : BaseViewModel
+    public class EditPageViewModel : BaseViewModel, IValidatableObject
     {
         public Page Page { get; set; }
         public int? ParentId { get; set; }
@@ -44,5 +47,14 @@ namespace EKContent.web.Models.ViewModels
             return String.Format("{0} {1}", action, " Page");
         }
 
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+            var service = new PageService(new EKProvider());
+            if ((this.Inserting()  || (!Inserting() && service.GetPage(this.Page.Id).Title.ToLower() != this.Page.PageNavigation.Title.ToLower())) && service.GetNavigation().Any(p => p.PagePath().ToLower() == this.Page.PageNavigation.PagePath().ToLower()))
+                errors.Add(new ValidationResult("Page title is currently being used", new string[]{"Page.PageNavigation.Title"}));
+            return errors;
+        }
     }
 }
