@@ -18,7 +18,10 @@ namespace EKContent.web.Controllers
     [Authorize(Roles = "Admin")]
     public class SiteController : Controller
     {
-
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            ViewBag.Service = _service;
+        }
         private PageService _service;
         public SiteController(IEKProvider dal)
         {

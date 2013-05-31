@@ -11,6 +11,10 @@ namespace EKContent.web.Controllers
     [Authorize(Roles = "Admin")]
     public class MemberController : BaseAdminController
     {
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            ViewBag.Service = _service;
+        }
         public MemberController(IEKProvider provider): base(provider)
         {
 

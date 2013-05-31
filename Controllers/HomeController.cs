@@ -14,6 +14,11 @@ namespace EKContent.web.Controllers
     {
         private PageService _service;
 
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            ViewBag.Service = _service;
+        }
+
         public HomeController(IEKProvider dal)
         {
             _service = new PageService(dal);

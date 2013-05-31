@@ -44,7 +44,12 @@
     @Html.LabelFor(m => m.Site.SmtpServer)
     @Html.TextBoxFor(m => m.Site.SmtpServer)
     @Html.ValidationMessageFor(m => m.Site.SmtpServer)
-    </div>               
+    </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Site.CustomStyleSheetIdentifier)
+    @Html.TextBoxFor(m => m.Site.CustomStyleSheetIdentifier)
+    @Html.ValidationMessageFor(m => m.Site.CustomStyleSheetIdentifier)
+    </div>                    
     <div class="control-group">
     <label for="image-input">Upload Image</label>
     <input type="file" name="image-input" id="image-input" />

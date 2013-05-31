@@ -18,7 +18,10 @@ namespace EKContent.web.Controllers
     [Authorize(Roles = "Admin")]
     public class StyleSettingsController : Controller
     {
-
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            ViewBag.Service = _service;
+        }
         private PageService _service;
         public StyleSettingsController(IEKProvider dal)
         {
@@ -32,6 +35,22 @@ namespace EKContent.web.Controllers
             var model = new StyleSettingsEditViewModel { StyleSettings = _service.GetStyleSettings() };
             model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Generate(int id)
+        {
+            _service.StylesProvider().Generate();
+            TempData["message"] = "Style sheets have been generated";
+            return RedirectToAction("Edit", new {id = id});
+        }
+
+        [HttpPost]
+        public ActionResult Revert(int id)
+        {
+            _service.StylesProvider().Revert();
+            TempData["message"] = "Style sheets have been reverted";
+            return RedirectToAction("Edit", new { id = id });
         }
 
         [HttpPost]

@@ -18,6 +18,10 @@ namespace EKContent.web.Controllers
 {
     public class TwitterController : Controller
     {
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            ViewBag.Service = _service;
+        }
         private PageService _service;
         public TwitterController(IEKProvider dal)
         {

@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 using System.Web.Security;
 using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Entities;
+using EKContent.web.Models.Styles;
 using EKContent.web.Models.ViewModels;
 using Newtonsoft.Json.Linq;
 
@@ -41,6 +42,11 @@ namespace EKContent.web.Models.Services
         public void SetSite(Site site)
         {
             _siteProvider.Save(site);
+        }
+
+        public StylesProvider StylesProvider()
+        {
+            return new StylesProvider(_dal);
         }
 
         //public PageService(INavigationProvider navigationProvider, IEkDataProvider dataProvider, IEkSiteDataProvider siteProvider, IImageDataProvider imageProvider)
@@ -221,5 +227,14 @@ namespace EKContent.web.Models.Services
             return md5Hash;
         }
 
+        public string BootstrapStyleSheet()
+        {
+            return new StylesProvider(_dal).GetStyleSheet("bootstrap.min");
+        }
+
+        public string BootstrapResponsiveStyleSheet()
+        {
+            return new StylesProvider(_dal).GetStyleSheet("bootstrap-responsive.min");
+        }
     }
 }

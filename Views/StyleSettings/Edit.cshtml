@@ -11,13 +11,15 @@
 {                                 
     @Html.HiddenFor(m => m.NavigationModel.Page.Id)
     <div class="control-group">
-    @Html.LabelFor(m => m.StyleSettings.BodyBackgroundColor)
-    @Html.TextBoxFor(m => m.StyleSettings.BodyBackgroundColor)
-    @Html.ValidationMessageFor(m => m.StyleSettings.BodyBackgroundColor)
+    @Html.LabelFor(m => m.StyleSettings.bodyBackground)
+    @Html.TextBoxFor(m => m.StyleSettings.bodyBackground)
+    @Html.ValidationMessageFor(m => m.StyleSettings.bodyBackground)
     </div>                     
 
     <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
     <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    <button class="btn btn-large btn-warning" data-action=@Url.Action("Generate",  new { id = Model.NavigationModel.Page.Id })>Generate Style Sheets</button>
+<button class="btn btn-large btn-warning" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>Revert Style Sheets</button>        
     
 }
 </div>

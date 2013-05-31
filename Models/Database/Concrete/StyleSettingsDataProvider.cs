@@ -23,7 +23,7 @@ namespace EKContent.web.Models.Database.Concrete
             {
                 styleSettings = new StyleSettings
                                {
-                                   BodyBackgroundColor = "#fff"
+                                   bodyBackground = "#fff"
                                };
                 Save(styleSettings);
                 return styleSettings;
