@@ -4,6 +4,10 @@
     ViewBag.Title = "HTML";
 }
 
+@if (Model.Idx == 0)
+{   
+@Html.Partial("ReviewForm", new EKContent.web.Models.ViewModels.ReviewViewModel { ContentWrapper = Model, Message = new EKContent.web.Models.Entities.Message { } })
+}
 
  @Html.Partial("EditContentControls")
  @Html.Partial("ImageItem")
@@ -11,3 +15,4 @@
     <p>@Html.Raw(Model.Content.Body)</p>
     <small>@Model.Content.Title on @Model.Content.DatePublished.ToShortDateString()</small>
     </blockquote>
+

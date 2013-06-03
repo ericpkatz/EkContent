@@ -30,11 +30,14 @@ namespace EKContent.web.Controllers
             return View(model);
         }
 
-        public ActionResult SendMessage(int? id, string pageTitle, HomeIndexViewModel model, Message message, bool userMode = false)
+        public ActionResult SendMessage(int? id, string pageTitle, HomeIndexViewModel model, Message message, bool userMode = false, bool review = false)
         {
             ViewBag.Service = _service;
             _service.SendMessage(message);
-            TempData["message"] = "Your message has been sent";
+            if(review)
+                TempData["message"] = "Thanks for your review!!";
+            else
+                TempData["message"] = "Your message has been sent";
             return RedirectToAction("Index", new {id = id});
         }
 

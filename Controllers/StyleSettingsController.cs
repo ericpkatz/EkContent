@@ -28,21 +28,23 @@ namespace EKContent.web.Controllers
             _service = new PageService(dal);
         }
 
-      
+
 
         public ActionResult Edit(int id)
         {
             var model = new StyleSettingsEditViewModel { StyleSettings = _service.GetStyleSettings() };
+            model.Settings = _service.StylesProvider().VariablesList();
             model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Generate(int id)
+        public ActionResult Generate(StyleSettingsEditViewModel model)
         {
+            _service.SetStyleSettings(new StyleSettings { Settings = model.Settings });
             _service.StylesProvider().Generate();
             TempData["message"] = "Style sheets have been generated";
-            return RedirectToAction("Edit", new {id = id});
+            return RedirectToAction("Edit", new { id = model.NavigationModel.Page.PageNavigation.Id });
         }
 
         [HttpPost]
@@ -56,9 +58,9 @@ namespace EKContent.web.Controllers
         [HttpPost]
         public ActionResult Edit(StyleSettingsEditViewModel model)
         {
-            _service.SetStyleSettings(model.StyleSettings);
+            _service.SetStyleSettings(new StyleSettings{Settings =  model.Settings});
             TempData["message"] = "Style settings have been set";
-            return RedirectToAction("Edit",  new {id = model.NavigationModel.Page.PageNavigation.Id});
+            return RedirectToAction("Edit", new { id = model.NavigationModel.Page.PageNavigation.Id });
         }
 
     }

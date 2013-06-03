@@ -146,12 +146,14 @@
     <Compile Include="Models\Entities\ModuleType.cs" />
     <Compile Include="Models\Entities\Page.cs" />
     <Compile Include="Models\Entities\Site.cs" />
+    <Compile Include="Models\Entities\StyleSetting.cs" />
     <Compile Include="Models\Entities\StyleSettings.cs" />
     <Compile Include="Models\Entities\TwitterKeys.cs" />
     <Compile Include="Models\Services\PageService.cs" />
     <Compile Include="Models\Styles\StylesProvider.cs" />
     <Compile Include="Models\ViewModels\BaseViewModel.cs" />
     <Compile Include="Models\ViewModels\ContentWrapper.cs" />
+    <Compile Include="Models\ViewModels\ReviewViewModel.cs" />
     <Compile Include="Models\ViewModels\StyleSettingsEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TwitterKeysEditViewModel.cs" />
     <Compile Include="Models\ViewModels\ImageCreateViewModel.cs" />
@@ -283,6 +285,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="images\glyphicons-halflings-white.png" />
+    <Content Include="images\glyphicons-halflings.png" />
     <Content Include="libs\dotless.compiler.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -346,6 +350,7 @@
     <Content Include="Views\Shared\Body.cshtml" />
     <Content Include="Views\Shared\Items\TestimonialItem.cshtml" />
     <Content Include="Views\StyleSettings\Edit.cshtml" />
+    <Content Include="Views\Shared\ReviewForm.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

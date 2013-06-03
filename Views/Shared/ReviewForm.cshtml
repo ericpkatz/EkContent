@@ -1,0 +1,33 @@
+﻿@model EKContent.web.Models.ViewModels.ReviewViewModel
+@{
+    ViewBag.Title = "HTML";
+}
+ 
+    <p>
+    <a class="btn btn-primary btn-large" data-toggle="modal" href="#modal-review">Add your own review!</a>
+    </p>
+            <div id="modal-review" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @using (Html.BeginForm("SendMessage", "Home", new { id = Model.ContentWrapper.Page.Id }, FormMethod.Post))
+    {
+    <input type="hidden" name="review" value="true" />
+ <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h3 id="myModalLabel">Add Your Review!!</h3>
+</div>
+<div class="modal-body">
+    @Html.TextBoxFor(m=>m.Message.Name, new{@class="span3", placeholder="Your Name"})
+    @Html.ValidationMessageFor(m => m.Message.Name)
+    @Html.TextBoxFor(m=>m.Message.Email, new{@class="span3", placeholder="Your Email"})
+    @Html.ValidationMessageFor(m => m.Message.Email)
+    <div class="controls">
+    <textarea id="message" name="Body" class="span3" placeholder="Your Review" rows="5"></textarea>
+    </div>
+    </div>
+<div class="modal-footer">
+<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+<button id="contact-submit" type="submit" class="btn btn-primary input-medium">Send Review</button>
+</div>
+  
+    }  </div>
+
+

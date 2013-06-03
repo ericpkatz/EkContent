@@ -38,7 +38,7 @@ namespace EKContent.web.Models.ViewModels
             if (ParentId.HasValue)
                 return ParentId.Value;
             else
-                return PageId.Value;
+                return Page.PageNavigation.Id;
         }
 
         public string TitleText()
@@ -52,7 +52,7 @@ namespace EKContent.web.Models.ViewModels
         {
             var errors = new List<ValidationResult>();
             var service = new PageService(new EKProvider());
-            if ((this.Inserting()  || (!Inserting() && service.GetPage(this.Page.Id).Title.ToLower() != this.Page.PageNavigation.Title.ToLower())) && service.GetNavigation().Any(p => p.PagePath().ToLower() == this.Page.PageNavigation.PagePath().ToLower()))
+            if ((this.Inserting()  || (!Inserting() && service.GetPage(this.Page.PageNavigation.Id).Title.ToLower() != this.Page.PageNavigation.Title.ToLower())) && service.GetNavigation().Any(p => p.PagePath().ToLower() == this.Page.PageNavigation.PagePath().ToLower()))
                 errors.Add(new ValidationResult("Page title is currently being used", new string[]{"Page.PageNavigation.Title"}));
             return errors;
         }

@@ -9,6 +9,10 @@
 <h3>@Model.TitleText()</h3>
 @using (Html.BeginForm("EditPage", "Home", FormMethod.Post, new { @class="well"}))
 {
+    if (!Model.Inserting())
+    {
+        @Html.HiddenFor(m => m.Page.PageNavigation.Id)
+    }
      @Html.HiddenFor(m => m.NavigationModel.Page.Id)
      @Html.HiddenFor(m => m.ParentId)
     <div class="control-group">

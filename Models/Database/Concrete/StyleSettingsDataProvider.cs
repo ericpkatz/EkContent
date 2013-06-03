@@ -13,9 +13,6 @@ namespace EKContent.web.Models.Database.Concrete
     {
         string file = System.Web.HttpContext.Current.Server.MapPath(String.Format("~/App_Data/styleSettings.js"));
 
-
-
-
         public StyleSettings Get()
         {
             StyleSettings styleSettings = null;
@@ -23,7 +20,7 @@ namespace EKContent.web.Models.Database.Concrete
             {
                 styleSettings = new StyleSettings
                                {
-                                   bodyBackground = "#fff"
+                                  
                                };
                 Save(styleSettings);
                 return styleSettings;

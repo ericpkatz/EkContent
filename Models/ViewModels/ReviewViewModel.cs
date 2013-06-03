@@ -6,9 +6,9 @@ using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.ViewModels
 {
-    public class StyleSettingsEditViewModel : BaseViewModel
+    public class ReviewViewModel
     {
-        public StyleSettings StyleSettings { get; set; }
-        public List<StyleSetting> Settings { get; set; }
+        public ContentWrapper ContentWrapper { get; set; }
+        public Message Message { get; set; }
     }
 }

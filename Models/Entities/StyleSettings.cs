@@ -7,7 +7,6 @@ namespace EKContent.web.Models.Entities
 {
     public class StyleSettings
     {
-        public string bodyBackground { get; set; }
-        public string textColor { get; set; }
+        public List<StyleSetting> Settings { get; set; }
     }
 }

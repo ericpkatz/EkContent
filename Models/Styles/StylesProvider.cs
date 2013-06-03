@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 using EKContent.web.Models.Database.Abstract;
@@ -50,13 +51,31 @@ namespace EKContent.web.Models.Styles
             return String.Format("{0}{1}{2}.css", HasCustomStyle() ? dal.SiteProvider.Get().CustomStyleSheetIdentifier : String.Empty, HasCustomStyle() ? "." : String.Empty, baseStyleSheet);
         }
 
+        private void AddProperty(List<string> properties, string name, string value)
+        {
+            if (!String.IsNullOrEmpty(value))
+                properties.Add(String.Format("@{0}: {1};", name, value));
+        }
+
         public string GetVariableString()
         {
             var data = new List<string>();
-            if (!String.IsNullOrEmpty(StyleSettings.bodyBackground))
-                data.Add(String.Format("@bodyBackground: {0};", StyleSettings.bodyBackground));
-            if (!String.IsNullOrEmpty(StyleSettings.textColor))
-                data.Add(String.Format("@textColor: {0};", StyleSettings.textColor));
+            foreach (var setting in StyleSettings.Settings)
+                AddProperty(data, setting.Key, setting.Value);
+            //if (!String.IsNullOrEmpty(StyleSettings.bodyBackground))
+            //    data.Add(String.Format("@bodyBackground: {0};", StyleSettings.bodyBackground));
+            //if (!String.IsNullOrEmpty(StyleSettings.textColor))
+            //    data.Add(String.Format("@textColor: {0};", StyleSettings.textColor));
+            //AddProperty(data, "navbarBackgroundHighlight", StyleSettings.navbarBackgroundHighlight);
+            //AddProperty(data, "navbarBackground", StyleSettings.navbarBackground);
+            //AddProperty(data, "navbarBorder", StyleSettings.navbarBorder);
+            //AddProperty(data, "navbarText", StyleSettings.navbarText);
+            //AddProperty(data, "navbarLinkColor", StyleSettings.navbarLinkColor);
+            //AddProperty(data, "navbarLinkColorHover", StyleSettings.navbarLinkColorHover);
+            //AddProperty(data, "navbarLinkColorActive", StyleSettings.navbarLinkColorActive);
+            //AddProperty(data, "navbarLinkBackgroundHover", StyleSettings.navbarLinkBackgroundHover);
+            //AddProperty(data, "navbarLinkBackgroundActive", StyleSettings.navbarLinkBackgroundActive);
+            //AddProperty(data, "navbarBrandColor", StyleSettings.navbarBrandColor);
             return String.Join(Environment.NewLine, data.ToArray());
         }
 
@@ -186,6 +205,14 @@ namespace EKContent.web.Models.Styles
             }
         }
 
+        public string FileVariablesDotLess
+        {
+            get
+            {
+                return AbsolutePathToLessFile("variables.less");
+            }           
+        }
+
         public string FileExe
         {
             get
@@ -225,6 +252,22 @@ namespace EKContent.web.Models.Styles
             }
         }
 
+        public List<StyleSetting> VariablesList()
+        {
+            var input = ReadFile(FileVariablesDotLess);
+             var regex = new Regex("@(?<name>[^@]*?):(?<value>[^;]*?);");
+            var results = regex.Matches(input);
+            var current =  this.dal.StyleSettingsProvider.Get().Settings;
+            var defaultValues = (from Match match in results
+                        select
+                            new StyleSetting
+                                {Key = match.Groups["name"].Value.Trim(), Value = match.Groups["value"].Value.Trim()});
+            foreach (var item in current)
+            {
+                item.DefaultValue = defaultValues.Single(dv => dv.Key == item.Key).Value;
+            }
+            return current.ToList();
+        }
 
         public void Generate()
         {
@@ -243,7 +286,7 @@ namespace EKContent.web.Models.Styles
 
         public void Revert()
         {
-            foreach(var file in CustomFiles())
+            foreach (var file in CustomFiles())
             {
                 File.Delete(file.FullName);
             }
