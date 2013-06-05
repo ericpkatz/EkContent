@@ -171,13 +171,17 @@
     <Compile Include="ThirdParty\Twitter\LongTermTokenProvider.cs" />
     <Compile Include="ThirdParty\Twitter\ShortTermTokenProvider.cs" />
     <Compile Include="ThirdParty\Twitter\TwitterBaseClass.cs" />
+    <Compile Include="Utilities\ImageHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\EKContent.web.dll" />
+    <Content Include="bin\FreeTextBox.dll" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\less\accordion.less" />
@@ -301,6 +305,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\less.min.js" />
+    <Content Include="Views\Shared\FreeTextBox.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -316,7 +321,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\custom\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -351,6 +355,7 @@
     <Content Include="Views\Shared\Items\TestimonialItem.cshtml" />
     <Content Include="Views\StyleSettings\Edit.cshtml" />
     <Content Include="Views\Shared\ReviewForm.cshtml" />
+    <Content Include="Views\Shared\ReviewFormControls.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

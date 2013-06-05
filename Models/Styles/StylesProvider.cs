@@ -62,20 +62,6 @@ namespace EKContent.web.Models.Styles
             var data = new List<string>();
             foreach (var setting in StyleSettings.Settings)
                 AddProperty(data, setting.Key, setting.Value);
-            //if (!String.IsNullOrEmpty(StyleSettings.bodyBackground))
-            //    data.Add(String.Format("@bodyBackground: {0};", StyleSettings.bodyBackground));
-            //if (!String.IsNullOrEmpty(StyleSettings.textColor))
-            //    data.Add(String.Format("@textColor: {0};", StyleSettings.textColor));
-            //AddProperty(data, "navbarBackgroundHighlight", StyleSettings.navbarBackgroundHighlight);
-            //AddProperty(data, "navbarBackground", StyleSettings.navbarBackground);
-            //AddProperty(data, "navbarBorder", StyleSettings.navbarBorder);
-            //AddProperty(data, "navbarText", StyleSettings.navbarText);
-            //AddProperty(data, "navbarLinkColor", StyleSettings.navbarLinkColor);
-            //AddProperty(data, "navbarLinkColorHover", StyleSettings.navbarLinkColorHover);
-            //AddProperty(data, "navbarLinkColorActive", StyleSettings.navbarLinkColorActive);
-            //AddProperty(data, "navbarLinkBackgroundHover", StyleSettings.navbarLinkBackgroundHover);
-            //AddProperty(data, "navbarLinkBackgroundActive", StyleSettings.navbarLinkBackgroundActive);
-            //AddProperty(data, "navbarBrandColor", StyleSettings.navbarBrandColor);
             return String.Join(Environment.NewLine, data.ToArray());
         }
 
@@ -101,7 +87,7 @@ namespace EKContent.web.Models.Styles
 
         public DirectoryInfo ContentDirectory()
         {
-            return new DirectoryInfo(AbsPath("~/content"));
+            return new DirectoryInfo(AbsPath("~/content/css"));
         }
 
         public string ReplaceContents(string contents, string toReplace, string replaceWith)
@@ -146,7 +132,7 @@ namespace EKContent.web.Models.Styles
         }
         public string AbsolutePathToCssFile(string file)
         {
-            return AbsPath(String.Format("~/content/{0}", file));
+            return AbsPath(String.Format("~/content/css/{0}", file));
         }
 
         public string AbsolutePathToLessFile(string file)

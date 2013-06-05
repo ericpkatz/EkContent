@@ -1,0 +1,13 @@
+﻿@model EKContent.web.Models.Entities.Message
+@{
+    ViewBag.Title = "HTML";
+}
+ 
+    @Html.HiddenFor(m=>m.IsReview)
+    @Html.TextBoxFor(m=>m.Name, new{@class=String.Format("span{0}", Model.IsReview?"3" : "6"), placeholder="Your Name"})
+    @Html.ValidationMessageFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Email, new { @class = String.Format("span{0}", Model.IsReview ? "3" : "6"), placeholder = "Your Email" })
+    @Html.ValidationMessageFor(m => m.Email)
+    <div class="controls">
+    <textarea id="message" name="Body" class="span@(Model.IsReview?"3" : "6")" placeholder="@(Model.IsReview?"Your Review" : "Your Message")" rows="5"></textarea>
+    </div>

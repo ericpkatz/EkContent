@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ using EKContent.web.Models.Entities;
 using EKContent.web.Models.Services;
 using EKContent.web.Models.ViewModels;
 using EKContent.web.ThirdParty.Twitter;
+using EKContent.web.Utilities;
 
 namespace EKContent.web.Controllers
 {
@@ -112,8 +114,13 @@ new ShortTermTokenProvider());
                         System.IO.File.Delete(oldImagePath);
                 }
                 model.Site.Logo = String.Format("{0}{1}", Guid.NewGuid(), extension);
-                var saveTo = this.Server.MapPath(String.Format("~/user_images/{0}", model.Site.Logo));
-                this.Request.Files[0].SaveAs(saveTo);
+                //resize
+                using(var bitMap =  ImageHelper.Instance().ResizeImage(Request.Files[0].InputStream, 20, 20))
+                {
+                    var saveTo = this.Server.MapPath(String.Format("~/user_images/{0}", model.Site.Logo));
+                    bitMap.Save(saveTo);
+                }
+
             };
             _service.SetSite(model.Site);
             TempData["message"] = "Site settings have been set";

@@ -24,6 +24,11 @@ namespace EKContent.web.Controllers
             _service = new PageService(dal);
         }
 
+        public ActionResult Logon(HomeIndexViewModel homeIndexViewModel)
+        {
+            return RedirectToAction("Login", new {id = _service.GetHomePage().Id});
+        }
+
         public ActionResult Login(int id, HomeIndexViewModel homeIndexViewModel)
         {
             var model = new LoginViewModel {};

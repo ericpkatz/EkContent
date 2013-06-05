@@ -30,11 +30,11 @@ namespace EKContent.web.Controllers
             return View(model);
         }
 
-        public ActionResult SendMessage(int? id, string pageTitle, HomeIndexViewModel model, Message message, bool userMode = false, bool review = false)
+        public ActionResult SendMessage(int? id, string pageTitle, HomeIndexViewModel model, Message message, bool userMode = false)
         {
             ViewBag.Service = _service;
             _service.SendMessage(message);
-            if(review)
+            if(message.IsReview)
                 TempData["message"] = "Thanks for your review!!";
             else
                 TempData["message"] = "Your message has been sent";
@@ -90,6 +90,7 @@ namespace EKContent.web.Controllers
                 content.Priority = model.Content.Priority;
                 content.ImageId = model.Content.ImageId;
                 content.DatePublished = model.Content.DatePublished;
+                content.ShowAddThis = model.Content.ShowAddThis;
                 _service.SavePage(model.NavigationModel.Page);
                 Message("Content Saved");
                 return RedirectToAction("Index", new { id = model.NavigationModel.Page.PageNavigation.Id });

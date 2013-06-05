@@ -10,6 +10,10 @@
     @*<div class="row" style="text-align:center">*@
     <p style="text-align:center;">
     <img style="border:solid 1px black;padding:10px;border-radius:3px;" src="@Url.Content(String.Format("~/user_images/{0}", @Model.Content.Image.FileName))" />
+    @if (Model.Content.ShowAddThis)
+    {
+        <a href="http://pinterest.com/pin/create/button/?url=@(Url.Encode(this.Request.Url.AbsoluteUri))&media=@Server.UrlEncode(String.Format("{0}{1}user_images/{2}", HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority), Url.Content("~/"), Model.Content.Image.FileName))&description=@Server.UrlEncode(Model.Content.Title)" data-pin-do="buttonPin" data-pin-config="above"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
+    }
     </p>
   @*  </div>*@
 }

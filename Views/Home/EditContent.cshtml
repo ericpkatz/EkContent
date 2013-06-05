@@ -48,7 +48,16 @@
             @Html.DropDownListFor(m => m.Content.ImageId, Model.SelectListImages())
             @Html.Help("Image will appear before content body.")
         </div>
-    </div>        
+    </div>
+    <div class="row">
+        <div class="span2">
+            @Html.LabelFor(m => m.Content.ShowAddThis)
+        </div>
+        <div class="span6">
+            @Html.EditorFor(m => m.Content.ShowAddThis)
+            @Html.Help("Will users be able to 'pin' this content")
+        </div>
+    </div>            
     <div class="control-group">
         <div style="width: 500px">
             @Html.ValidationMessageFor(m => m.Content.Body)

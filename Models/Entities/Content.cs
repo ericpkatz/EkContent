@@ -10,6 +10,7 @@ namespace EKContent.web.Models.Entities
     {
         public string Body { get; set; }
         public int ImageId { get; set; }
+        public bool ShowAddThis { get; set; }
 
         public DateTime DatePublished { get; set; }
 

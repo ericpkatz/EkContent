@@ -9,24 +9,32 @@
 <div class="well">
 @using (Html.BeginForm())
 {  
-    int counter = 0;
+
     for (var i = 0; i < Model.Settings.Count; i++ )
     {
-    <div class="control-group @(Model.Settings[i].isDefault()?"info" : "success")">
+@*        @(i%3 == 0?Html.Raw("<div class=row>"):Html.Raw(String.Empty))*@
+    <div class="span3 control-group">
 
-    @Html.LabelFor(m => m.Settings[counter].Value, Model.Settings[counter].Key)
-    @Html.TextBoxFor(m =>  m.Settings[counter].Key)
-    @Html.TextBoxFor(m =>  m.Settings[counter].Value)
+    @Html.LabelFor(m => m.Settings[i].Value, Model.Settings[i].Key)
+    @Html.HiddenFor(m => m.Settings[i].Key)
+    @Html.TextBoxFor(m => m.Settings[i].Value)
     @Html.Help(Model.Settings[i].DefaultValue)
 
     </div>
-        counter++;
+@*      @(i % 3 == 0 ? Html.Raw("</div>") : Html.Raw(String.Empty))*@
     }            
     @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+    <br clear="all" />
+    <div class="form-actions">
     <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
     <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
-    <button class="btn btn-large btn-warning" data-action-post=@Url.Action("Generate", new { id = Model.NavigationModel.Page.Id })>Generate Style Sheets</button>
-<button class="btn btn-large btn-warning" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>Revert Style Sheets</button>        
+
+    <button class="btn btn-large btn-warning" data-action-post=@Url.Action("Generate", new { id = Model.NavigationModel.Page.Id })>Generate</button>
+
+<button class="btn btn-large btn-warning" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>Use Defaults</button>
+
+</div>
+        
     
 }
 </div>

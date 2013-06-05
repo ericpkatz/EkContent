@@ -10,13 +10,7 @@
 {
     <div class="row">
     <div class="span6">
-    <div class="controls controls-row">
-    <input id="name" name="Name" type="text" class="span3" placeholder="Your Name">
-    <input id="email" name="Email" type="email" class="span3" placeholder="Your Email address">
-    </div>
-    <div class="controls">
-    <textarea id="message" name="Body" class="span6" placeholder="Your Message" rows="5"></textarea>
-    </div>
+        @Html.Partial("ReviewFormControls", new EKContent.web.Models.Entities.Message {IsReview = false })
     <div class="controls">
     <button id="contact-submit" type="submit" class="btn btn-primary input-medium pull-right">Send</button>
     </div>
