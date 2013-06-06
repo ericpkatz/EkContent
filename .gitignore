@@ -1,4 +1,8 @@
 *.pubxml*
+
 obj/
+
 user_images/
+
 PublishProfiles/
+Scripts/tinymce/

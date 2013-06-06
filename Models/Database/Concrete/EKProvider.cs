@@ -45,5 +45,11 @@ namespace EKContent.web.Models.Database.Concrete
         {
             get { return new StyleSettingsDataProvider(); }
         }
+
+
+        public IColorProvider ColorProvider
+        {
+            get {return new ColorDataProvider(); }
+        }
     }
 }

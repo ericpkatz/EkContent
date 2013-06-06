@@ -9,30 +9,26 @@ using EKContent.web.Models.Entities;
 
 namespace EKContent.web.Models.Database.Concrete
 {
-    public class StyleSettingsDataProvider : IStyleSettingsDataProvider
+    public class ColorDataProvider : IColorProvider
     {
-        string file = System.Web.HttpContext.Current.Server.MapPath(String.Format("~/App_Data/styleSettings.js"));
+        string file = System.Web.HttpContext.Current.Server.MapPath(String.Format("~/App_Data/colors.js"));
 
-        public StyleSettings Get()
+        public List<Color> Get()
         {
-            StyleSettings styleSettings = null;
+            List<Color> settings = null;
             if (!File.Exists(file))
             {
-                styleSettings = new StyleSettings
-                               {
-                                  Settings = new List<StyleSetting>{}
-                               };
-                Save(styleSettings);
-                return styleSettings;
+                settings = new List<Color>();
+                Set(settings);
+                return settings;
             }
-            styleSettings = null;
             StreamReader sr = null;
             try
             {
                 sr = new StreamReader(file);
                 var str = sr.ReadToEnd();
                 var serializer = new JavaScriptSerializer();
-                styleSettings = serializer.Deserialize<StyleSettings>(str);
+                settings = serializer.Deserialize<List<Color>>(str);
             }
             finally
             {
@@ -40,19 +36,17 @@ namespace EKContent.web.Models.Database.Concrete
                 sr.Dispose();
                 sr = null;
             }
-            return styleSettings;
+            return settings;
         }
 
-
-        public void Save(StyleSettings styleSettings)
+        public void Set(List<Color> colors)
         {
-
             StreamWriter sw = null;
             try
             {
                 sw = new StreamWriter(file);
                 var serializer = new JavaScriptSerializer();
-                var str = serializer.Serialize(styleSettings);
+                var str = serializer.Serialize(colors);
                 sw.Write(str);
                 sw.Flush();
             }
@@ -61,7 +55,7 @@ namespace EKContent.web.Models.Database.Concrete
                 sw.Close();
                 sw.Dispose();
                 sw = null;
-            }          
+            }
         }
     }
 }

@@ -206,7 +206,7 @@ body {
   font-size: 14px;
   line-height: 20px;
   color: #333333;
-  background-color: #efefef;
+  background-color: white;
 }
 a {
   color: #0088cc;
@@ -1732,7 +1732,7 @@ table {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #efefef;
+  background-color: white;
 }
 .table-condensed th,
 .table-condensed td {
@@ -2405,7 +2405,7 @@ table th[class*="span"],
   width: 0;
   height: 0;
   vertical-align: top;
-  border-top: 4px solid black;
+  border-top: 4px solid #333333;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
   content: "";
@@ -2526,7 +2526,7 @@ table th[class*="span"],
 .dropup .caret,
 .navbar-fixed-bottom .dropdown .caret {
   border-top: 0;
-  border-bottom: 4px solid black;
+  border-bottom: 4px solid #333333;
   content: "";
 }
 .dropup .dropdown-menu,
@@ -2652,14 +2652,14 @@ table th[class*="span"],
   font-size: 20px;
   font-weight: bold;
   line-height: 20px;
-  color: black;
+  color: #333333;
   text-shadow: 0 1px 0 white;
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
 .close:hover,
 .close:focus {
-  color: black;
+  color: #333333;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.4;
@@ -3454,7 +3454,7 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs > .active > a:hover,
 .nav-tabs > .active > a:focus {
   color: #555555;
-  background-color: #efefef;
+  background-color: white;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -4400,7 +4400,7 @@ input[type="submit"].btn.btn-mini {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: black;
+  background-color: #333333;
 }
 .modal-backdrop.fade {
   opacity: 0;

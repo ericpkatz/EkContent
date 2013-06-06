@@ -44,7 +44,7 @@
         </script>
     @if (!Request.Browser.IsMobileDevice)
     {
-        <script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+        <script src="@Url.Content("~/Scripts/tinymce/tiny_mce.js")"></script>
 
         <script>
             tinymce.init({ selector: '.richText'

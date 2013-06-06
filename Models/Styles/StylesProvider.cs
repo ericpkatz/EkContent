@@ -246,13 +246,14 @@ namespace EKContent.web.Models.Styles
             var current =  this.dal.StyleSettingsProvider.Get().Settings;
             var defaultValues = (from Match match in results
                         select
-                            new StyleSetting
-                                {Key = match.Groups["name"].Value.Trim(), Value = match.Groups["value"].Value.Trim()});
-            foreach (var item in current)
+                            new StyleSetting { Key = match.Groups["name"].Value.Trim(), Value = match.Groups["value"].Value.Trim(), DefaultValue = match.Groups["value"].Value.Trim() });
+            foreach (var item in defaultValues)
             {
-                item.DefaultValue = defaultValues.Single(dv => dv.Key == item.Key).Value;
+                var currentItem = current.SingleOrDefault(cur => cur.Key == item.Key);
+                if (currentItem != null)
+                    item.Value = currentItem.Value;
             }
-            return current.ToList();
+            return defaultValues.ToList();
         }
 
         public void Generate()

@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.Title = "SaveCancelButtons";
+}
+
+
+    <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
+    <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>

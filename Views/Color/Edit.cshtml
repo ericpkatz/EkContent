@@ -1,0 +1,41 @@
+﻿@model EKContent.web.Models.ViewModels.ColorEditViewModel
+
+@{
+    ViewBag.Title = "Edit Site Settings";
+}
+
+@Html.Partial("Nav", Model.NavigationModel)
+<h2>Edit Color</h2>
+@using (Html.BeginForm("Edit", "Color"))
+{                                 
+    @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+    <div class="row">
+        <button class="btn" data-action-post=@Url.Action("Add")>Add
+        </button>
+    </div>
+    for (var i = 0; i < Model.Colors.Count; i++)
+    {
+    <div class="row">
+    <div class="span2">
+        @Html.LabelFor(m => m.Colors[i].Name)
+        @Html.TextBoxFor(m => m.Colors[i].Name)
+        @Html.ValidationMessageFor(m => m.Colors[i].Name)
+    </div>
+    <div class="span2">
+        @Html.LabelFor(m => m.Colors[i].Value)
+        @Html.TextBoxFor(m => m.Colors[i].Value)
+        @Html.ValidationMessageFor(m => m.Colors[i].Value)
+    </div>
+    <div class="span2">
+        @Html.LabelFor(m => m.Colors[i].IsPalette)
+        @Html.EditorFor(m => m.Colors[i].IsPalette)
+        @Html.ValidationMessageFor(m => m.Colors[i].IsPalette)
+    </div> 
+    <div class="span2">
+            <button class="btn"  data-action-post=@Url.Action("Remove", new { colorIdx = i }) href="#">Remove</button>
+    </div>
+    </div>  
+    }       
+
+@Html.Partial("SaveCancelButtons")
+    }
