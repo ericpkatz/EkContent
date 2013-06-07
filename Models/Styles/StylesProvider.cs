@@ -60,8 +60,9 @@ namespace EKContent.web.Models.Styles
         public string GetVariableString()
         {
             var data = new List<string>();
-            foreach (var setting in StyleSettings.Settings)
-                AddProperty(data, setting.Key, setting.Value);
+            foreach (var setting in VariablesList())
+                if(!setting.isDefault())
+                    AddProperty(data, setting.Key, setting.Value);
             return String.Join(Environment.NewLine, data.ToArray());
         }
 
@@ -242,11 +243,25 @@ namespace EKContent.web.Models.Styles
         {
             var input = ReadFile(FileVariablesDotLess);
              var regex = new Regex("@(?<name>[^@]*?):(?<value>[^;]*?);");
-            var results = regex.Matches(input);
+             var defaultValues = new List<StyleSetting>();
+            //var results = regex.Matches(input);
+            var lines = input.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            string category = String.Empty;
+            foreach(var line in lines){
+                var match = Regex.Match(line, "// (?<category>[A-Za-z ]+)" );
+
+                if(match.Success)
+                    category = match.Groups["category"].Value;
+                match = regex.Match(line);
+                if(match.Success)
+                    defaultValues.Add(new StyleSetting{ Key = match.Groups["name"].Value.Trim(), Value = match.Groups["value"].Value.Trim(), DefaultValue = match.Groups["value"].Value.Trim(), Category = category });
+
+            }
             var current =  this.dal.StyleSettingsProvider.Get().Settings;
-            var defaultValues = (from Match match in results
+            /*var defaultValues = (from Match match in results
                         select
-                            new StyleSetting { Key = match.Groups["name"].Value.Trim(), Value = match.Groups["value"].Value.Trim(), DefaultValue = match.Groups["value"].Value.Trim() });
+                            new StyleSetting { Key = match.Groups["name"].Value.Trim(), Value = match.Groups["value"].Value.Trim(), DefaultValue = match.Groups["value"].Value.Trim() }).ToList();
+             * */
             foreach (var item in defaultValues)
             {
                 var currentItem = current.SingleOrDefault(cur => cur.Key == item.Key);

@@ -46,7 +46,7 @@ namespace EKContent.web.Controllers
 
             _service.Dal.ColorProvider.Set(model.Colors);
             TempData["message"] = "Color settings have been set";
-            return RedirectToAction("Index", "Home", new {id = model.NavigationModel.Page.PageNavigation.Id});
+            return RedirectToAction("Edit", new {id = model.NavigationModel.Page.PageNavigation.Id});
         }
 
         [HttpPost]

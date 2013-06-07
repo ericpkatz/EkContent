@@ -12,6 +12,8 @@ namespace EKContent.web.Models.Entities
         public string Value { get; set; }
        [ScriptIgnore]
         public string DefaultValue { get; set; }
+       [ScriptIgnore]
+       public string Category { get; set; }
 
         public bool isDefault()
         {

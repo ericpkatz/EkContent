@@ -10,5 +10,6 @@ namespace EKContent.web.Models.ViewModels
     {
         public StyleSettings StyleSettings { get; set; }
         public List<StyleSetting> Settings { get; set; }
+        public List<Color> Colors { get; set; }
     }
 }

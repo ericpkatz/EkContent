@@ -1,40 +1,144 @@
 ﻿@model EKContent.web.Models.ViewModels.StyleSettingsEditViewModel
-
 @{
     ViewBag.Title = "Edit Style Settings";
 }
-
 @Html.Partial("Nav", Model.NavigationModel)
-<h2>Edit Style Settings</h2>
-<div class="well">
-@using (Html.BeginForm())
-{  
-
-    for (var i = 0; i < Model.Settings.Count; i++ )
+<h2>
+    Edit Style Settings</h2>
+<style>
+    [data-swatch].selected
     {
-@*        @(i%3 == 0?Html.Raw("<div class=row>"):Html.Raw(String.Empty))*@
-    <div class="span3 control-group">
+        border: solid 1px black;
+    }
+    
+    [data-swatch]
+    {
+        border-radius: 3px;
+        padding: 5px;
+        cursor: pointer;
+    }
+</style>
+<script>
+    $(function () {
+        $('#color-modal').on('shown', function () {
+            var index = $(this).attr("data-index");
+            var correspondingTextBox = $("input.property")[index];
+            var color = $(correspondingTextBox).val();
+            $("[data-swatch]").removeClass("selected");
+            var selected = $("[data-swatch]:contains(" + color + ")");
+            selected.addClass("selected");
+        });
 
-    @Html.LabelFor(m => m.Settings[i].Value, Model.Settings[i].Key)
-    @Html.HiddenFor(m => m.Settings[i].Key)
-    @Html.TextBoxFor(m => m.Settings[i].Value)
-    @Html.Help(Model.Settings[i].DefaultValue)
+        $(".color-opener").click(function () {
+            $('#color-modal').attr("data-index", $(this).attr("data-index"));
+        });
 
-    </div>
-@*      @(i % 3 == 0 ? Html.Raw("</div>") : Html.Raw(String.Empty))*@
-    }            
-    @Html.HiddenFor(m => m.NavigationModel.Page.Id)
-    <br clear="all" />
-    <div class="form-actions">
-    <button type="submit" value="save" class="btn btn-primary btn-large">Save</button>
-    <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+        $("[data-swatch]").click(function () {
+            var modal = $(this).parents("#color-modal");
+            $($("input.property")[modal.attr("data-index")]).val($(this).attr("data-swatch"));
+            $($("input.property")[modal.attr("data-index")]).css("background-color", $(this).attr("data-swatch"));
+            $(modal).modal("hide");
+        });
+        $("[data-category]").click(function () {
+            localStorage.setItem("data-category", $(this).attr("data-category"));
+        });
 
-    <button class="btn btn-large btn-warning" data-action-post=@Url.Action("Generate", new { id = Model.NavigationModel.Page.Id })>Generate</button>
+        if (localStorage.getItem("data-category")) {
+            $(".accordion-body").collapse("hide");
+            $(localStorage.getItem("data-category")).collapse("show");
+        }
+    });
+</script>
+<div class="well">
+    @using (Html.BeginForm("Edit", "StyleSettings", FormMethod.Post, new { @class="form form-horizontal"}))
+    {
+        <div class="accordion" id="style-accordion">
+            @{var categories = Model.Settings.GroupBy(m => m.Category).Select(gr => gr.Key);
 
-<button class="btn btn-large btn-warning" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>Use Defaults</button>
+              var i = 0;
+            }
+            @foreach (var category in categories)
+            {
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#style-accordian" href="#@category.Replace(" ", "-")" data-category="#@category.Replace(" ", "-")">
+                            @category
+                        </a>
+                    </div>
+                    @{var settings = Model.Settings.Where(s => s.Category == category);
+                    }
+                    <div id="@category.Replace(" ", "-")" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            @foreach (var setting in settings)
+                            {
+                                <div class="control-group">
+                                    <label class="control-label" for="@String.Format("Settings_{0}__Value", i)">@Model.Settings[i].Key</label>
+                                    @Html.HiddenFor(m => m.Settings[i].Key)
+                                    <div class="controls">
+                                    @if (Model.Colors.Select(c => c.Value).Contains(Model.Settings[i].Value))
+                                    {
+                                        @Html.TextBoxFor(m => m.Settings[i].Value, new { @class = "property", style = String.Format("background-color:{0}", Model.Settings[i].Value) })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.Settings[i].Value, new { @class = "property" })
+                                    }
+                                                                        <button href="#color-modal" role="button"  data-toggle="modal" class="color-opener" data-index=@i><i class="icon-tint"></i>
+                                        Color Helper</button>
+                                    (@Model.Settings[i].DefaultValue)
 
-</div>
+                                        </div>
+                                    @{i++;}
+                                    </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+        <br clear="all" />
+        <div class="form-actions">
+            <button type="submit" value="save" class="btn btn-primary btn-large">
+                Save</button>
+            <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>
+                Cancel</button>
+            <button class="btn btn-large btn-warning" data-action-post=@Url.Action("Generate", new { id = Model.NavigationModel.Page.Id })>
+                Generate</button>
+            <button class="btn btn-large btn-warning" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>
+                Use Defaults</button>
+        </div>
         
     
-}
+    }
+</div>
+<!-- Modal -->
+<div id="color-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Color Picker</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            @foreach (var color in Model.Colors)
+            {
+                <div class="span2">
+                    <p style="background-color:@color.Value" data-swatch="@color.Value">
+                        @color.Name
+                        <br />
+                        @color.Value
+                    </p>
+                </div>
+        
+
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+    </div>
 </div>

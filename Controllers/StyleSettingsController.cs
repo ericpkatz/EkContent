@@ -32,8 +32,9 @@ namespace EKContent.web.Controllers
 
         public ActionResult Edit(int id)
         {
-            var model = new StyleSettingsEditViewModel { StyleSettings = _service.GetStyleSettings() };
+            var model = new StyleSettingsEditViewModel {  };
             model.Settings = _service.StylesProvider().VariablesList();
+            model.Colors = _service.Dal.ColorProvider.Get();
             model.NavigationModel = HomeIndexViewModelLoader.Create(id, _service);
             return View(model);
         }
