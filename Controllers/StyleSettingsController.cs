@@ -16,16 +16,11 @@ using EKContent.web.ThirdParty.Twitter;
 namespace EKContent.web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class StyleSettingsController : Controller
+    public class StyleSettingsController : BaseController
     {
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+
+        public StyleSettingsController(IEKProvider dal) : base(dal)
         {
-            ViewBag.Service = _service;
-        }
-        private PageService _service;
-        public StyleSettingsController(IEKProvider dal)
-        {
-            _service = new PageService(dal);
         }
 
 

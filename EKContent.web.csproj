@@ -598,11 +598,10 @@
     <Content Include="Views\Shared\TopNavBar.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Shared\Items\HTMLItem.cshtml" />
-    <Content Include="Views\Shared\Items\BlogItem.cshtml" />
+    <Content Include="Views\Shared\Items\AccordianItem.cshtml" />
     <Content Include="Views\Shared\Items\ContactItem.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\EditContentControls.cshtml" />
-    <Content Include="Views\Home\Slider.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
     <None Include="Properties\PublishProfiles\diy_demo.pubxml" />
     <None Include="Properties\PublishProfiles\ekatz.pubxml" />
@@ -618,6 +617,8 @@
     <Content Include="Views\Shared\ReviewFormControls.cshtml" />
     <Content Include="Views\Color\Edit.cshtml" />
     <Content Include="Views\Shared\SaveCancelButtons.cshtml" />
+    <Content Include="Views\Shared\Items\BlogItem.cshtml" />
+    <Content Include="Views\Home\Blog.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

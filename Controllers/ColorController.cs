@@ -18,16 +18,11 @@ using EKContent.web.Utilities;
 namespace EKContent.web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class ColorController : Controller
+    public class ColorController : BaseController
     {
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+
+        public ColorController(IEKProvider dal) : base(dal)
         {
-            ViewBag.Service = _service;
-        }
-        private PageService _service;
-        public ColorController(IEKProvider dal)
-        {
-            _service = new PageService(dal);
         }
 
 

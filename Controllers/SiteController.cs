@@ -18,16 +18,12 @@ using EKContent.web.Utilities;
 namespace EKContent.web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class SiteController : Controller
+    public class SiteController : BaseController
     {
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+
+        public SiteController(IEKProvider dal) : base(dal)
         {
-            ViewBag.Service = _service;
-        }
-        private PageService _service;
-        public SiteController(IEKProvider dal)
-        {
-            _service = new PageService(dal);
+
         }
 
         public ActionResult EditTwitterKeys(int id)

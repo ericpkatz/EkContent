@@ -21,8 +21,14 @@
     @Html.Help("The title of the page")
     @Html.ValidationMessageFor(m => m.Page.PageNavigation.Title)
     </div>
+    <div class="control-group">
+    @Html.LabelFor(m => m.Page.PageNavigation.DatePublished)
+            @Html.TextBox("Page.PageNavigation.DatePublished", Model.Page.PageNavigation.DatePublished == DateTime.MinValue ? DateTime.Now.ToShortDateString() : Model.Page.PageNavigation.DatePublished.ToShortDateString(), new { @class = "datepicker" })
+            @Html.Help("The display date for this page.")
+            @Html.ValidationMessageFor(m => Model.Page.PageNavigation.DatePublished)
+    </div>    
         <div class="control-group">
-    @Html.TextBoxFor(m => m.Page.PageNavigation.Priority, new { @readonly = "readonly"})<div data-slider="#Page_PageNavigation_Priority" style="width:50%"></div>
+    @Html.TextBoxFor(m => m.Page.PageNavigation.Priority, new { @readonly = "readonly" })<div data-slider="#Page_PageNavigation_Priority" style="width:50%"></div>
     @Html.Help("The priority of page. A page with a priority of 1 will show up before a page of priority 2")
     </div>
     <div class="control-group">

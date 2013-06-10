@@ -15,6 +15,7 @@ namespace EKContent.web.Controllers
         public BaseController(IEKProvider provider)
         {
             _service = new PageService(provider);
+            ViewBag.Service = _service;
         }
     }
 }

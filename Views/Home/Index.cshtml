@@ -49,6 +49,10 @@ else if (Model.Page.PageNavigation.ShowSimpleDescription())
 {
     @Html.Partial("Contact")
 }
+@if (Model.Page.PageType == EKContent.web.Models.Entities.PageTypes.Blog)
+{
+    @Html.Partial("Blog")
+}
 </div>
 @if (Model.Page.ShowTwitterFeed)
 {

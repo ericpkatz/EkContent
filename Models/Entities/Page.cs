@@ -8,10 +8,11 @@ namespace EKContent.web.Models.Entities
 {
     public enum PageTypes
     {
-        Blog,
+        Accordian,
         HTML,
         Contact,
-        Testimonial
+        Testimonial,
+        Blog
     }
 
     public class Page 

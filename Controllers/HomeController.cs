@@ -10,18 +10,18 @@ using EKContent.web.Models.ViewModels;
 
 namespace EKContent.web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private PageService _service;
+        //private PageService _service;
 
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            ViewBag.Service = _service;
-        }
+        //protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        //{
+        //    ViewBag.Service = _service;
+        //}
 
-        public HomeController(IEKProvider dal)
+        public HomeController(IEKProvider dal) : base(dal)
         {
-            _service = new PageService(dal);
+            //_service = new PageService(dal);
         }
 
         public ActionResult Index(int? id, HomeIndexViewModel model, bool userMode = false)
@@ -124,13 +124,7 @@ namespace EKContent.web.Controllers
                 return View(model);
             var pages = _service.GetNavigation();
             var page = model.Inserting() ? new PageNavigation { ParentId = model.ParentId } : pages.Single(p => p.Id == model.NavigationModel.Page.PageNavigation.Id);
-            page.Title = model.Page.PageNavigation.Title;
-            page.PageType = model.Page.PageNavigation.PageType;
-            page.Active = model.Page.PageNavigation.Active;
-            page.Description = model.Page.PageNavigation.Description;
-            page.Priority = model.Page.PageNavigation.Priority;
-            page.ShowTwitterFeed = model.Page.PageNavigation.ShowTwitterFeed;
-            page.ShowPageDescriptionInHeroUnit = model.Page.PageNavigation.ShowPageDescriptionInHeroUnit;
+            model.Page.PageNavigation.TransferTo(page);
             if (model.Inserting())
             {
                 page.Id = pages.Max(p => p.Id) + 1;

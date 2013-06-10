@@ -37,7 +37,7 @@
 
 @if (Model.PagePathList().Count < 3)
 {
-<select class="alternative-navigation">
+<select class="alternative-navigation span2">
             <option value="@Url.Action("Index", "Home", new { pageTitle = Model.Pages.Single(p => p.IsHomePage()).PagePath(), id = (int?)null })">@Model.Site.Title</option>
             
                     @foreach (var page in Model.TopLevelPages())

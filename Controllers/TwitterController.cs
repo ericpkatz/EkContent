@@ -16,16 +16,11 @@ using Newtonsoft.Json.Linq;
 
 namespace EKContent.web.Controllers
 {
-    public class TwitterController : Controller
+    public class TwitterController : BaseController
     {
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+
+        public TwitterController(IEKProvider dal) : base(dal)
         {
-            ViewBag.Service = _service;
-        }
-        private PageService _service;
-        public TwitterController(IEKProvider dal)
-        {
-            _service = new PageService(dal);
         }
 
         private ServiceProviderDescription ServiceProviderDescription()

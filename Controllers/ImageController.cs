@@ -15,12 +15,9 @@ using Image = EKContent.web.Models.Entities.Image;
 namespace EKContent.web.Controllers
 {
     [Authorize(Roles="Admin")]
-    public class ImageController : Controller
+    public class ImageController : BaseController
     {
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            ViewBag.Service = _service;
-        }
+
         private void ResizeImage(string lcFilename, int lnWidth = 150, int lnHeight = 150)
         {
             System.Drawing.Bitmap bmpOut = null;
@@ -75,11 +72,9 @@ namespace EKContent.web.Controllers
             bmpOut.Save(lcFilename);
             bmpOut.Dispose();
         }
-        private PageService _service;
 
-        public ImageController(IEKProvider provider)
+        public ImageController(IEKProvider provider) : base(provider)
         {
-            _service = new PageService(provider);
         }
 
         public ActionResult List(int id, HomeIndexViewModel homeIndexViewModel)

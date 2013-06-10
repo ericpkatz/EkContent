@@ -20,8 +20,6 @@ namespace EKContent.web.Models.ViewModels
 
         public List<PageNavigation> ChildPages()
         {
-            if (this.Page.IsHomePage())
-                return new List<PageNavigation>();
             return Pages.Where(p => p.ParentId == Page.PageNavigation.Id).ToList();
         }
 
@@ -34,7 +32,7 @@ namespace EKContent.web.Models.ViewModels
 
         public bool ShowChildPages()
         {
-            return ChildPages().Count > 0;
+            return ChildPages().Count > 0 && !Page.IsHomePage() && Page.PageType != PageTypes.Blog;
         }
         public bool CanDelete()
         {
