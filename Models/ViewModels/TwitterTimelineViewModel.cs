@@ -5,7 +5,7 @@ using System.Web;
 
 namespace EKContent.web.Models.ViewModels
 {
-    public class TwitterTimelineViewModel
+    public class TwitterTimelineViewModel : BaseViewModel
     {
         public string TwitterLink { get; set; }
         public Newtonsoft.Json.Linq.JArray Tweets { get; set; }

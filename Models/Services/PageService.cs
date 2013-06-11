@@ -7,10 +7,14 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using DotNetOpenAuth.Messaging;
+using DotNetOpenAuth.OAuth;
+using DotNetOpenAuth.OAuth.ChannelElements;
 using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Entities;
 using EKContent.web.Models.Styles;
 using EKContent.web.Models.ViewModels;
+using EKContent.web.ThirdParty.Twitter;
 using Newtonsoft.Json.Linq;
 
 namespace EKContent.web.Models.Services
@@ -235,6 +239,25 @@ namespace EKContent.web.Models.Services
         public string BootstrapResponsiveStyleSheet()
         {
             return new StylesProvider(_dal).GetStyleSheet("bootstrap-responsive.min");
+        }
+
+        private ServiceProviderDescription TwitterServiceDescription()
+        {
+
+            return new ServiceProviderDescription
+
+            {
+                AccessTokenEndpoint = new MessageReceivingEndpoint("https://api.twitter.com/oauth/access_token", HttpDeliveryMethods.PostRequest),
+                RequestTokenEndpoint = new MessageReceivingEndpoint("https://api.twitter.com/oauth/request_token", HttpDeliveryMethods.PostRequest),
+                UserAuthorizationEndpoint = new MessageReceivingEndpoint("https://api.twitter.com/oauth/authorize", HttpDeliveryMethods.PostRequest),
+                TamperProtectionElements = new ITamperProtectionChannelBindingElement[] { new HmacSha1SigningBindingElement() },
+                ProtocolVersion = ProtocolVersion.V10a
+            };
+        }
+
+        public WebConsumer TwitterConsumer()
+        {
+            return new DotNetOpenAuth.OAuth.WebConsumer(TwitterServiceDescription(), new ShortTermTokenProvider());
         }
     }
 }

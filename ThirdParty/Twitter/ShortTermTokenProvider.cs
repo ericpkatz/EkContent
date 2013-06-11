@@ -42,12 +42,7 @@ namespace EKContent.web.ThirdParty.Twitter
         public void ExpireRequestTokenAndStoreNewAccessToken(string consumerKey, string requestToken, string accessToken, string accessTokenSecret)
         {
             Store.Remove(requestToken);
-            var keys = Keys();
-            keys.ApplicationAuthorizationKey = accessToken;
-            keys.ApplicationAuthorizationSecret = accessTokenSecret;
-            keys.Configured = true;
-            Service().SaveTwitterKeys(keys);
-            //Store[accessToken] = accessTokenSecret;
+            Store[accessToken] = accessTokenSecret;
         }
 
         public string GetTokenSecret(string token)

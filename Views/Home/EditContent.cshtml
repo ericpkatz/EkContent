@@ -59,7 +59,7 @@
         </div>
     </div>            
     <div class="control-group">
-        <div style="width: 500px">
+        <div style="width: 100%">
             @Html.ValidationMessageFor(m => m.Content.Body)
             @Html.TextAreaFor(m => m.Content.Body, new { @class = "richText", rows = 5 })
             @Html.Help("The body of the content item.")

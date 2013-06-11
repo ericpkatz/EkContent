@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace EKContent.web.Models.Entities
@@ -35,7 +36,8 @@ namespace EKContent.web.Models.Entities
 
         public string PagePath()
         {
-            return Title.Replace(' ', '_');
+            var title = Title.Replace(' ', '_');
+            return Regex.Replace(title, "[^A-Za-z0-0_]", String.Empty);
         }
 
         public bool ShowHeroUnit()

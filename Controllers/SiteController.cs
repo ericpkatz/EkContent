@@ -33,24 +33,10 @@ namespace EKContent.web.Controllers
             return View(model);
         }
 
-        private ServiceProviderDescription ServiceProviderDescription()
-        {
-
-            return new ServiceProviderDescription
-
-            {
-                AccessTokenEndpoint = new MessageReceivingEndpoint("     https://api.twitter.com/oauth/access_token", HttpDeliveryMethods.PostRequest),
-                RequestTokenEndpoint = new MessageReceivingEndpoint("     https://api.twitter.com/oauth/request_token", HttpDeliveryMethods.PostRequest),
-                UserAuthorizationEndpoint = new MessageReceivingEndpoint("https://api.twitter.com/oauth/authorize", HttpDeliveryMethods.PostRequest),
-                TamperProtectionElements = new ITamperProtectionChannelBindingElement[] { new HmacSha1SigningBindingElement() },
-                ProtocolVersion = ProtocolVersion.V10a
-            };
-
-        }
 
         public ActionResult StartAuth()
         {
-            var consumer = new DotNetOpenAuth.OAuth.WebConsumer(this.ServiceProviderDescription(), new ShortTermTokenProvider());
+            var consumer = _service.TwitterConsumer();
             var uri = new Uri(this.Request.Url.AbsoluteUri.Replace("Start", "End"));
             
             consumer.Channel.Send(consumer.PrepareRequestUserAuthorization(uri, null, null));
@@ -60,10 +46,13 @@ namespace EKContent.web.Controllers
 
         public ActionResult EndAuth(int id)
         {
-            var consumer = new DotNetOpenAuth.OAuth.WebConsumer(
-this.ServiceProviderDescription(),
-new ShortTermTokenProvider());
+            var consumer = _service.TwitterConsumer();
             var authorizationTokenResponse = consumer.ProcessUserAuthorization();
+            var keys = _service.Dal.TwitterKeysProvider.Get();
+            keys.ApplicationAuthorizationKey = authorizationTokenResponse.AccessToken;
+            keys.ApplicationAuthorizationSecret = new ShortTermTokenProvider().GetTokenSecret(authorizationTokenResponse.AccessToken);
+            keys.Configured = true;
+            _service.Dal.TwitterKeysProvider.Save(keys);
             TempData["message"] = "Twitter has been configured successfully.";
             return RedirectToAction("EditTwitterKeys", new { id = id });
            // Response.Write(authorizationTokenResponse.AccessToken);

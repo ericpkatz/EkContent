@@ -44,12 +44,23 @@
         </script>
     @if (!Request.Browser.IsMobileDevice)
     {
-        <script src="@Url.Content("~/Scripts/tinymce/tiny_mce.js")"></script>
+        <script src="@Url.Content("~/Scripts/tinymce/tinymce.min.js")"></script>
 
-        <script>
+@*        <script>
             tinymce.init({ selector: '.richText'
             });
-        </script>
+        </script>*@
+<script type="text/javascript">
+    tinymce.init({
+        selector: ".richText",
+        plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste"
+    ],
+        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    });
+</script>
 
 
     }

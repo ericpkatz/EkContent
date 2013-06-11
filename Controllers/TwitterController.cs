@@ -23,30 +23,13 @@ namespace EKContent.web.Controllers
         {
         }
 
-        private ServiceProviderDescription ServiceProviderDescription()
+        public ViewResult Index(TwitterTimelineViewModel model, int id)
         {
-
-            return new ServiceProviderDescription
-
-            {
-                AccessTokenEndpoint = new MessageReceivingEndpoint("     https://api.twitter.com/oauth/access_token", HttpDeliveryMethods.PostRequest),
-                RequestTokenEndpoint = new MessageReceivingEndpoint("     https://api.twitter.com/oauth/request_token", HttpDeliveryMethods.PostRequest),
-                UserAuthorizationEndpoint = new MessageReceivingEndpoint("https://api.twitter.com/oauth/authorize", HttpDeliveryMethods.PostRequest),
-                TamperProtectionElements = new ITamperProtectionChannelBindingElement[] { new HmacSha1SigningBindingElement() },
-                ProtocolVersion = ProtocolVersion.V10a
-            };
-
-        }
-        public ViewResult Index()
-        {
-            var model = new TwitterTimelineViewModel
-                            {
-                                Tweets = _service.GetTweets(),
-                                TwitterLink =
-                                    String.Format("https://twitter.com/{0}",
-                                                  _service.Dal.TwitterKeysProvider.Get().TwitterHandle),
-                                                  ShowFeed = _service.ShowTwitterFeed()
-                            };
+            model.Tweets = _service.GetTweets();
+            model.TwitterLink =
+                String.Format("https://twitter.com/{0}",
+                              _service.Dal.TwitterKeysProvider.Get().TwitterHandle);
+            model.ShowFeed = _service.ShowTwitterFeed();
             return View(model);
         }
 

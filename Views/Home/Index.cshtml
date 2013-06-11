@@ -57,7 +57,14 @@ else if (Model.Page.PageNavigation.ShowSimpleDescription())
 @if (Model.Page.ShowTwitterFeed)
 {
 <div class="span3">
-@Html.Action("Index", "Twitter")
+@Html.Partial("TwitterFeed", new TwitterTimelineViewModel
+{
+    NavigationModel = Model,
+    Tweets = ((EKContent.web.Models.Services.PageService)ViewBag.Service).GetTweets(),
+    TwitterLink = String.Format("https://twitter.com/{0}",
+        ((EKContent.web.Models.Services.PageService)ViewBag.Service).Dal.TwitterKeysProvider.Get().TwitterHandle),
+        ShowFeed = ((EKContent.web.Models.Services.PageService)ViewBag.Service).ShowTwitterFeed()
+})
 </div>
 }
 </div>

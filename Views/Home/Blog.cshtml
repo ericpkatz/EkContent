@@ -10,11 +10,12 @@
 {
     <tr>
         <td>
-        @page.DatePublished.ToShortDateString()
+        <em>@page.DatePublished.ToShortDateString()</em>
 
         @Html.ActionLink(page.Title, "Index", new { pageTitle = page.PagePath() })
         <p>
         @page.Description
+        <small>@Html.ActionLink("read more...", "Index", new { pageTitle = page.PagePath() })</small>
         </p>
         </td>
     </tr>

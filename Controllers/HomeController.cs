@@ -7,6 +7,7 @@ using EKContent.web.Models.Database.Abstract;
 using EKContent.web.Models.Entities;
 using EKContent.web.Models.Services;
 using EKContent.web.Models.ViewModels;
+using EKContent.web.ThirdParty.Twitter;
 
 namespace EKContent.web.Controllers
 {
@@ -175,11 +176,35 @@ namespace EKContent.web.Controllers
             return RedirectToAction("Index", new { id = model.PageId });
         }
 
-        public ActionResult Slider(int? id, HomeIndexViewModel model)
+        public ActionResult FollowUs(int id)
         {
-            ViewBag.Service = _service;
-            return View(model);
+            var consumer = _service.TwitterConsumer();
+            var uri = new Uri(this.Request.Url.AbsoluteUri.Replace("FollowUs", "EndFollowUs"));
+
+            consumer.Channel.Send(consumer.PrepareRequestUserAuthorization(uri, null, null));
+            return View();
+
         }
+
+        public ActionResult EndFollowUs(int id)
+        {
+            var consumer = _service.TwitterConsumer();
+            var authorizationTokenResponse = consumer.ProcessUserAuthorization();
+            //var keys = _service.Dal.TwitterKeysProvider.Get();
+            //keys.ApplicationAuthorizationKey = authorizationTokenResponse.AccessToken;
+            //keys.ApplicationAuthorizationSecret = new ShortTermTokenProvider().GetTokenSecret(authorizationTokenResponse.AccessToken);
+            //keys.Configured = true;
+            //_service.Dal.TwitterKeysProvider.Save(keys);
+            TempData["message"] = "Thanks for following us.";
+            return RedirectToAction("Index", new { id = id });
+            // Response.Write(authorizationTokenResponse.AccessToken);
+            // if (authorizationTokenResponse == null)
+
+            //   return RedirectToAction("Index", "Home");
+
+
+        }
+
 
     }
 }
