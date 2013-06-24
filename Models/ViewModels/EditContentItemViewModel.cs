@@ -41,5 +41,22 @@ namespace EKContent.web.Models.ViewModels
             items.Insert(0, new SelectListItem {Text = "None", Value = "0"});
             return items;
         }
+
+        private List<EKFile> _files;
+        public List<EKFile> Files
+        {
+            set { _files = value; }
+            get { return _files = _files ?? new List<EKFile>(); }
+        }
+
+        public List<SelectListItem> SelectListFiles()
+        {
+            var items =
+                Files.Select(
+                    i =>
+                    new SelectListItem { Value = i.Id.ToString(), Text = i.Title.ToString(), Selected = Content.ImageId == i.Id }).ToList();
+            items.Insert(0, new SelectListItem { Text = "None", Value = "0" });
+            return items;
+        }
     }
 }

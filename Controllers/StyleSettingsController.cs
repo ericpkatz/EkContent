@@ -52,6 +52,14 @@ namespace EKContent.web.Controllers
         }
 
         [HttpPost]
+        public ActionResult Clear(int id)
+        {
+            _service.StylesProvider().Clear();
+            TempData["message"] = "Style sheets have been cleared";
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        [HttpPost]
         public ActionResult Edit(StyleSettingsEditViewModel model)
         {
             _service.SetStyleSettings(new StyleSettings{Settings =  model.Settings});

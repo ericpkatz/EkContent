@@ -13,6 +13,9 @@
  @Html.Partial("ImageItem")
     <blockquote>
     <p>@Html.Raw(Model.Content.Body)</p>
+    @if (Model.Content.ShowTitle)
+    {
     <small>@Model.Content.Title on @Model.Content.DatePublished.ToShortDateString()</small>
+    }
     </blockquote>
 

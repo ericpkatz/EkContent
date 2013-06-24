@@ -274,11 +274,13 @@ namespace EKContent.web.Models.Styles
         public void Generate()
         {
             Revert();
+            var variableString = GetVariableString();
+            var empty = variableString == String.Empty;
             WriteFile(FileGeneratedVariablesDotLess, GetVariableString());
             WriteFile(FileGeneratedBootstrapDotLess,
-                      ReplaceContents(GetBootstrapContents(), "[custom.less]", VariableGeneratedFileName));
+                ReplaceContents(GetBootstrapContents(), "[custom.less]", empty ? String.Empty : VariableGeneratedFileName));
             WriteFile(FileGeneratedResponsiveDotLess,
-                      ReplaceContents(GetResponsiveContents(), "[custom.less]", VariableGeneratedFileName));
+                ReplaceContents(GetResponsiveContents(), "[custom.less]",empty ? String.Empty : VariableGeneratedFileName));
             ProcessDotLess(FileGeneratedBootstrapDotLess, FileGeneratedBootstrapDotCss);
             ProcessDotLess(FileGeneratedResponsiveDotLess, FileGeneratedResponsiveDotCss);
             var site = dal.SiteProvider.Get();
@@ -295,6 +297,18 @@ namespace EKContent.web.Models.Styles
             var site = dal.SiteProvider.Get();
             site.CustomStyleSheetIdentifier = String.Empty;
             dal.SiteProvider.Save(site);
+        }
+
+        public void Clear()
+        {
+            foreach (var file in CustomFiles())
+            {
+                File.Delete(file.FullName);
+            }
+            var site = dal.SiteProvider.Get();
+            site.CustomStyleSheetIdentifier = String.Empty;
+            dal.SiteProvider.Save(site);
+            dal.StyleSettingsProvider.Clear();
         }
 
         public void ProcessDotLess(string input, string output)

@@ -37,7 +37,7 @@ namespace EKContent.web.Models.Entities
         public string PagePath()
         {
             var title = Title.Replace(' ', '_');
-            return Regex.Replace(title, "[^A-Za-z0-0_]", String.Empty);
+            return Regex.Replace(title, "[^A-Za-z0-9_]", String.Empty);
         }
 
         public bool ShowHeroUnit()

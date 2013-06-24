@@ -15,5 +15,6 @@ namespace EKContent.web.Models.Database.Abstract
         ITwitterKeysProvider TwitterKeysProvider { get;  }
         IStyleSettingsDataProvider StyleSettingsProvider { get;  }
         IColorProvider ColorProvider { get; }
+        IFileDataProvider FileProvider { get;  }
     }
 }

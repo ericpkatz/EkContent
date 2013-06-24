@@ -62,7 +62,8 @@ namespace EKContent.web.Controllers
                                 Mdx = Mdx,
                                 Idx = Idx,
                                 NavigationModel =  HomeIndexViewModelLoader.Create(pageId, _service),
-                                Images = _service.GetImages()
+                                Images = _service.GetImages(),
+                                Files = _service.Dal.FileProvider.Get()
                             };
             model.Content = model.Inserting() ? new Content { } : page.Modules[Mdx].Content[Idx];
             return View(model);
@@ -73,8 +74,8 @@ namespace EKContent.web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditContent(EditContentItemViewModel model)
         {
-            if (String.IsNullOrEmpty(model.Content.Body))
-                ModelState.AddModelError("Content.Body", "Required");
+            //if (String.IsNullOrEmpty(model.Content.Body))
+            //    ModelState.AddModelError("Content.Body", "Required");
             if (ModelState.IsValid)
             {
                 var content = model.Inserting() ? new Content { } : model.NavigationModel.Page.Modules[model.Mdx].Content[model.Idx];
@@ -90,13 +91,16 @@ namespace EKContent.web.Controllers
                 content.ShowTitle = model.Content.ShowTitle;
                 content.Priority = model.Content.Priority;
                 content.ImageId = model.Content.ImageId;
+                content.FileId = model.Content.FileId;
                 content.DatePublished = model.Content.DatePublished;
                 content.ShowAddThis = model.Content.ShowAddThis;
+                content.BorderImage = model.Content.BorderImage;
                 _service.SavePage(model.NavigationModel.Page);
                 Message("Content Saved");
                 return RedirectToAction("Index", new { id = model.NavigationModel.Page.PageNavigation.Id });
             }
             model.Images = _service.GetImages();
+            model.Files = _service.Dal.FileProvider.Get();
             model.NavigationModel = HomeIndexViewModelLoader.Create(model.NavigationModel.Page.PageNavigation.Id, _service);
             return View(model);
         }
@@ -184,6 +188,16 @@ namespace EKContent.web.Controllers
             consumer.Channel.Send(consumer.PrepareRequestUserAuthorization(uri, null, null));
             return View();
 
+        }
+
+        public FileResult DownloadFile(int id)
+        {
+            var file = _service.Dal.FileProvider.Get().SingleOrDefault(f => f.Id == id);
+            if(file != null)
+            {
+                return File(file.AbsolutePath(), System.Net.Mime.MediaTypeNames.Application.Octet, file.NameWithExtension());
+            }
+            return null;
         }
 
         public ActionResult EndFollowUs(int id)

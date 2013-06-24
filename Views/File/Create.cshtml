@@ -1,0 +1,26 @@
+﻿@model EKContent.web.Models.ViewModels.FileCreateViewModel
+
+@{
+    ViewBag.Title = "Create File";
+}
+@Html.Partial("Nav", Model.NavigationModel)
+<h2>Create File</h2>
+@using (Html.BeginForm("Create", "File", FormMethod.Post, new { @class = "well", enctype = "multipart/form-data"}))
+{
+    @Html.HiddenFor(m => m.File.Id);
+    @Html.HiddenFor(m => m.File.FileName);                                    
+    @Html.HiddenFor(m => m.NavigationModel.Page.Id)
+    <div class="control-group">
+    @Html.LabelFor(m => m.File.Title)
+    @Html.TextBoxFor(m => m.File.Title)
+    @Html.ValidationMessageFor(m => m.File.Title)
+    </div>
+    <div class="control-group">
+    <label for="image-input">Upload File</label>
+    <input type="file" name="image-input" id="image-input" />
+    </div>    
+
+    <button type="submit" value="save" class="btn btn-primary">Save</button>
+    <button class="btn" data-href=@Url.Action("List", new { id = Model.NavigationModel.Page.Id })>Cancel</button>
+    
+}

@@ -98,17 +98,24 @@
         </div>
         @Html.HiddenFor(m => m.NavigationModel.Page.Id)
         <br clear="all" />
+        <div class="row">
         <div class="form-actions">
-            <button type="submit" value="save" class="btn btn-primary btn-large">
+            <button type="submit" value="save" class="btn btn-primary btn-large btn-block">
                 Save</button>
-            <button class="btn btn-large" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>
+                <br clear="all" />
+            <button class="btn btn-large btn-block" data-href=@Url.Action("Index", "Home", new { id = Model.NavigationModel.Page.Id })>
                 Cancel</button>
-            <button class="btn btn-large btn-warning" data-action-post=@Url.Action("Generate", new { id = Model.NavigationModel.Page.Id })>
+                <br clear="all" />
+            <button class="btn btn-large btn-warning btn-block" data-action-post=@Url.Action("Generate", new { id = Model.NavigationModel.Page.Id })>
                 Generate</button>
-            <button class="btn btn-large btn-warning" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>
+                <br clear="all" />
+            <button class="btn btn-large btn-warning btn-block" data-action=@Url.Action("Revert", new { id = Model.NavigationModel.Page.Id })>
                 Use Defaults</button>
+                <br clear="all" />
+            <button class="btn btn-large btn-warning btn-block" data-action=@Url.Action("Clear", new { id = Model.NavigationModel.Page.Id })>
+                Clear Settings</button>
         </div>
-        
+        </div>
     
     }
 </div>

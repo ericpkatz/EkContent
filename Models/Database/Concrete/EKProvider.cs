@@ -51,5 +51,11 @@ namespace EKContent.web.Models.Database.Concrete
         {
             get {return new ColorDataProvider(); }
         }
+
+
+        public IFileDataProvider FileProvider
+        {
+            get { return new FileProvider(); }
+        }
     }
 }

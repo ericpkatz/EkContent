@@ -102,12 +102,19 @@ namespace EKContent.web.Models.Services
             
             page.Modules = _dataProvider.Get(page.PageNavigation.Id);
             foreach(var module in page.Modules)
-                foreach(var item in module.Content)
-                    if(item.ImageId != 0)
+                foreach (var item in module.Content)
+                {
+                    if (item.ImageId != 0)
                     {
                         var image = _imageProvider.Get().SingleOrDefault(i => i.Id == item.ImageId);
                         item.Image = image;
                     }
+                    if (item.FileId != 0)
+                    {
+                        var file = this.Dal.FileProvider.Get().SingleOrDefault(i => i.Id == item.FileId);
+                        item.File = file;
+                    }
+                }
             return page;
         }
 

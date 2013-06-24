@@ -1,0 +1,15 @@
+﻿@model EKContent.web.Models.ViewModels.ContentWrapper
+
+@{
+    ViewBag.Title = "HTML";
+}
+
+
+@if (Model.Content.File != null)
+{
+    @*<div class="row" style="text-align:center">*@
+    <p style="text-align:center;">
+        <a href ="@Url.Action( "DownloadFile", "Home", new { id = Model.Content.FileId})" class="btn"><i class="icon-file"></i>Download</a>
+    </p>
+
+}

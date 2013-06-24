@@ -17,8 +17,8 @@
 @Html.Partial("Nav")
 @if (Model.Page.PageNavigation.ShowHeroUnit())
 {
-<div class="well">
-    @Html.Raw(Model.Page.Description)
+<div class="hero-unit">
+ @Html.Raw(ViewBag.Service.RenderImages(Model.Page.Description))
 </div>
 }
 else if (Model.Page.PageNavigation.ShowSimpleDescription())

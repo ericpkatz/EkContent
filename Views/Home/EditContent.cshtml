@@ -51,6 +51,24 @@
     </div>
     <div class="row">
         <div class="span2">
+            @Html.LabelFor(m => m.Content.BorderImage)
+        </div>
+        <div class="span6">
+            @Html.EditorFor(m => m.Content.BorderImage)
+            @Html.Help("Show border around image?")
+        </div>
+    </div>     
+    <div class="row">
+        <div class="span2">
+            @Html.LabelFor(m => m.Content.FileId, "Select File")
+        </div>
+        <div class="span6">
+            @Html.DropDownListFor(m => m.Content.FileId, Model.SelectListFiles())
+            @Html.Help("File will be downloadable in content item.")
+        </div>
+    </div>    
+    <div class="row">
+        <div class="span2">
             @Html.LabelFor(m => m.Content.ShowAddThis)
         </div>
         <div class="span6">

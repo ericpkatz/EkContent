@@ -26,12 +26,25 @@
 }
 @if (Model.ShowChildPages())
 {
+    if (Model.ChildPages().Count < 3)
+    {
     <ul class="nav nav-pills nav-stacked">
         @foreach (var page in Model.ChildPages())
         {
             <li>@Html.ActionLink(page.Title, "Index", "Home", new { pageTitle = page.PagePath() }, null)</li>
         }
     </ul>
+    }
+    else
+    {
+        <select class="navigation span3">
+        <option>-- also see --</option>
+        @foreach (var page in Model.ChildPages())
+        {
+            <option value="@Url.Action("Index", "Home", new { pageTitle = page.PagePath() }, null)">@page.Title</option>
+        } 
+        </select>
+    }
 }
 @if (Roles.IsUserInRole("Admin"))
 {
@@ -65,6 +78,8 @@
             }
             <li><a  href = "@Url.Action("List", "Image", new { id = Model.Page.Id })">
                 <i class="icon-picture"></i>Image Gallery</a></li>
+            <li><a  href = "@Url.Action("List", "File", new { id = Model.Page.Id })">
+                <i class="icon-file"></i>File Gallery</a></li>
             <li><a  href = "@Url.Action("Edit", "Site", new { id = Model.Page.Id })">
                 <i class="icon-globe"></i>Site Settings</a></li>
             <li><a  href = "@Url.Action("EditTwitterKeys", "Site", new { id = Model.Page.Id })">

@@ -63,5 +63,11 @@ namespace EKContent.web.Models.Database.Concrete
                 sw = null;
             }          
         }
+
+
+        public void Clear()
+        {
+            File.Delete(file);
+        }
     }
 }

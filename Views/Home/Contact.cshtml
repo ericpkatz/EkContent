@@ -17,6 +17,8 @@
     </div>
     </div>
 }
-
+@if (!String.IsNullOrEmpty(Model.Site.Phone))
+{
 <div>Or give us a call at @Model.Site.Phone.</div>
+}
 

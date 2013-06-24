@@ -23,23 +23,26 @@ namespace EKContent.web.Utilities
                     int lnNewWidth = 0;
                     int lnNewHeight = 0;
 
-                    if (inputBitmap .Width < lnWidth && inputBitmap .Height < lnHeight)
-                        return null;
+                    if (inputBitmap.Width < lnWidth && inputBitmap.Height < lnHeight)
+                        return new Bitmap(inputBitmap);
 
                         lnRatio = inputBitmap.Width > inputBitmap.Height?(decimal) lnWidth/inputBitmap.Width : (decimal) lnHeight/inputBitmap.Height;
                         lnNewWidth = inputBitmap.Width > inputBitmap.Height ? lnWidth : (int)(inputBitmap.Width*lnRatio);
                         lnNewHeight = inputBitmap.Width > inputBitmap.Height?(int) (inputBitmap.Height*lnRatio) : lnHeight;
 
 
-                    var bmpOut = new Bitmap(lnNewWidth, lnNewHeight);
-                    Graphics g = Graphics.FromImage(bmpOut);
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                    g.FillRectangle(Brushes.White, 0, 0, lnNewWidth, lnNewHeight);
-                    g.DrawImage(inputBitmap, 0, 0, lnNewWidth, lnNewHeight);
-                    return bmpOut;
+                    var bmpOut = new Bitmap(lnNewWidth, lnNewHeight, PixelFormat.Format32bppPArgb);
+                    using (Graphics g = Graphics.FromImage(bmpOut))
+                    {
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                        //g.FillRectangle(Brushes.White, 0, 0, lnNewWidth, lnNewHeight);
+                        g.DrawImage(inputBitmap, 0, 0, lnNewWidth, lnNewHeight);
+                        return bmpOut;
+                    }
+
                 }
         }
     }

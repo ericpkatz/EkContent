@@ -38,9 +38,11 @@
     </div>
     
     <div class="control-group">
-    @Html.LabelFor(m => m.Page.PageNavigation.Description)
-    @Html.TextAreaFor(m => m.Page.PageNavigation.Description)
-     @Html.Help("The description of the page- not currently being used")       
+        <div style="width: 100%">
+            @Html.ValidationMessageFor(m => m.Page.PageNavigation.Description)   
+            @Html.TextAreaFor(m => m.Page.PageNavigation.Description, new { @class = "richText", rows = 5 })
+            @Html.Help("The body of the content item.")
+        </div>   
     </div>    
     
     <div class="control-group">

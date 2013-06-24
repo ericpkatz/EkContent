@@ -34,7 +34,7 @@ namespace EKContent.web.Models.Entities
             var str = String.Empty;
             if(ShowLogo || Logo != null)
             {
-                str = String.Format(".icon_logo{{background-image : url({0}); display:block;float:left;width:20px;height:20px;}}", new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext).Content(String.Format("~/user_images/{0}", Logo) ) );
+                str = String.Format(".icon_logo{{background-image : url({0}); display:block;float:left;width:20px;height:20px;background-repeat:no-repeat;}}", new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext).Content(String.Format("~/user_images/{0}", Logo) ) );
             }
             return str;
 
